@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GroupActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textColor="@color/colorAccent"
+            android:id="@+id/masonry"
+            android:padding="10dp"
+            android:text="@string/mansory"
+            android:textStyle="bold|normal"
+            android:textSize="24sp"
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableRight="@android:drawable/ic_menu_more"
+            android:drawableEnd="@android:drawable/ic_menu_more"
+            android:drawableTint="@color/colorAccent"/>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/mansory_card_view"
+            android:layout_below="@+id/masonry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/masonry_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:textColor="@color/colorAccent"
+            android:layout_marginTop="15dip"
+            android:id="@+id/professional"
+            android:padding="10dp"
+            android:text="@string/professional"
+            android:textStyle="bold|normal"
+            android:textSize="24sp"
+            android:gravity="start"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/mansory_card_view"
+            android:layout_height="wrap_content"
+            android:drawableRight="@android:drawable/ic_menu_more"
+            android:drawableEnd="@android:drawable/ic_menu_more"
+            android:drawableTint="@color/colorAccent"/>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/professional_card_view"
+            android:layout_below="@+id/professional"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/professional_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+
+
+
+</ScrollView>

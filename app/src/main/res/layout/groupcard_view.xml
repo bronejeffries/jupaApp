@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/group_card_view"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="10dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:src="@drawable/ic_group"
+                android:tint="@color/colorAccent"
+                android:background="@color/white"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/group_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:padding="8dp"
+                    android:text="@string/group_name"/>
+                <TextView
+                    android:id="@+id/group_admin_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start|center"
+                    android:text="@string/assign_admin"
+                    android:textSize="18sp"
+                    android:drawableTint="@color/colorPrimary"
+                    android:drawableRight="@android:drawable/ic_menu_edit"
+                    android:drawableEnd="@android:drawable/ic_menu_edit"
+                    android:drawablePadding="10dp"
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
