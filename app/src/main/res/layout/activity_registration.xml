@@ -16,6 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
@@ -27,13 +29,37 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text="@string/reg_no"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:padding="10dp"/>
 
                 <EditText
-                    android:id="@+id/name_input"
+                    android:id="@+id/regno._input"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:text="@string/first_name"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:padding="10dp"/>
+
+                <EditText
+                    android:id="@+id/first_name_input"
                     android:layout_weight="0.5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
@@ -50,13 +76,108 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
-                    android:text="Contact No."
+                    android:text="@string/last_name"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:padding="10dp"/>
 
                 <EditText
-                    android:id="@+id/contact_input"
+                    android:id="@+id/last_name_input"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:text="Family Name"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:padding="10dp"/>
+
+                <EditText
+                    android:id="@+id/family_name_input"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gender"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:padding="10dp"/>
+
+                <Spinner
+                    android:entries="@array/gender_array"
+                    android:id="@+id/gender_input"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mobile_no"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:padding="10dp"/>
+
+                <EditText
+                    android:id="@+id/mobile_no_input"
+                    android:layout_weight="0.5"
+                    android:inputType="phone"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:text="@string/other_no"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:padding="10dp"/>
+
+                <EditText
+                    android:id="@+id/other_no_input"
                     android:layout_weight="0.5"
                     android:inputType="phone"
                     android:layout_width="0dp"
@@ -156,7 +277,6 @@
                     android:inputType="date"
                     android:layout_weight="0.5"
                     android:layout_width="0dp"
-                    android:entries="@array/categories_array"
                     android:layout_height="match_parent" />
 
             </LinearLayout>
@@ -172,13 +292,13 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
-                    android:text="Country"
+                    android:text="@string/address"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:padding="10dp"/>
 
                 <EditText
-                    android:id="@+id/country_input"
+                    android:id="@+id/address_input"
                     android:inputType="text"
                     android:layout_weight="0.5"
                     android:layout_width="0dp"
@@ -197,64 +317,13 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
-                    android:text="State"
+                    android:text="@string/education"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:padding="10dp"/>
 
                 <EditText
-                    android:id="@+id/state_input"
-                    android:inputType="text"
-                    android:layout_weight="0.5"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content"
-                    android:text="City"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:padding="10dp"/>
-
-                <EditText
-                    android:id="@+id/city_input"
-                    android:inputType="text"
-                    android:layout_weight="0.5"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="wrap_content"
-                    android:text="Town"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:padding="10dp"/>
-
-
-                <EditText
-                    android:id="@+id/town_input"
+                    android:id="@+id/education_input"
                     android:inputType="text"
                     android:layout_weight="0.5"
                     android:layout_width="0dp"

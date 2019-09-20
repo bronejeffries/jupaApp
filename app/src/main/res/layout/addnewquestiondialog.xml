@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:padding="12dp" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@string/question_category"
+            android:textSize="21sp"
+            android:padding="5dp"
+            android:textStyle="bold|normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:hint="@string/client_name"
+            android:textColorHint="@color/colorAccent"
+            android:inputType="text"
+            android:textSize="21sp"
+            android:textStyle="normal"
+            android:id="@+id/question_category_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@string/question"
+            android:textSize="21sp"
+            android:padding="5dp"
+            android:textStyle="bold|normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:hint="@string/question"
+            android:textColorHint="@color/colorAccent"
+            android:inputType="text"
+            android:textSize="21sp"
+            android:textStyle="normal"
+            android:id="@+id/question_title_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/save_question_btn"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:text="@string/add_group"
+            android:textSize="21sp"
+            android:padding="5dp"
+            android:textStyle="bold|normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -6,117 +6,153 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class GroupActivity extends AppCompatActivity {
 
     public static final String GROUP_TAG = "group" ;
+    public static final String SEARCH_LIST ="candidates" ;
     Group group;
-    RegisteredCandidates registeredCandidates;
+    public static String groupName;
     final static String MASON_CATEGORY = "mason", PROFESSIONAL_CATEGORY = "professional";
-    RecyclerView masonry_recycler_view , professional_recycler_view;
-    TextView masonry_title, professional_title;
-    CardView masonry_card, professional_card;
-    Boolean masonryCard_visible = true, professionalCard_visible = true;
+    RecyclerView masonry_recycler_view;
+    ImageButton Load_more;
 
-    ArrayList<Candidate> GroupCandidates,  masonryCandidates, professionalCandidates;
+    CardView masonry_card;
+
+    GroupBackgroundApiTasks groupBackgroundApiTasks;
+    ArrayList<Candidate> GroupCandidates;
     private CandidatesAdapter masonCandidatesAdapter;
-    private CandidatesAdapter professionalCandidatesAdapter;
+    showProgressbar showprogress;
+    ProgressBar progressBar;
+    private GroupSearchActivity.searchObject searchObject;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
+
+
+        showprogress = new showProgressbar(this);
+        progressBar = (ProgressBar)findViewById(R.id.search_progress_bar);
+
         Intent intent = getIntent();
         group = (Group)intent.getParcelableExtra(GROUP_TAG);
-        registeredCandidates = RegisteredCandidates.getInstance();
-        GroupCandidates = registeredCandidates.filterListByGroup(group.getGroup_name());
-        masonry_recycler_view = (RecyclerView)findViewById(R.id.masonry_recycler_view);
-        professional_recycler_view = (RecyclerView)findViewById(R.id.professional_recycler_view);
+        GroupCandidates = intent.getParcelableArrayListExtra(SEARCH_LIST);
 
-        masonry_title = (TextView)findViewById(R.id.masonry);
+        groupName = group.getGroup_name();
+
+        groupBackgroundApiTasks = GroupBackgroundApiTasks.getInstance(GroupActivity.this);
+
+        masonry_recycler_view = (RecyclerView)findViewById(R.id.masonry_recycler_view);
+
+        Load_more = (ImageButton) findViewById(R.id.masonry);
         masonry_card = (CardView)findViewById(R.id.mansory_card_view);
 
-        masonry_title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (masonryCard_visible){
-                    masonry_card.setVisibility(View.GONE);
-                    masonryCard_visible = false;
-                }else {
-                    masonry_card.setVisibility(View.VISIBLE);
-                    masonryCard_visible = true;
-                }
-            }
-        });
+        populateMasonCandidates(GroupCandidates);
 
-        professional_title = (TextView)findViewById(R.id.professional);
-        professional_card = (CardView)findViewById(R.id.professional_card_view);
-
-        professional_title.setOnClickListener(new View.OnClickListener() {
+        Load_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-
-                if (professionalCard_visible){
-
-                    professional_card.setVisibility(View.GONE);
-                    professionalCard_visible = false;
-                }else {
-
-                    professional_card.setVisibility(View.VISIBLE);
-                    professionalCard_visible = true;
-
-                }
+                        fetchGroupCandidates();
 
             }
         });
 
-        populateMasonCandidates(filterByCategory(GroupCandidates,MASON_CATEGORY));
-        populateProfessionalCandidates(filterByCategory(GroupCandidates,PROFESSIONAL_CATEGORY));
     }
 
-    private void populateProfessionalCandidates(ArrayList<Candidate> professionals) {
 
-        professionalCandidatesAdapter = new CandidatesAdapter(this,professionals);
-        professional_recycler_view.setLayoutManager(new LinearLayoutManager(this));
-        professional_recycler_view.setAdapter(professionalCandidatesAdapter);
+    private void fetchGroupCandidates() {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        int last = masonCandidatesAdapter.getLastItemId();
+        searchObject = GroupSearchActivity.activitySearchObject;
+        searchObject.setLast(last);
+
+        new getCandidates().execute(searchObject);
 
     }
+
+
 
     private void populateMasonCandidates(ArrayList<Candidate> masons) {
         masonCandidatesAdapter = new CandidatesAdapter(this,masons);
-        masonry_recycler_view.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayout = new LinearLayoutManager(this);
+        linearLayout.setReverseLayout(true);
+        masonry_recycler_view.setLayoutManager(linearLayout);
         masonry_recycler_view.setAdapter(masonCandidatesAdapter);
     }
 
 
-    public static ArrayList<Candidate> filterByCategory(ArrayList<Candidate> candidateArrayList , String categoryName){
+//    public static ArrayList<Candidate> filterByCategory(ArrayList<Candidate> candidateArrayList , String categoryName){
+//
+//        ArrayList<Candidate> filteredList = new ArrayList<>();
+//
+//        for (Candidate candidate : candidateArrayList ) {
+//
+//            if (candidate.getCategory() != null ){
+//
+//                if (candidate.getCategory().equals(categoryName)){
+//
+//                    filteredList.add(candidate);
+//
+//                }
+//
+//            }
+//
+//        }
+//
+//        return filteredList;
+//    }
 
-        ArrayList<Candidate> filteredList = new ArrayList<>();
+    public class getCandidates extends AsyncTask<GroupSearchActivity.searchObject,Void, ArrayList<Candidate>>{
 
-        for (Candidate candidate : candidateArrayList ) {
+        @Override
+        protected void onPostExecute(ArrayList<Candidate> candidateArrayList) {
 
-            if (candidate.getCategory() != null ){
+            if (candidateArrayList.size()>0){
+                masonCandidatesAdapter.updateArrayList(candidateArrayList);
+                masonry_recycler_view.scrollToPosition((searchObject.last-1));
+            }else {
 
-                if (candidate.getCategory().equals(categoryName)){
-
-                    filteredList.add(candidate);
-
-                }
+                Toast.makeText(GroupActivity.this, groupBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
+            progressBar.setVisibility(View.GONE);
 
         }
 
-        return filteredList;
+        @Override
+        protected ArrayList<Candidate> doInBackground(GroupSearchActivity.searchObject... searchObjects) {
 
+            ArrayList<Candidate> returnedArraylist;
+
+            synchronized (groupBackgroundApiTasks){
+
+                try {
+                    groupBackgroundApiTasks.SearchGroupCandidates(searchObjects[0]);
+                    groupBackgroundApiTasks.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                returnedArraylist = groupBackgroundApiTasks.getGroupCandidatesList();
+            }
+
+            return returnedArraylist;
+        }
     }
 
 

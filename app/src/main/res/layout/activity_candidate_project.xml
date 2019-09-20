@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CandidateProjectActivity">
+
+
+    <LinearLayout
+        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/title"
+                android:textSize="22sp"
+                android:padding="12dp"
+                android:textStyle="bold|normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:hint="@string/title"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="text"
+                android:textSize="21sp"
+                android:textStyle="normal"
+                android:id="@+id/project_title_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/location"
+                android:textSize="22sp"
+                android:padding="12dp"
+                android:textStyle="bold|normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:hint="@string/location"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="text"
+                android:textSize="21sp"
+                android:textStyle="normal"
+                android:id="@+id/project_location_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/description"
+                android:textSize="22sp"
+                android:padding="12dp"
+                android:textStyle="bold|normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:hint="@string/location"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="text"
+                android:textSize="21sp"
+                android:textStyle="normal"
+                android:id="@+id/project_description_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/date_of_completion"
+                android:textSize="22sp"
+                android:padding="12dp"
+                android:textStyle="bold|normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:hint="@string/date_of_completion"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="date"
+                android:textSize="21sp"
+                android:textStyle="normal"
+                android:id="@+id/project_date_completion_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/client_name"
+                android:textSize="22sp"
+                android:padding="12dp"
+                android:textStyle="bold|normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:hint="@string/client_name"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="text"
+                android:textSize="21sp"
+                android:textStyle="normal"
+                android:id="@+id/project_client_name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/client_contact"
+                android:textSize="22sp"
+                android:padding="12dp"
+                android:textStyle="bold|normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:hint="@string/client_contact"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="phone"
+                android:textSize="21sp"
+                android:textStyle="normal"
+                android:id="@+id/project_client_contact_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/client_email"
+                android:textSize="22sp"
+                android:padding="12dp"
+                android:textStyle="bold|normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:hint="@string/client_email"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="textEmailAddress"
+                android:textSize="21sp"
+                android:textStyle="normal"
+                android:id="@+id/project_client_email_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/client_address"
+                android:textSize="22sp"
+                android:padding="12dp"
+                android:textStyle="bold|normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:hint="@string/client_address"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="text"
+                android:textSize="21sp"
+                android:textStyle="normal"
+                android:id="@+id/project_client_address_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/attach_image"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
+                android:clickable="false"
+                android:text="@string/attach_image"
+                android:textSize="16sp"
+                android:padding="3dp"
+                android:textColor="@color/white"
+                android:textStyle="bold|normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/construction_icon_png_5"
+                android:layout_margin="12dp"
+                android:inputType="text"
+                android:textSize="21sp"
+                android:textStyle="normal"
+                android:id="@+id/project_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:background="@color/colorPrimary"
+                android:text="@string/add_group"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:padding="8dp"
+                android:textStyle="normal"
+                android:id="@+id/save_project"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -25,6 +25,7 @@ public class CandidatesAdapter extends RecyclerView.Adapter {
     public static CandidatesAdapter instance = null;
     public Context context;
     public ArrayList<Candidate> arrayList;
+    public Candidate loggedInCandidate =  LoggedInUser.getInstance().getLoggedInCandidate();
 
 
     public CandidatesAdapter(Context context, ArrayList<Candidate> arrayList) {
@@ -57,21 +58,31 @@ public class CandidatesAdapter extends RecyclerView.Adapter {
             final Candidate candidate = arrayList.get(position);
             ((CandidateViewHolder) holder).name.setText(candidate.getName());
             ((CandidateViewHolder) holder).role.setText(candidate.getRole());
+            if (loggedInCandidate!=null){
+                if (!loggedInCandidate.getRole().equals(UserHomeActivity.ADMINISTRATOR_ROLE)){
+
+                    ((CandidateViewHolder) holder).role.setCompoundDrawables(null,null,null,null);
+
+                }else {
+
+                    ((CandidateViewHolder) holder).role.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            showRolesDialog(candidate,((CandidateViewHolder) holder));
+
+                        }
+                    });
+
+                }
+            }
             ((CandidateViewHolder) holder).status.setText(candidate.getStatus());
             ((CandidateViewHolder) holder).available.setText(candidate.getAvailable());
-            ((CandidateViewHolder) holder).country.setText(candidate.getCountry());
+            ((CandidateViewHolder) holder).country.setText(candidate.getAddress());
             ((CandidateViewHolder) holder).profile_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     showProfile(candidate);
-                }
-            });
-            ((CandidateViewHolder) holder).role.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    showRolesDialog(candidate,((CandidateViewHolder) holder));
-
                 }
             });
         }
@@ -113,6 +124,33 @@ public class CandidatesAdapter extends RecyclerView.Adapter {
 
     }
 
+    public ArrayList<Candidate> getArrayList() {
+        return arrayList;
+    }
+
+    public void updateArrayList(ArrayList<Candidate> candidateArrayList){
+
+        this.getArrayList().addAll(candidateArrayList);
+        this.notifyDataSetChanged();
+
+    }
+
+    public int getLastItemId(){
+
+        int last = 0;
+        if (getItemCount()>0){
+
+            last = getArrayList().get((getItemCount()-1)).getId();
+
+        }
+
+        return last;
+
+    }
+
+    public void setArrayList(ArrayList<Candidate> arrayList) {
+        this.arrayList = arrayList;
+    }
 
     public static class CandidateViewHolder extends RecyclerView.ViewHolder{
 
@@ -128,7 +166,6 @@ public class CandidatesAdapter extends RecyclerView.Adapter {
             profile_view = (TextView)view.findViewById(R.id.profile_view);
 
         }
-
 
 
     }

@@ -44,7 +44,7 @@ public class RegisteredCandidates {
 
             if (candidate.getGroup() != null){
 
-                if (candidate.getGroup().getGroup_name().equals(groupname)){
+                if (candidate.getCandidate_group().getGroup_name().equals(groupname)){
 
                     filteredList.add(candidate);
 
@@ -57,36 +57,36 @@ public class RegisteredCandidates {
 
 
 
-    public ArrayList<Candidate> filterListByAssesor(Candidate Assessor){
+//    public ArrayList<Candidate> filterListByAssesor(Candidate Assessor){
+//
+//        ArrayList<Candidate> filteredList = new ArrayList<>();
+//
+//        for (Candidate candidate: filterListByGroup(Assessor.getCandidate_group().getGroup_name()) ) {
+//
+//            if (candidate.getGroup() != null && candidate.getCandidateAssessor()!=null){
+//
+//                if (candidate.getCandidateAssessor().getName().equals(Assessor.getName())){
+//
+//                    filteredList.add(candidate);
+//                }
+//
+//            }
+//        }
+//        return filteredList;
+//
+//    }
 
-        ArrayList<Candidate> filteredList = new ArrayList<>();
-
-        for (Candidate candidate: filterListByGroup(Assessor.getGroup().getGroup_name()) ) {
-
-            if (candidate.getGroup() != null && candidate.getCandidateAssessor()!=null){
-
-                if (candidate.getCandidateAssessor().getName().equals(Assessor.getName())){
-
-                    filteredList.add(candidate);
-                }
-
-            }
-        }
-        return filteredList;
-
-    }
-
-    public List<String> filterGroupAssessorsList(Group group) {
-
-        List<String> stringList = new ArrayList<>();
-        ArrayList<Candidate> groupAssessors = filterGroupAssessors(group);
-        for (Candidate candidate : groupAssessors) {
-            stringList.add(candidate.getName());
-        }
-
-        return stringList;
-
-    }
+//    public List<String> filterGroupAssessorsList(Group group) {
+//
+//        List<String> stringList = new ArrayList<>();
+//        ArrayList<Candidate> groupAssessors = filterGroupAssessors(group);
+//        for (Candidate candidate : groupAssessors) {
+//            stringList.add(candidate.getName());
+//        }
+//
+//        return stringList;
+//
+//    }
 
     public ArrayList<Candidate> filterGroupAssessors( Group group ){
 

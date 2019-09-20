@@ -77,7 +77,6 @@ public class RanksAdapter extends BaseAdapter {
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
-        Toast.makeText(context, "Rank added "+ rankArrayList.size(), Toast.LENGTH_SHORT).show();
     }
 
     public ArrayList<Rank> getRankArrayList() {
@@ -86,6 +85,11 @@ public class RanksAdapter extends BaseAdapter {
 
     public void setRankArrayList(ArrayList<Rank> rankArrayList) {
         this.rankArrayList = rankArrayList;
+        this.notifyDataSetChanged();
+    }
+
+    public void addItem(Rank rank){
+        getRankArrayList().add(rank);
         this.notifyDataSetChanged();
     }
 

@@ -12,7 +12,7 @@
             android:text="@string/new_Rank"
             android:gravity="center_horizontal"
             android:textStyle="bold"
-            android:textSize="26sp"
+            android:textSize="22sp"
             android:padding="15dp"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,12 +23,32 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.3"
                 android:layout_height="wrap_content"
-                android:text="@string/ranks"
+                android:text="@string/rank_name"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:padding="10dp"/>
             <EditText
                 android:id="@+id/rank_name_input"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="wrap_content"
+                android:text="@string/rank_code"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:padding="10dp"/>
+            <EditText
+                android:id="@+id/rank_code_input"
                 android:layout_weight="0.5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent" />

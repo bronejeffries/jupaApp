@@ -81,16 +81,13 @@ public class GroupsAdapter extends RecyclerView.Adapter {
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context,GroupActivity.class);
+                    Intent intent = new Intent(context,GroupSearchActivity.class);
                     intent.putExtra(GroupActivity.GROUP_TAG,group);
                     context.startActivity(intent);
-
                 }
             });
 
-
     }
-
 
     @Override
     public int getItemCount() {
@@ -109,5 +106,10 @@ public class GroupsAdapter extends RecyclerView.Adapter {
     public void setGroupArrayList(ArrayList<Group> groupArrayList) {
         this.groupArrayList = groupArrayList;
         this.notifyDataSetChanged();
+    }
+
+    public void addItemToList(Group group){
+        getGroupArrayList().add(group);
+        notifyDataSetChanged();
     }
 }

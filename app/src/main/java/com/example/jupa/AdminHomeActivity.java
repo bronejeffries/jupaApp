@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,10 +37,17 @@ public class AdminHomeActivity extends AppCompatActivity {
     private SkillsAdapter skillsAdapter;
     private RanksAdapter ranksAdapter;
     private ArrayList<Rank> rankArrayList;
+    private RankBackgroundApiTasks rankBackgroundApiTasks;
+    showProgressbar showprogress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
+
+        rankBackgroundApiTasks = RankBackgroundApiTasks.getInstance(this);
+        showprogress = new showProgressbar(this);
+
     }
 
 
@@ -93,6 +101,14 @@ public class AdminHomeActivity extends AppCompatActivity {
         rankBottomSheetDialog.setContentView(sheetView);
         rankBottomSheetDialog.show();
 
+        showprogress.setMessage("Loading");
+        showprogress.show();
+        fetchAllRanks();
+    }
+
+    private void fetchAllRanks() {
+
+        new fetchAllRanksAsync().execute();
 
     }
 
@@ -106,31 +122,37 @@ public class AdminHomeActivity extends AppCompatActivity {
         FloatingActionButton floatingActionButton = (FloatingActionButton)sheetView.findViewById(R.id.bottom_sheet_fab);
         floatingActionButton.setOnClickListener(onClickListener);
 
-
     }
 
     private void popAddRankDialog(Context applicationContext) {
 
         CardView cardView = (CardView)LayoutInflater.from(applicationContext).inflate(R.layout.add_rank_view,null,true);
         final EditText rankNameInput = (EditText)cardView.findViewById(R.id.rank_name_input);
+        final EditText rankCodeInput = (EditText)cardView.findViewById(R.id.rank_code_input);
         Button save_button = (Button)cardView.findViewById(R.id.save_group_btn);
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 String name = rankNameInput.getText().toString();
-                Rank newRank = new Rank(name);
-                if (rankArrayList == null){
-                    rankArrayList = new ArrayList<>();
-                }
-                rankArrayList.add(newRank);
-                ranksAdapter.setRankArrayList(rankArrayList);
+                String code = rankCodeInput.getText().toString();
+                Rank newRank = new Rank(name,code);
+                saveNewRank(newRank);
+
             }
         });
         BottomSheetDialog addSkillBottomSheet = new BottomSheetDialog(applicationContext);
         addSkillBottomSheet.setContentView(cardView);
         addSkillBottomSheet.show();
     }
+
+    private void saveNewRank(Rank newRank) {
+        showprogress.setMessage("Creating new rank");
+        showprogress.show();
+        new addNewRank().execute(newRank);
+    }
+
+
 
     private void LaunchSkillsBottomSheetDialog() {
 
@@ -172,7 +194,6 @@ public class AdminHomeActivity extends AppCompatActivity {
         addSkillBottomSheet.show();
 
 
-
     }
 
     private void manageSkillView(View sheetView, View.OnClickListener onClickListener, String title) {
@@ -195,16 +216,71 @@ public class AdminHomeActivity extends AppCompatActivity {
 
     }
 
-//    private void showOptionsDialog(String dialog) {
-//
-//        switch (dialog){
-//
-//            case GROUPS_SHOW:
-////
-//            default:
-//                Toast.makeText(this, "Wrong Option", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+    public class addNewRank extends AsyncTask<Rank,Void,Rank>{
+
+
+        @Override
+        protected void onPostExecute(Rank rank) {
+
+            if (rank!=null){
+                ranksAdapter.addItem(rank);
+            }
+            showprogress.dismiss();
+            Toast.makeText(AdminHomeActivity.this, rankBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        protected Rank doInBackground(Rank... ranks) {
+            Rank returnedRank;
+
+            synchronized (rankBackgroundApiTasks){
+
+                rankBackgroundApiTasks.createRank(ranks[0]);
+                try {
+                    rankBackgroundApiTasks.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                returnedRank = rankBackgroundApiTasks.getRank();
+
+            }
+
+            return returnedRank;
+        }
+    }
+
+    public class fetchAllRanksAsync extends AsyncTask<Void,Void,ArrayList<Rank>>{
+
+
+        @Override
+        protected void onPostExecute(ArrayList<Rank> rank) {
+
+            ranksAdapter.setRankArrayList(rank);
+            showprogress.dismiss();
+
+        }
+
+        @Override
+        protected ArrayList<Rank> doInBackground(Void... voids) {
+            ArrayList<Rank> returnedRanks;
+
+            synchronized (rankBackgroundApiTasks){
+
+                rankBackgroundApiTasks.getAllRanks();
+                try {
+                    rankBackgroundApiTasks.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                returnedRanks = rankBackgroundApiTasks.getRankArrayList();
+
+            }
+
+            return returnedRanks;
+        }
+    }
 
 
     @Override
