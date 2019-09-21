@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.reflect.Array;
+import java.security.PublicKey;
 import java.util.ArrayList;
 
 public class CandidatesAdapter extends RecyclerView.Adapter {
@@ -26,6 +27,9 @@ public class CandidatesAdapter extends RecyclerView.Adapter {
     public Context context;
     public ArrayList<Candidate> arrayList;
     public Candidate loggedInCandidate =  LoggedInUser.getInstance().getLoggedInCandidate();
+    public Rank rank;
+    public Group group;
+
 
 
     public CandidatesAdapter(Context context, ArrayList<Candidate> arrayList) {
@@ -91,10 +95,13 @@ public class CandidatesAdapter extends RecyclerView.Adapter {
 
     private void showProfile(Candidate candidate) {
 
-        Toast.makeText(context, "Profile Loading.....", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(context,ProfileActivity.class);
+
         intent.putExtra(ProfileActivity.CANDIDATE_EXTRA, candidate);
+        intent.putExtra(ProfileActivity.RANK_EXTRA,rank);
+        intent.putExtra(GroupActivity.GROUP_TAG,group);
         context.startActivity(intent);
+
     }
 
     
@@ -150,6 +157,23 @@ public class CandidatesAdapter extends RecyclerView.Adapter {
 
     public void setArrayList(ArrayList<Candidate> arrayList) {
         this.arrayList = arrayList;
+    }
+
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public void setRank(Rank rank) {
+        this.rank = rank;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public static class CandidateViewHolder extends RecyclerView.ViewHolder{

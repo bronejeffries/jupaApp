@@ -53,13 +53,18 @@
                         />
                     <TextView
                         android:gravity="center_horizontal|center"
-                        android:id="@+id/assessor"
+                        android:id="@+id/rank_view"
                         android:layout_width="0dip"
                         android:layout_weight="0.6"
                         android:layout_height="wrap_content"
-                        android:text="@string/assessor"
+                        android:text="@string/rank"
                         android:textSize="19sp"
                         />
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/rank_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -86,6 +91,11 @@
                         android:text="@string/role"
                         android:textSize="19sp"
                         />
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/role_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -113,6 +123,11 @@
                         android:drawableEnd="@android:drawable/ic_menu_edit"
                         android:drawableTint="@color/colorPrimary"
                         />
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/status_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
                 </LinearLayout>
 
 
@@ -141,7 +156,46 @@
                         android:drawableEnd="@android:drawable/ic_menu_edit"
                         android:drawableTint="@color/colorPrimary"
                         />
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/available_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="10dip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content"
+                        android:text="@string/address"
+                        android:textSize="21sp"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:gravity="center_horizontal|start"
+                        android:id="@+id/country"
+                        android:layout_width="0dip"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content"
+                        android:text="@string/address"
+                        android:textSize="19sp"
+                        android:drawableRight="@android:drawable/ic_menu_edit"
+                        android:drawableEnd="@android:drawable/ic_menu_edit"
+                        android:drawableTint="@color/colorPrimary"
+                        />
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/address_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
+                </LinearLayout>
+
+
 
                 <LinearLayout
                     android:layout_marginTop="10dip"
@@ -168,6 +222,12 @@
                         android:drawableEnd="@android:drawable/ic_menu_edit"
                         android:drawableTint="@color/colorPrimary"
                         />
+
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/country_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
 
                 </LinearLayout>
 
@@ -196,6 +256,12 @@
                         android:drawableEnd="@android:drawable/ic_menu_edit"
                         android:drawableTint="@color/colorPrimary"
                         />
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/state_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -224,34 +290,14 @@
                         android:drawableTint="@color/colorPrimary"
                         />
 
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/city_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
+
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_marginTop="10dip"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dip"
-                        android:layout_weight="0.5"
-                        android:layout_height="wrap_content"
-                        android:text="@string/town"
-                        android:textSize="21sp"
-                        android:textStyle="bold"
-                        />
-                    <TextView
-                        android:gravity="center_horizontal|center"
-                        android:id="@+id/town_view"
-                        android:layout_width="0dip"
-                        android:layout_weight="0.5"
-                        android:layout_height="wrap_content"
-                        android:text="@string/town"
-                        android:textSize="19sp"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:drawableEnd="@android:drawable/ic_menu_edit"
-                        android:drawableTint="@color/colorPrimary"
-                        />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_marginTop="10dip"
@@ -278,6 +324,11 @@
                         android:drawableEnd="@android:drawable/ic_menu_edit"
                         android:drawableTint="@color/colorPrimary"
                         />
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/contract_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
                 </LinearLayout>
 
 
@@ -306,6 +357,11 @@
                         android:drawableEnd="@android:drawable/ic_menu_edit"
                         android:drawableTint="@color/colorPrimary"
                         />
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/email_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -333,6 +389,11 @@
                         android:drawableEnd="@android:drawable/ic_menu_edit"
                         android:drawableTint="@color/colorPrimary"
                         />
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/dob_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -357,6 +418,11 @@
                         android:text="@string/group_name"
                         android:textSize="19sp"
                         />
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/group_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -384,6 +450,11 @@
                         android:drawableEnd="@android:drawable/ic_menu_edit"
                         android:drawableTint="@color/colorPrimary"
                         />
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/category_progress"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -406,10 +477,10 @@
                 android:background="@color/colorAccent"
                 android:textColor="@color/white"
                 android:text="@string/projects"
-                android:textSize="21sp"
-                android:padding="8dip"
+                android:textAllCaps="false"
+                android:textSize="22sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="26dip" />
 
             <Button
                 android:id="@+id/view_skills"
@@ -417,10 +488,10 @@
                 android:background="@color/colorPrimary"
                 android:textColor="@color/white"
                 android:text="@string/skills"
-                android:padding="8dip"
-                android:textSize="21sp"
+                android:textAllCaps="false"
+                android:textSize="22sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="26dip" />
 
         </LinearLayout>
 

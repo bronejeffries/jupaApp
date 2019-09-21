@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GroupSearchActivity"></activity>
+        <activity android:name=".CandidateProjectDetailViewActivity"></activity>
+        <activity android:name=".GroupSearchActivity" />
         <activity android:name=".ProjectAssessmentsActivity" />
         <activity android:name=".AssessementActivity" />
         <activity android:name=".GroupQuestionsActivity" />

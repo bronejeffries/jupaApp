@@ -70,6 +70,46 @@ public class RankBackgroundApiTasks {
 
     }
 
+    public void getRankById(int rank_id){
+
+        Call<RankApiData> call = ranksApiInterface.getRankByID(rank_id);
+        call.enqueue(new Callback<RankApiData>() {
+            @Override
+            public void onResponse(Call<RankApiData> call, Response<RankApiData> response) {
+
+                synchronized (RankBackgroundApiTasks.this){
+
+                    if (response.body().getSuccess().equals(SUCCESS)){
+
+                        setRank(response.body().getRank());
+                    }else {
+
+                        setRank(null);
+
+                    }
+                    setMessage(response.body().getMessage());
+                    RankBackgroundApiTasks.this.notifyAll();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RankApiData> call, Throwable t) {
+
+                synchronized (RankBackgroundApiTasks.this){
+
+                    setRank(null);
+
+                    setMessage(t.getMessage());
+
+                    RankBackgroundApiTasks.this.notifyAll();
+
+                }
+
+            }
+        });
+
+    }
 
     public void getAllRanks(){
 

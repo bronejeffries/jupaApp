@@ -11,11 +11,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,11 +22,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    public static final String CANDIDATE_EXTRA ="candidate";
+    public static final String CANDIDATE_EXTRA ="candidate", RANK_EXTRA = "rank", CATEGORY_EXTRA = "category";
     ListView skillsListView;
     RecyclerView projectsRecyclerView;
     public static CandidateProjectsAdapter candidateProjectsAdapter;
@@ -35,11 +33,20 @@ public class ProfileActivity extends AppCompatActivity {
     Intent intent;
     Candidate candidate;
     SkillsAdapter skillsAdapter;
-    TextView profile_name, assessor, role, status, available, country, state, city, town, contact, email, date_of_birth, group_name, category,bottom_sheet_title;
+    TextView profile_name, rankView, role, status, available, address ,country, state, city, contact, email, date_of_birth, group_name, category,bottom_sheet_title;
+    ProgressBar rankProgressLoader, categoryProgressLoader,groupProgressLoader;
     FloatingActionButton createNew;
     Integer candidate_id;
     showProgressbar showProgress;
     CandidateBackgroundApiTasks candidateBackgroundApiTasks;
+    CandidateCategoryBackgroundApiTasks candidateCategoryBackgroundApiTasks;
+    RankBackgroundApiTasks rankBackgroundApiTasks;
+    GroupBackgroundApiTasks groupBackgroundApiTasks;
+    public Candidate loggedInCandidate =  LoggedInUser.getInstance().getLoggedInCandidate();
+    Boolean ProfileOwner = false;
+    private Rank candidateRank;
+    private CandidateCategory candidateCategory;
+    private Group group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -47,32 +54,53 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         showProgress = new showProgressbar(this);
+
         candidateBackgroundApiTasks = CandidateBackgroundApiTasks.getInstance(this);
+        candidateCategoryBackgroundApiTasks = CandidateCategoryBackgroundApiTasks.getInstance(this);
+        rankBackgroundApiTasks = RankBackgroundApiTasks.getInstance(this);
 
         intent = getIntent();
+        candidate = intent.getParcelableExtra(CANDIDATE_EXTRA);
+        candidateRank = intent.getParcelableExtra(RANK_EXTRA);
+        candidateCategory = intent.getParcelableExtra(CATEGORY_EXTRA);
+        group = intent.getParcelableExtra(GroupActivity.GROUP_TAG);
+
+        candidate_id = candidate.getId();
+        ProfileOwner = loggedInCandidate.getId().equals(candidate_id);
+
+
         profile_name = (TextView)findViewById(R.id.profile_name);
-        assessor = (TextView)findViewById(R.id.assessor);
+
+        rankView = (TextView)findViewById(R.id.rank_view);
+        rankProgressLoader = (ProgressBar)findViewById(R.id.rank_progress);
+
         role = (TextView)findViewById(R.id.role_view);
         status = (TextView)findViewById(R.id.status_view);
         available = (TextView)findViewById(R.id.available_view);
-        country = (TextView)findViewById(R.id.country_view);
+        address = (TextView)findViewById(R.id.country_view);
+        country = (TextView)findViewById(R.id.country);
         state = (TextView)findViewById(R.id.state_view);
         city = (TextView)findViewById(R.id.city_view);
-        town = (TextView)findViewById(R.id.town_view);
         contact = (TextView)findViewById(R.id.contact_view);
         email = (TextView)findViewById(R.id.email_view);
         date_of_birth = (TextView)findViewById(R.id.dob_view);
+
         group_name = (TextView)findViewById(R.id.group_view);
+        groupProgressLoader = (ProgressBar)findViewById(R.id.group_progress);
+
         category = (TextView)findViewById(R.id.category_profile_view);
-        candidate = intent.getParcelableExtra(CANDIDATE_EXTRA);
-        candidate_id = candidate.getId();
+        categoryProgressLoader = (ProgressBar)findViewById(R.id.category_progress);
+
+
         view_projects = (Button)findViewById(R.id.view_projects);
+
         view_projects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showProjectsBottomSheet();
             }
         });
+
         view_skills = (Button)findViewById(R.id.view_skills);
         view_skills.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
         BottomSheetDialog skillsBottomSheetDialog = new BottomSheetDialog(this);
         RelativeLayout relativeLayout = (RelativeLayout)LayoutInflater.from(this).inflate(R.layout.bottomsheetlistview,null,false);
         skillsListView = (ListView) relativeLayout.findViewById(R.id.bottom_sheet_list_view);
+
         populateSkills();
 
         bottom_sheet_title = (TextView)relativeLayout.findViewById(R.id.bottom_sheet_title);
@@ -104,7 +133,6 @@ public class ProfileActivity extends AppCompatActivity {
                 showSkillsDialog();
             }
         });
-
         skillsBottomSheetDialog.setContentView(relativeLayout);
         skillsBottomSheetDialog.show();
 
@@ -185,22 +213,55 @@ public class ProfileActivity extends AppCompatActivity {
     private void populateViews() {
 
         profile_name.setText(candidate.getName());
-//        if(candidate.getCandidateAssessor()!= null){
-//            assessor.setText(candidate.getCandidateAssessor().getName());
-//        }
-
         role.setText(candidate.getRole());
         status.setText(candidate.getStatus());
         available.setText(candidate.getAvailable());
-        country.setText(candidate.getAddress());
+        address.setText(candidate.getAddress());
+        country.setText(candidate.getCountry_id());
+        state.setText(candidate.getState_id());
+        city.setText(candidate.getCity_id());
         contact.setText(candidate.getMobile_number());
         email.setText(candidate.getEmail());
         date_of_birth.setText(candidate.getDate_of_birth());
-        group_name.setText(GroupActivity.groupName);
-//        category.setText(candidate.getCategory());
+
+        if (!ProfileOwner){
+            status.setCompoundDrawables(null,null,null,null);
+            available.setCompoundDrawables(null,null,null,null);
+            address.setCompoundDrawables(null,null,null,null);
+            country.setCompoundDrawables(null,null,null,null);
+            state.setCompoundDrawables(null,null,null,null);
+            city.setCompoundDrawables(null,null,null,null);
+            contact.setCompoundDrawables(null,null,null,null);
+            email.setCompoundDrawables(null,null,null,null);
+            date_of_birth.setCompoundDrawables(null,null,null,null);
+            group_name.setCompoundDrawables(null,null,null,null);
+        }
+
+//        fetch the candidate's rank
+        if (candidateRank == null){
+            rankProgressLoader.setVisibility(View.VISIBLE);
+            new getCandidateRank().execute(candidate.getRank_id());
+        }else {
+            rankView.setText(candidateRank.getName());
+        }
+
+//        fetch the candidate's category
+        if (candidateCategory == null){
+            categoryProgressLoader.setVisibility(View.VISIBLE);
+            new getCandidateCategory().execute(candidate.getCategory_id());
+        }else {
+            category.setText(candidateCategory.getName());
+        }
+
+//        fetch the candidate's group
+        if (group == null){
+            groupProgressLoader.setVisibility(View.VISIBLE);
+            new getCandidateGroup().execute(candidate.getGroup());
+        }else {
+            group_name.setText(group.getGroup_name());
+        }
 
     }
-
 
 
 
@@ -268,7 +329,6 @@ public class ProfileActivity extends AppCompatActivity {
             Toast.makeText(ProfileActivity.this, candidateBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
             candidateProjectsAdapter.setCandidateProjectArrayList(candidateProjects);
             showProgress.dismiss();
-
         }
 
         @Override
@@ -290,5 +350,121 @@ public class ProfileActivity extends AppCompatActivity {
             return returnedProjects;
         }
     }
+
+
+    public class getCandidateCategory extends AsyncTask<Integer,Void,CandidateCategory>{
+
+        @Override
+        protected void onPostExecute(CandidateCategory returnedcategory) {
+
+            if (returnedcategory!=null){
+                candidateCategory = returnedcategory;
+                category.setText(candidateCategory.getName());
+            }else {
+                Toast.makeText(ProfileActivity.this, rankBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            categoryProgressLoader.setVisibility(View.GONE);
+
+        }
+
+        @Override
+        protected CandidateCategory doInBackground(Integer... integers) {
+
+            CandidateCategory returnedCandidateCategory;
+
+            synchronized (candidateBackgroundApiTasks){
+
+                candidateCategoryBackgroundApiTasks.getCategoryById(integers[0]);
+                try {
+                    candidateCategoryBackgroundApiTasks.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                returnedCandidateCategory = candidateCategoryBackgroundApiTasks.getCandidateCategory();
+            }
+
+            return returnedCandidateCategory;
+        }
+    }
+
+    public class getCandidateGroup extends AsyncTask<Integer,Void,Group>{
+
+        @Override
+        protected void onPostExecute(Group returnedgroup) {
+
+            if (returnedgroup!=null){
+                group = returnedgroup;
+                group_name.setText(group.getGroup_name());
+            }else {
+                Toast.makeText(ProfileActivity.this, groupBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            categoryProgressLoader.setVisibility(View.GONE);
+
+
+        }
+
+        @Override
+        protected Group doInBackground(Integer... integers) {
+            Group returnedGroup;
+
+            synchronized (groupBackgroundApiTasks){
+
+                groupBackgroundApiTasks.getGroupById(integers[0]);
+
+                try {
+                    groupBackgroundApiTasks.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                returnedGroup = groupBackgroundApiTasks.getGroup();
+
+            }
+
+            return returnedGroup;
+        }
+    }
+
+    public class getCandidateRank extends  AsyncTask<Integer, Void, Rank>{
+
+
+        @Override
+        protected void onPostExecute(Rank rank) {
+
+            if (rank!=null){
+                candidateRank = rank;
+                rankView.setText(rank.getName());
+            }else {
+                Toast.makeText(ProfileActivity.this, rankBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            rankProgressLoader.setVisibility(View.GONE);
+
+        }
+
+        @Override
+        protected Rank doInBackground(Integer... integers) {
+            Rank returnedRank;
+
+            synchronized (rankBackgroundApiTasks){
+
+                rankBackgroundApiTasks.getRankById(integers[0]);
+                try {
+                    rankBackgroundApiTasks.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                returnedRank = rankBackgroundApiTasks.getRank();
+
+            }
+
+            return returnedRank;
+
+        }
+    }
+
 
 }

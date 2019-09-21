@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class UserHomeActivity extends AppCompatActivity {
 
@@ -21,12 +23,18 @@ public class UserHomeActivity extends AppCompatActivity {
     Candidate thisCandidate;
     CardView ViewMyProfileCard,ViewMyRequestsCard, ViewCandidatesCard, ViewGroupDetailsCard, ViewIncomingRequestsCard, ViewManageQuestionsCard;
     final static String CANDIDATE_ROLE = "Candidate", ASSESSOR_ROLE= "Assessor", GROUP_ADMIN_ROLE = "Group Admin", ADMINISTRATOR_ROLE = "Administrator";
+    GroupBackgroundApiTasks groupBackgroundApiTasks;
+    Group candidateGroup;
+    showProgressbar showprogress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
 
+        showprogress = new showProgressbar(this);
+        showprogress.setMessage("Loading information....a moment");
+        groupBackgroundApiTasks = GroupBackgroundApiTasks.getInstance(this);
         ViewMyProfileCard = (CardView)findViewById(R.id.my_profile_view);
         ViewMyRequestsCard = (CardView)findViewById(R.id.my_requests_view);
         ViewCandidatesCard = (CardView)findViewById(R.id.assessor_candidates_view);
@@ -35,7 +43,8 @@ public class UserHomeActivity extends AppCompatActivity {
         ViewManageQuestionsCard = (CardView)findViewById(R.id.group_admin_manage_group_questions);
 
         thisCandidate = LoggedInUser.getInstance().getLoggedInCandidate();
-        ManageDisplay();
+
+        new getCandidateGroup().execute(thisCandidate.getId());
 
     }
 
@@ -74,6 +83,7 @@ public class UserHomeActivity extends AppCompatActivity {
     public void ViewMyProfile(View view){
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra(ProfileActivity.CANDIDATE_EXTRA,thisCandidate);
+        intent.putExtra(GroupActivity.GROUP_TAG,candidateGroup);
         startActivity(intent);
     }
 
@@ -91,7 +101,7 @@ public class UserHomeActivity extends AppCompatActivity {
     public void ViewGroupDetails(View view){
 
         Intent intent = new Intent(this,GroupSearchActivity.class);
-        intent.putExtra(GroupActivity.GROUP_TAG,thisCandidate.getGroup());
+        intent.putExtra(GroupActivity.GROUP_TAG,candidateGroup);
         startActivity(intent);
 
     }
@@ -198,6 +208,41 @@ public class UserHomeActivity extends AppCompatActivity {
 
     }
 
+
+    public class getCandidateGroup extends AsyncTask<Integer,Void,Group>{
+
+        @Override
+        protected void onPostExecute(Group group) {
+
+            if (group!=null){
+                candidateGroup = group;
+                ManageDisplay();
+            }else {
+                Toast.makeText(UserHomeActivity.this, "Failed to load user information, please consider logging in again", Toast.LENGTH_SHORT).show();
+            }
+
+            showprogress.dismiss();
+
+        }
+
+        @Override
+        protected Group doInBackground(Integer... integers) {
+            Group returnedGroup;
+
+            synchronized (groupBackgroundApiTasks){
+
+                groupBackgroundApiTasks.getGroupById(integers[0]);
+                try {
+                    groupBackgroundApiTasks.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                returnedGroup = groupBackgroundApiTasks.getGroup();
+            }
+
+            return returnedGroup;
+        }
+    }
 
 
 }

@@ -30,6 +30,7 @@ public class GroupSearchActivity extends AppCompatActivity {
     GroupBackgroundApiTasks groupBackgroundApiTasks;
     public static GroupSearchActivity.searchObject activitySearchObject;
     final static int LIMIT = 20;
+    private Rank rank;
 
 
     @Override
@@ -52,7 +53,7 @@ public class GroupSearchActivity extends AppCompatActivity {
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Rank rank = groupsList.findRankByName(rankSpinner.getSelectedItem().toString());
+                rank = groupsList.findRankByName(rankSpinner.getSelectedItem().toString());
                 String status = statusSpinner.getSelectedItem().toString();
                 activitySearchObject = new searchObject(rank.getId(),group.getId(),0,LIMIT,status);
                 initiateSearch(activitySearchObject);
@@ -161,6 +162,7 @@ public class GroupSearchActivity extends AppCompatActivity {
         Intent groupActivityIntent = new Intent(this,GroupActivity.class);
         groupActivityIntent.putExtra(GroupActivity.SEARCH_LIST,candidateArrayList);
         groupActivityIntent.putExtra(GroupActivity.GROUP_TAG, group);
+        groupActivityIntent.putExtra(ProfileActivity.RANK_EXTRA,rank);
         startActivity(groupActivityIntent);
 
     }

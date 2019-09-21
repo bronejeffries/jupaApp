@@ -19,9 +19,9 @@ import java.util.ArrayList;
 
 public class GroupActivity extends AppCompatActivity {
 
-    public static final String GROUP_TAG = "group" ;
-    public static final String SEARCH_LIST ="candidates" ;
+    public static final String GROUP_TAG = "group", SEARCH_LIST ="candidates";
     Group group;
+    Rank rank;
     public static String groupName;
     final static String MASON_CATEGORY = "mason", PROFESSIONAL_CATEGORY = "professional";
     RecyclerView masonry_recycler_view;
@@ -43,14 +43,13 @@ public class GroupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group);
 
 
-
         showprogress = new showProgressbar(this);
         progressBar = (ProgressBar)findViewById(R.id.search_progress_bar);
 
         Intent intent = getIntent();
         group = (Group)intent.getParcelableExtra(GROUP_TAG);
         GroupCandidates = intent.getParcelableArrayListExtra(SEARCH_LIST);
-
+        rank = intent.getParcelableExtra(ProfileActivity.RANK_EXTRA);
         groupName = group.getGroup_name();
 
         groupBackgroundApiTasks = GroupBackgroundApiTasks.getInstance(GroupActivity.this);
@@ -77,11 +76,9 @@ public class GroupActivity extends AppCompatActivity {
     private void fetchGroupCandidates() {
 
         progressBar.setVisibility(View.VISIBLE);
-
         int last = masonCandidatesAdapter.getLastItemId();
         searchObject = GroupSearchActivity.activitySearchObject;
         searchObject.setLast(last);
-
         new getCandidates().execute(searchObject);
 
     }
@@ -90,6 +87,8 @@ public class GroupActivity extends AppCompatActivity {
 
     private void populateMasonCandidates(ArrayList<Candidate> masons) {
         masonCandidatesAdapter = new CandidatesAdapter(this,masons);
+        masonCandidatesAdapter.setRank(rank);
+        masonCandidatesAdapter.setGroup(group);
         LinearLayoutManager linearLayout = new LinearLayoutManager(this);
         linearLayout.setReverseLayout(true);
         masonry_recycler_view.setLayoutManager(linearLayout);

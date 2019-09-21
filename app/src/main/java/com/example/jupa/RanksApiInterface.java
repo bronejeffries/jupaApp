@@ -6,6 +6,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface RanksApiInterface {
 
@@ -16,6 +17,9 @@ public interface RanksApiInterface {
 
     @GET("fetch_all_ranks.php")
     Call<RanksLIstApiData> getAllRanks();
+
+    @GET("get_rank_byID.php")
+    Call<RankApiData> getRankByID(@Query("rank_id") int rank_id);
 
 
 

@@ -151,6 +151,46 @@ public class GroupBackgroundApiTasks {
 
     }
 
+    public void getGroupById(Integer group_id){
+
+        Call<GroupApiData> call = groupApi_interface.getGroupById(group_id);
+        call.enqueue(new Callback<GroupApiData>() {
+            @Override
+            public void onResponse(Call<GroupApiData> call, Response<GroupApiData> response) {
+
+                synchronized (GroupBackgroundApiTasks.this){
+
+                    Log.e(TAG, "onResponse: "+response.body().getSuccess());
+
+                    if (response.body().getSuccess().equals(SUCCESS)){
+                        setGroup(response.body().getGroup());
+                    }else {
+                        setGroup(null);
+                    }
+                    setMessage(response.body().getMessage());
+                    GroupBackgroundApiTasks.this.notifyAll();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GroupApiData> cgetGroupByIdall, Throwable t) {
+
+                synchronized (GroupBackgroundApiTasks.this){
+
+                    setMessage(t.getMessage());
+                    setGroup(null);
+                    GroupBackgroundApiTasks.this.notifyAll();
+                    t.printStackTrace();
+                }
+
+            }
+
+        });
+
+
+    }
+
 
     public void fetchGroupCandidates(int group_id){
 
