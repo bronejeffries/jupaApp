@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CandidateProjectDetailViewActivity">
+    tools:context=".Activity.CandidateProjectDetailViewActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="350dip">
             <TextView
+                android:id="@+id/project_title_input"
                 android:textColor="@color/colorPrimary"
                 android:padding="6dip"
                 android:layout_alignParentBottom="true"
@@ -259,7 +260,7 @@
 
                 <Button
                     android:background="@color/colorPrimary"
-                    android:text="@string/assess"
+                    android:text="@string/view_assessments"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textAllCaps="false"

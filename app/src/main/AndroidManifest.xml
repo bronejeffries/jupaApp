@@ -11,28 +11,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CandidateProjectDetailViewActivity"></activity>
-        <activity android:name=".GroupSearchActivity" />
-        <activity android:name=".ProjectAssessmentsActivity" />
-        <activity android:name=".AssessementActivity" />
-        <activity android:name=".GroupQuestionsActivity" />
-        <activity android:name=".CandidateProjectActivity" />
-        <activity android:name=".CandidatesDisplayActivity" />
-        <activity android:name=".UserHomeActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".GroupActivity" />
-        <activity android:name=".AdminHomeActivity" />
-        <activity android:name=".SplashActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Activity.CandidateProjectDetailViewActivity"></activity>
+        <activity android:name=".Activity.GroupSearchActivity" />
+        <activity android:name=".Activity.ProjectAssessmentsActivity" />
+        <activity android:name=".Activity.AssessementActivity" />
+        <activity android:name=".Activity.GroupQuestionsActivity" />
+        <activity android:name=".Activity.CandidateProjectActivity" />
+        <activity android:name=".Activity.CandidatesDisplayActivity" />
+        <activity android:name=".Activity.UserHomeActivity" />
+        <activity android:name=".Activity.ProfileActivity" />
+        <activity android:name=".Activity.GroupActivity" />
+        <activity android:name=".Activity.AdminHomeActivity" />
+        <activity android:name=".Activity.SplashActivity" />
+        <activity android:name=".Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".GroupsActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Activity.RegistrationActivity" />
+        <activity android:name=".Activity.GroupsActivity" />
+        <activity android:name=".Activity.MainActivity" />
     </application>
 
 </manifest>
