@@ -478,18 +478,28 @@
                 android:textColor="@color/white"
                 android:text="@string/projects"
                 android:textAllCaps="false"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="26dip" />
 
             <Button
                 android:id="@+id/view_skills"
                 android:layout_margin="8dip"
-                android:background="@color/colorPrimary"
+                android:background="@color/design_default_color_primary"
                 android:textColor="@color/white"
                 android:text="@string/skills"
                 android:textAllCaps="false"
-                android:textSize="22sp"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="26dip" />
+            <Button
+                android:id="@+id/view_specialities"
+                android:layout_margin="8dip"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:text="@string/specialities"
+                android:textAllCaps="false"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="26dip" />
 

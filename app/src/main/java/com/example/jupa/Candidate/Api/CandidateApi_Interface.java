@@ -1,6 +1,8 @@
 package com.example.jupa.Candidate.Api;
 
-import com.example.jupa.Assessment.AssessmentGroup.AssessmentGroupApiData;
+import com.example.jupa.Assessment.Api.AssessmentApiData;
+import com.example.jupa.Assessment.Api.AssessmentListApiData;
+import com.example.jupa.Assessment.AssessmentGroup.Api.AssessmentGroupApiData;
 import com.example.jupa.Assessment.AssessmentGroup.Api.AssessmentGroupListApiData;
 import com.example.jupa.Candidate.Project.CandidateProjectApiData;
 import com.example.jupa.Candidate.Project.CandidateProjectListApiData;
@@ -47,16 +49,23 @@ public interface CandidateApi_Interface {
                                                       @Field("descrp") String descrp, @Field("project_status") Integer project_status);
 
 
-    @GET("/")
+    @GET("get_assessment_groups_byProject.php")
     Call<AssessmentGroupListApiData> getAllProjectAssessmentGroups(@Query("project_id") int project_id);
 
     @GET("/")
     Call<AssessmentGroupApiData> getAssessmentGroupDetails(@Query("assessment_group_id") int assessment_group_id);
 
     @FormUrlEncoded
-    @POST("/")
+    @POST("attach_assessment_group_toproject.php")
     Call<AssessmentGroupApiData> addNewAssessmentGroupToProject(@Field("assessment_group_name") String assessment_group_name, @Field("project_id") int project_id, @Field("assessor_id") int assessor_id );
 
+    @FormUrlEncoded
+    @POST("/")
+    Call<AssessmentApiData> makeAssessment(@Field("assessment_") String assessment_group_name, @Field("project_id") int project_id, @Field("assessor_id") int assessor_id );
+
+
+    @GET("/")
+    Call<AssessmentListApiData> getAssessmentsInAssessmentGroup(@Query("assessment_group_id") int assessment_group_id);
 
 
 

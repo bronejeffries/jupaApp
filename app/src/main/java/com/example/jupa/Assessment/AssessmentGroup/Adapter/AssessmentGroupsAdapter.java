@@ -1,6 +1,7 @@
 package com.example.jupa.Assessment.AssessmentGroup.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.jupa.Activity.AssessementActivity;
 import com.example.jupa.Assessment.AssessmentGroup.AssessmentGroup;
 import com.example.jupa.R;
 
@@ -72,21 +74,22 @@ public class AssessmentGroupsAdapter extends RecyclerView.Adapter {
 
         if (getItemCount()>0){
 
-            AssessmentGroup assessmentGroup = assessmentGroupArrayList.get(position);
+            final AssessmentGroup assessmentGroup = assessmentGroupArrayList.get(position);
             ((AssessmentGroupViewHolder)holder).textView.setText(assessmentGroup.getName());
             ((AssessmentGroupViewHolder)holder).assess.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-
-
+                    makeAssessment(assessmentGroup);
                 }
             });
-
         }
 
+    }
 
-
+    public void makeAssessment(AssessmentGroup assessmentGroup){
+        Intent assessmentIntent = new Intent(context, AssessementActivity.class);
+        assessmentIntent.putExtra(AssessementActivity.ASSESSMENT_GROUP_EXTRA, assessmentGroup);
+        context.startActivity(assessmentIntent);
 
     }
 
@@ -99,16 +102,14 @@ public class AssessmentGroupsAdapter extends RecyclerView.Adapter {
 
 
         RelativeLayout holderView;
-        TextView textView, assess,view;
-
+        TextView textView, assess;
 
         public AssessmentGroupViewHolder(View view) {
 
             super(view);
             holderView = (RelativeLayout)view;
             textView = (TextView)view.findViewById(R.id.assessment_name);
-            assess = (TextView)view.findViewById(R.id.assessment_continue);
-            view = (TextView)view.findViewById(R.id.assessment_view);
+            assess = (TextView)view.findViewById(R.id.assessment_view);
 
         }
     }

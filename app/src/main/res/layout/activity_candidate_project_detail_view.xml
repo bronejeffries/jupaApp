@@ -216,39 +216,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="18dp"
-                android:layout_marginBottom="2dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/attach_image"
-                    android:layout_gravity="center"
-                    android:background="@color/colorPrimary"
-                    android:clickable="false"
-                    android:text="@string/attach_image"
-                    android:textSize="16sp"
-                    android:padding="3dp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold|normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:layout_gravity="center"
-                    android:src="@drawable/construction_icon_png_5"
-                    android:layout_margin="12dp"
-                    android:inputType="text"
-                    android:textSize="21sp"
-                    android:textStyle="normal"
-                    android:id="@+id/project_image_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:gravity="end|center_vertical"
                 android:layout_marginTop="13dp"
                 android:layout_marginBottom="2dp"

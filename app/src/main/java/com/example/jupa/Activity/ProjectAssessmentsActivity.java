@@ -61,9 +61,7 @@ public class ProjectAssessmentsActivity extends AppCompatActivity {
             add_new_assessment_group.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     showStartNewAssessmentBottomSheet();
-
                 }
             });
 
@@ -79,12 +77,8 @@ public class ProjectAssessmentsActivity extends AppCompatActivity {
         showProgress = new showProgressbar(this);
         showProgress.setMessage("Loading Previous Assessments..");
         showProgress.show();
+
         new getAssessmentGroups().execute(candidateProject.getProject_id());
-
-
-
-
-
     }
 
     private void showStartNewAssessmentBottomSheet() {
@@ -105,7 +99,7 @@ public class ProjectAssessmentsActivity extends AppCompatActivity {
         });
 
         bottomSheetDialog.setContentView(linearLayout);
-
+        bottomSheetDialog.show();
     }
 
     private void saveAssessmentGroup(AssessmentGroup assessorGroup) {
@@ -115,7 +109,6 @@ public class ProjectAssessmentsActivity extends AppCompatActivity {
         new AddNewAssessmentGroup().execute(assessorGroup);
 
     }
-
 
 
     public class getAssessmentGroups extends AsyncTask<Integer,Void,ArrayList<AssessmentGroup>>{
@@ -157,6 +150,7 @@ public class ProjectAssessmentsActivity extends AppCompatActivity {
         }
     }
 
+
     public class AddNewAssessmentGroup extends AsyncTask<AssessmentGroup,Void,AssessmentGroup>{
 
         @Override
@@ -167,7 +161,6 @@ public class ProjectAssessmentsActivity extends AppCompatActivity {
                 assessmentGroupsAdapter.addItem(assessmentGroup);
 
             }
-
             Toast.makeText(ProjectAssessmentsActivity.this, candidateBackgroundApiTasks.getMessage(), Toast.LENGTH_LONG).show();
             showProgress.dismiss();
 

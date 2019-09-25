@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="6dip" >
 
     <TextView
+        android:drawableTint="@color/white"
+        android:drawableEnd="@android:drawable/ic_menu_more"
+        android:drawableRight="@android:drawable/ic_menu_more"
         android:text="@string/category"
         android:textSize="21sp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:textColor="@color/white"
         android:id="@+id/categoryView"
         android:gravity="center"
         android:padding="12dip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/category_progressLoader"
+        android:layout_margin="6dip"
+        android:layout_below="@+id/categoryView"
+        android:layout_width="wrap_content"
+        android:layout_height="24dip" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:layout_marginTop="10dip"
+        android:id="@+id/category_questions_recycler_view"
+        android:layout_below="@+id/categoryView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
 </RelativeLayout>

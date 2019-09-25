@@ -76,7 +76,6 @@ public class CandidateCategoryBackgroundApiTasks {
     }
 
 
-
     public void getCategoryById(Integer category_id){
 
         Call<CandidateCategoryApiData> call = candidateCategoryApiInterface.getCandidateCategory(category_id);
@@ -87,8 +86,8 @@ public class CandidateCategoryBackgroundApiTasks {
                 synchronized (CandidateCategoryBackgroundApiTasks.this){
 
 //                    Log.e(TAG, "onResponse categories: "+ (response.body() != null ? response.body().getCandidateCategoryArrayList().toString() : null));
-                    Log.e(TAG, "onResponse: "+response.body().getSuccess().equals(SUCCESS));
-                    if (response.body().getSuccess().equals(SUCCESS)){
+                    Log.e(TAG, "onResponse: CandidateCategory "+response.body().getSuccess());
+                    if (response.body().getSuccess().equals(String.valueOf(SUCCESS))){
 
                         setCandidateCategory(response.body().getCandidateCategory());
 

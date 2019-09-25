@@ -21,5 +21,6 @@ public interface RanksApiInterface {
     Call<RankApiData> getRankByID(@Query("rank_id") int rank_id);
 
 
+//    http://umrac.mycoba.net/api/get_rank_byID.php?rank_id=1
 
 }

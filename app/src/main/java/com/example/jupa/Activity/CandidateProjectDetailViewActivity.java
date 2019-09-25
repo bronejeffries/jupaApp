@@ -22,14 +22,12 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
     Button assess_btn;
     RelativeLayout photo_View;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_candidate_project_detail_view);
         intent = getIntent();
         candidateProject = intent.getParcelableExtra(CANDIDATE_PROJECT);
-
         location = (TextView)findViewById(R.id.project_location_input);
         date_of_completion = (TextView)findViewById(R.id.project_date_completion_input);
         client_names = (TextView)findViewById(R.id.project_client_name_input);
@@ -40,11 +38,7 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
         assess_btn = (Button)findViewById(R.id.assess_project_btn);
         title = (TextView)findViewById(R.id.project_title_input);
         photo_View = (RelativeLayout)findViewById(R.id.header_layout);
-
         populateViews();
-
-
-
     }
 
     private void populateViews() {
@@ -61,15 +55,11 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
         assess_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 showAssessments(candidateProject);
-
             }
         });
 
     }
-
-
 
     private void showAssessments(CandidateProject candidateProject) {
 

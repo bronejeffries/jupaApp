@@ -27,7 +27,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:src="@android:drawable/ic_input_add"
-        app:fabCustomSize="80dp"
         android:id="@+id/bottom_sheet_fab"
 />
 

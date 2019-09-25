@@ -108,6 +108,7 @@ public class CandidatesAdapter extends RecyclerView.Adapter {
         intent.putExtra(GroupActivity.GROUP_TAG,group);
         context.startActivity(intent);
 
+
     }
 
     

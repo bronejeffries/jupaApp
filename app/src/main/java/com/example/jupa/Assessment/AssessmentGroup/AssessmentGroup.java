@@ -11,10 +11,10 @@ public class AssessmentGroup implements Parcelable {
     @SerializedName("project_id")
     Integer project_id;
 
-    @SerializedName("name")
+    @SerializedName("assessment_group_name")
     String name;
 
-    @SerializedName("id")
+    @SerializedName("assessment_group_id")
     int id;
 
     @SerializedName("assessor_id")

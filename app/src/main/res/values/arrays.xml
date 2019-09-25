@@ -17,4 +17,10 @@
         <item>VERIFIED</item>
     </string-array>
 
+    <string-array name="grades_array">
+        <item>Passed</item>
+        <item>Average</item>
+        <item>Has No Knowledge</item>
+    </string-array>
+
 </resources>

@@ -92,4 +92,7 @@
     <string name="search_by_registration_number">Search by registration number</string>
     <string name="rank">Rank</string>
     <string name="view_assessments">View Assessments</string>
+    <string name="open">Open</string>
+    <string name="archive">Archive</string>
+    <string name="specialities">Specialities</string>
 </resources>

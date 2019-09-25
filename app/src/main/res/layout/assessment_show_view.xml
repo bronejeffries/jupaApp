@@ -4,8 +4,8 @@
     android:layout_marginTop="15dip">
 
     <LinearLayout
-        android:paddingTop="12dip"
-        android:paddingBottom="12dip"
+        android:paddingTop="2dip"
+        android:paddingBottom="2dip"
         android:layout_alignParentTop="true"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -14,47 +14,24 @@
         <TextView
             android:layout_gravity="center_vertical"
             android:id="@+id/assessment_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="0.7"
             android:layout_height="wrap_content"
             android:text="@string/assessment_name"
-            android:textSize="21sp"
-            android:padding="12dip" />
+            android:textSize="18sp"
+            android:padding="5dip" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_gravity="end|center_vertical"
-                android:drawableRight="@android:drawable/ic_menu_edit"
-                android:drawableEnd="@android:drawable/ic_menu_edit"
-                android:drawableTint="@color/colorAccent"
-                android:id="@+id/assessment_continue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Continue"
-                android:textStyle="normal|bold"
-                android:textSize="21sp"
-                android:padding="5dp" />
-
-            <TextView
+         <TextView
                 android:layout_gravity="end|center_vertical"
                 android:drawableRight="@android:drawable/ic_menu_more"
                 android:drawableEnd="@android:drawable/ic_menu_more"
                 android:drawableTint="@color/colorPrimary"
                 android:id="@+id/assessment_view"
-                android:layout_width="wrap_content"
+                android:layout_width="0dip"
+                android:layout_weight="0.3"
                 android:layout_height="wrap_content"
-                android:text="View"
                 android:textStyle="normal|bold"
-                android:textSize="21sp"
-                android:padding="5dp" />
-
-
-
-        </LinearLayout>
-
+                android:textSize="18sp" />
 
     </LinearLayout>
 

@@ -6,7 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.jupa.Assessment.AssessmentGroup.AssessmentGroup;
-import com.example.jupa.Assessment.AssessmentGroup.AssessmentGroupApiData;
+import com.example.jupa.Assessment.AssessmentGroup.Api.AssessmentGroupApiData;
 import com.example.jupa.Assessment.AssessmentGroup.Api.AssessmentGroupListApiData;
 import com.example.jupa.Candidate.Candidate;
 import com.example.jupa.Candidate.Project.CandidateProject;
@@ -339,6 +339,10 @@ public class CandidateBackgroundApiTasks {
         });
 
     }
+
+
+
+
 
     public Context getContext() {
         return context;

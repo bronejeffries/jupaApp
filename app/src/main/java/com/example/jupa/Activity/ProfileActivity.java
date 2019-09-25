@@ -46,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
     public static CandidateProjectsAdapter candidateProjectsAdapter;
     Button view_projects,view_skills;
     Intent intent;
-    Candidate candidate;
+    public static Candidate candidate;
     SkillsAdapter skillsAdapter;
     TextView profile_name, rankView, role, status, available, address ,country, state, city, contact, email, date_of_birth, group_name, category,bottom_sheet_title;
     ProgressBar rankProgressLoader, categoryProgressLoader,groupProgressLoader;
@@ -73,6 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
         candidateBackgroundApiTasks = CandidateBackgroundApiTasks.getInstance(this);
         candidateCategoryBackgroundApiTasks = CandidateCategoryBackgroundApiTasks.getInstance(this);
         rankBackgroundApiTasks = RankBackgroundApiTasks.getInstance(this);
+        groupBackgroundApiTasks = GroupBackgroundApiTasks.getInstance(this);
 
         intent = getIntent();
         candidate = intent.getParcelableExtra(CANDIDATE_EXTRA);
@@ -81,6 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
         group = intent.getParcelableExtra(GroupActivity.GROUP_TAG);
 
         candidate_id = candidate.getId();
+
         ProfileOwner = loggedInCandidate.getId().equals(candidate_id);
 
 
@@ -232,10 +234,10 @@ public class ProfileActivity extends AppCompatActivity {
         status.setText(candidate.getStatus());
         available.setText(candidate.getAvailable());
         address.setText(candidate.getAddress());
-        country.setText(candidate.getCountry_id());
-        state.setText(candidate.getState_id());
-        city.setText(candidate.getCity_id());
-        contact.setText(candidate.getMobile_number());
+        country.setText(String.valueOf(candidate.getCountry_id()));
+        state.setText(String.valueOf(candidate.getState_id()));
+        city.setText(String.valueOf(candidate.getCity_id()));
+        contact.setText(String.valueOf(candidate.getMobile_number()));
         email.setText(candidate.getEmail());
         date_of_birth.setText(candidate.getDate_of_birth());
 
@@ -250,17 +252,18 @@ public class ProfileActivity extends AppCompatActivity {
             email.setCompoundDrawables(null,null,null,null);
             date_of_birth.setCompoundDrawables(null,null,null,null);
             group_name.setCompoundDrawables(null,null,null,null);
+            category.setCompoundDrawables(null,null,null,null);
         }
 
-//        fetch the candidate's rank
+////        fetch the candidate's rank
         if (candidateRank == null){
             rankProgressLoader.setVisibility(View.VISIBLE);
             new getCandidateRank().execute(candidate.getRank_id());
         }else {
             rankView.setText(candidateRank.getName());
         }
-
-//        fetch the candidate's category
+//
+////        fetch the candidate's category
         if (candidateCategory == null){
             categoryProgressLoader.setVisibility(View.VISIBLE);
             new getCandidateCategory().execute(candidate.getCategory_id());
@@ -388,7 +391,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             CandidateCategory returnedCandidateCategory;
 
-            synchronized (candidateBackgroundApiTasks){
+            synchronized (candidateCategoryBackgroundApiTasks){
 
                 candidateCategoryBackgroundApiTasks.getCategoryById(integers[0]);
                 try {
@@ -414,9 +417,7 @@ public class ProfileActivity extends AppCompatActivity {
             }else {
                 Toast.makeText(ProfileActivity.this, groupBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
             }
-
-            categoryProgressLoader.setVisibility(View.GONE);
-
+            groupProgressLoader.setVisibility(View.GONE);
 
         }
 
