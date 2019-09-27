@@ -95,4 +95,16 @@
     <string name="open">Open</string>
     <string name="archive">Archive</string>
     <string name="specialities">Specialities</string>
+    <string name="date_available">Date Available</string>
+    <string name="courses_offered">Courses Offered</string>
+    <string name="principals">Principals</string>
+    <string name="view_assessors">View Assessors</string>
+    <string name="view_results">View Results</string>
+    <string name="institution_name">Institution Name</string>
+    <string name="center_number">Center Number</string>
+    <string name="contact_person">Contact Person</string>
+    <string name="telephone_number">Telephone Number</string>
+    <string name="about">About</string>
+    <string name="about_the_institution">Say Something About the institution</string>
+    <string name="attach_badge">Attach Badge</string>
 </resources>

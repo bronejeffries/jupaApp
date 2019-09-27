@@ -17,8 +17,9 @@ public class QuestionCategory {
     @SerializedName("status")
     int status;
 
-    public QuestionCategory(String name) {
+    public QuestionCategory(String name, int group_id) {
         this.name = name;
+        this.group_id = group_id;
     }
 
     public String getName() {

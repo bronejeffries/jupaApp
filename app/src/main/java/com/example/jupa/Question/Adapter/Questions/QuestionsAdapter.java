@@ -1,10 +1,10 @@
 package com.example.jupa.Question.Adapter.Questions;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -14,12 +14,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.jupa.Activity.AssessementActivity;
+import com.example.jupa.Activity.AssessmentActivity;
+import com.example.jupa.Activity.UserHomeActivity;
 import com.example.jupa.Assessment.Assessment;
 import com.example.jupa.Question.Question;
 import com.example.jupa.R;
 
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
+import static com.example.jupa.Activity.AssessmentActivity.archivedAssessment;
 
 public class QuestionsAdapter extends RecyclerView.Adapter {
 
@@ -31,7 +35,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
         this.questionArrayList = questionArrayList;
         this.context = context;
         this.assessment = assessment;
-
     }
 
     @NonNull
@@ -48,11 +51,14 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
 
         if (getItemCount()>0) {
+
             final Question question = questionArrayList.get(position);
+
             ((questionViewHolder) holder).questionView.setText(question.getTitle());
 
-            if (this.assessment){
+            if (this.assessment && UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.ASSESSOR_ROLE)){
                 ((questionViewHolder)holder).open_button.setVisibility(View.VISIBLE);
+
                 ((questionViewHolder)holder).open_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -66,6 +72,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
                             ((questionViewHolder)holder).open_button.setBackgroundColor(context.getResources().getColor(R.color.design_default_color_primary_dark));
 
                         }else{
+
+
                             ((questionViewHolder)holder).gradeLayout.setVisibility(View.GONE);
                             ((questionViewHolder)holder).other_remarks_layout.setVisibility(View.GONE);
                             ((questionViewHolder)holder).archive_assessment.setVisibility(View.GONE);
@@ -76,24 +84,43 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
                         }
                     }
                 });
-            }
 
-            ((questionViewHolder)holder).archive_assessment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                if (AssessmentActivity.assessmentLinkedHashMap.containsKey(question.getQuestion_id())){
+                    Assessment assessmentRetrieved = AssessmentActivity.assessmentLinkedHashMap.get(question.getQuestion_id());
+                    ((questionViewHolder)holder).otherRemarks.setText(assessmentRetrieved.getOther_remarks());
+                    ((questionViewHolder)holder).archive_assessment.setText("Assessed");
+                    ((questionViewHolder)holder).archive_assessment.setClickable(false);
+                    Log.e(TAG, "onBindViewHolder: "+AssessmentActivity.gradesMap.get(assessmentRetrieved.getGrade()));
+                    Integer gradeSelectionIndex = AssessmentActivity.gradesMap.get(assessmentRetrieved.getGrade());
 
-                    String grade = ((questionViewHolder)holder).grade_spinner.getSelectedItem().toString();
-                    String other_remarks = ((questionViewHolder)holder).otherRemarks.getText().toString();
-                    int assessment_group_id = AssessementActivity.assessmentGroup.getId();
-                    int question_id = question.getQuestion_id();
+                    if (gradeSelectionIndex!=null){
 
-                    Assessment assessment = new Assessment(assessment_group_id,question_id,grade,other_remarks);
-                    Toast.makeText(context, "Assessment archived", Toast.LENGTH_SHORT).show();
-                    ((questionViewHolder)holder).archive_assessment.setText("Archived");
-                    ((questionViewHolder)holder).archive_assessment.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+                        ((questionViewHolder)holder).grade_spinner.setSelection(gradeSelectionIndex);
+
+                    }
 
                 }
-            });
+
+                ((questionViewHolder)holder).archive_assessment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        String grade = ((questionViewHolder)holder).grade_spinner.getSelectedItem().toString();
+                        String other_remarks = ((questionViewHolder)holder).otherRemarks.getText().toString();
+                        int assessment_group_id = AssessmentActivity.assessmentGroup.getId();
+                        int question_id = question.getQuestion_id();
+
+                        Assessment assessment = new Assessment(assessment_group_id,question_id,grade,other_remarks, AssessmentActivity.assessedCandidate.getId());
+                        archivedAssessment.add(assessment);
+                        Toast.makeText(context, "Assessment archived "+grade, Toast.LENGTH_SHORT).show();
+                        ((questionViewHolder)holder).archive_assessment.setText("Archived");
+                        ((questionViewHolder)holder).archive_assessment.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+
+                    }
+                });
+
+            }
+
 
         }
 

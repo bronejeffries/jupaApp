@@ -60,11 +60,11 @@ public interface CandidateApi_Interface {
     Call<AssessmentGroupApiData> addNewAssessmentGroupToProject(@Field("assessment_group_name") String assessment_group_name, @Field("project_id") int project_id, @Field("assessor_id") int assessor_id );
 
     @FormUrlEncoded
-    @POST("/")
-    Call<AssessmentApiData> makeAssessment(@Field("assessment_") String assessment_group_name, @Field("project_id") int project_id, @Field("assessor_id") int assessor_id );
+    @POST("add_assessment_results.php")
+    Call<AssessmentApiData> makeAssessment(@Field("assessment_group_id") int assessment_group_id, @Field("question_id") int question_id, @Field("candidate_id") int candidate_id , @Field("grade") String grade, @Field("other_remarks") String other_remarks);
 
 
-    @GET("/")
+    @GET("get_assessment_result_bygroup.php")
     Call<AssessmentListApiData> getAssessmentsInAssessmentGroup(@Query("assessment_group_id") int assessment_group_id);
 
 

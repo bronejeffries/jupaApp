@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
     Intent intent;
     public static Candidate candidate;
     SkillsAdapter skillsAdapter;
-    TextView profile_name, rankView, role, status, available, address ,country, state, city, contact, email, date_of_birth, group_name, category,bottom_sheet_title;
+    TextView profile_name, rankView, role, status, available, date_available ,address ,country, state, city, contact, email, date_of_birth, group_name, category,bottom_sheet_title;
     ProgressBar rankProgressLoader, categoryProgressLoader,groupProgressLoader;
     FloatingActionButton createNew;
     Integer candidate_id;
@@ -58,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
     RankBackgroundApiTasks rankBackgroundApiTasks;
     GroupBackgroundApiTasks groupBackgroundApiTasks;
     public Candidate loggedInCandidate =  LoggedInUser.getInstance().getLoggedInCandidate();
-    Boolean ProfileOwner = false;
+    Boolean ProfileOwner = false, groupAdmin = false;
     private Rank candidateRank;
     private CandidateCategory candidateCategory;
     private Group group;
@@ -94,6 +94,7 @@ public class ProfileActivity extends AppCompatActivity {
         role = (TextView)findViewById(R.id.role_view);
         status = (TextView)findViewById(R.id.status_view);
         available = (TextView)findViewById(R.id.available_view);
+        date_available = (TextView)findViewById(R.id.available_date_view);
         address = (TextView)findViewById(R.id.country_view);
         country = (TextView)findViewById(R.id.country);
         state = (TextView)findViewById(R.id.state_view);
@@ -233,6 +234,7 @@ public class ProfileActivity extends AppCompatActivity {
         role.setText(candidate.getRole());
         status.setText(candidate.getStatus());
         available.setText(candidate.getAvailable());
+        date_available.setText(candidate.getDate_available());
         address.setText(candidate.getAddress());
         country.setText(String.valueOf(candidate.getCountry_id()));
         state.setText(String.valueOf(candidate.getState_id()));
@@ -241,8 +243,17 @@ public class ProfileActivity extends AppCompatActivity {
         email.setText(candidate.getEmail());
         date_of_birth.setText(candidate.getDate_of_birth());
 
-        if (!ProfileOwner){
+        if (!UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.GROUP_ADMIN_ROLE)){
+
             status.setCompoundDrawables(null,null,null,null);
+
+        }else{
+
+//  TODO: attach status click listener
+
+        }
+
+        if (!ProfileOwner){
             available.setCompoundDrawables(null,null,null,null);
             address.setCompoundDrawables(null,null,null,null);
             country.setCompoundDrawables(null,null,null,null);
@@ -253,6 +264,7 @@ public class ProfileActivity extends AppCompatActivity {
             date_of_birth.setCompoundDrawables(null,null,null,null);
             group_name.setCompoundDrawables(null,null,null,null);
             category.setCompoundDrawables(null,null,null,null);
+            date_available.setCompoundDrawables(null,null,null,null);
         }
 
 ////        fetch the candidate's rank
@@ -305,9 +317,10 @@ public class ProfileActivity extends AppCompatActivity {
                     skillsAdapter.setSkillArrayList(candidate.getCandidateSkills());
                     Toast.makeText(ProfileActivity.this,"Skill Added Successfully" + String.valueOf(candidate.getCandidateSkills().size()), Toast.LENGTH_SHORT).show();
                 }else {
+
                     Toast.makeText(ProfileActivity.this, "No Skill now", Toast.LENGTH_SHORT).show();
+
                 }
-                
             }
         });
 
@@ -344,8 +357,14 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<CandidateProject> candidateProjects) {
 
-            Toast.makeText(ProfileActivity.this, candidateBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
-            candidateProjectsAdapter.setCandidateProjectArrayList(candidateProjects);
+            if (candidateProjects!=null){
+
+                candidateProjectsAdapter.setCandidateProjectArrayList(candidateProjects);
+
+            }else {
+                Toast.makeText(ProfileActivity.this, candidateBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
             showProgress.dismiss();
         }
 

@@ -5,6 +5,9 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.jupa.Assessment.Api.AssessmentApiData;
+import com.example.jupa.Assessment.Api.AssessmentListApiData;
+import com.example.jupa.Assessment.Assessment;
 import com.example.jupa.Assessment.AssessmentGroup.AssessmentGroup;
 import com.example.jupa.Assessment.AssessmentGroup.Api.AssessmentGroupApiData;
 import com.example.jupa.Assessment.AssessmentGroup.Api.AssessmentGroupListApiData;
@@ -32,6 +35,8 @@ public class CandidateBackgroundApiTasks {
     ArrayList<CandidateProject> candidateProjectArrayList = new ArrayList<>();
     AssessmentGroup assessmentGroup;
     ArrayList<AssessmentGroup> assessmentGroupArrayList;
+    Assessment assessment;
+    ArrayList<Assessment> assessmentArrayList;
 
     public String SUCCESS = "1", FAILED = "0",message;
     static CandidateBackgroundApiTasks Instance = null;
@@ -99,12 +104,17 @@ public class CandidateBackgroundApiTasks {
 
                 synchronized (CandidateBackgroundApiTasks.this){
 
-                    Log.e(ContentValues.TAG, "onResponse: "+response.body().getCandidateProjectArrayList().toString());
+                    Log.e(ContentValues.TAG, "projects onResponse: success "+response.body().getSuccess());
 
                     if (response.body().getSuccess().equals(SUCCESS)){
 
                         setCandidateProjectArrayList(response.body().getCandidateProjectArrayList());
+                    }else{
+
+                        setCandidateProjectArrayList(null);
+
                     }
+
                     setMessage(response.body().getMessage());
                     CandidateBackgroundApiTasks.this.notifyAll();
                 }
@@ -115,9 +125,9 @@ public class CandidateBackgroundApiTasks {
 
                 synchronized (CandidateBackgroundApiTasks.this){
 
+                    setCandidateProjectArrayList(null);
+                    setMessage(t.getMessage());
                     CandidateBackgroundApiTasks.this.notifyAll();
-
-                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -340,6 +350,84 @@ public class CandidateBackgroundApiTasks {
 
     }
 
+    public void getAssessmentsInAssessmentGroup(int assessment_group_id) {
+
+        Call<AssessmentListApiData> call = candidateApi_interface.getAssessmentsInAssessmentGroup(assessment_group_id);
+
+        call.enqueue(new Callback<AssessmentListApiData>() {
+
+            @Override
+            public void onResponse(Call<AssessmentListApiData> call, Response<AssessmentListApiData> response) {
+
+                synchronized (CandidateBackgroundApiTasks.this){
+
+                    if (response.body().getSuccess().equals(SUCCESS)){
+
+                        setAssessmentArrayList(response.body().getAssessmentArrayList());
+                        Log.e(TAG, "onResponse: "+response.body().getAssessmentArrayList().toString() );
+
+                    }else {
+
+                        setAssessmentArrayList(null);
+
+                    }
+
+                    setMessage(response.body().getMessage());
+                    CandidateBackgroundApiTasks.this.notifyAll();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<AssessmentListApiData> call, Throwable t) {
+
+                synchronized (CandidateBackgroundApiTasks.this){
+                    setMessage(t.getMessage());
+                    setAssessmentArrayList(null);
+                    CandidateBackgroundApiTasks.this.notifyAll();
+                }
+
+            }
+        });
+
+    }
+
+    public void addAssessment(Assessment assessment){
+
+
+        Call<AssessmentApiData> call = candidateApi_interface.makeAssessment(assessment.getAssessment_group_id(),
+                                                                            assessment.getQuestion_id(),assessment.getCandidate_id(),
+                                                                            assessment.getGrade(),assessment.getOther_remarks());
+        call.enqueue(new Callback<AssessmentApiData>() {
+            @Override
+            public void onResponse(Call<AssessmentApiData> call, Response<AssessmentApiData> response) {
+
+                Log.e(TAG, "onResponse: assessment "+response.body().getSuccess());
+                Log.e(TAG, "onResponse: assessment "+response.body().getMessage());
+                synchronized (CandidateBackgroundApiTasks.this){
+
+                    CandidateBackgroundApiTasks.this.notifyAll();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<AssessmentApiData> call, Throwable t) {
+
+                Log.e(TAG, "onResponse: assessment "+t.getMessage());
+
+                synchronized (CandidateBackgroundApiTasks.this){
+
+                    CandidateBackgroundApiTasks.this.notifyAll();
+
+                }
+
+            }
+        });
+
+    }
 
 
 
@@ -407,5 +495,21 @@ public class CandidateBackgroundApiTasks {
 
     public void setAssessmentGroupArrayList(ArrayList<AssessmentGroup> assessmentGroupArrayList) {
         this.assessmentGroupArrayList = assessmentGroupArrayList;
+    }
+
+    public Assessment getAssessment() {
+        return assessment;
+    }
+
+    public void setAssessment(Assessment assessment) {
+        this.assessment = assessment;
+    }
+
+    public ArrayList<Assessment> getAssessmentArrayList() {
+        return assessmentArrayList;
+    }
+
+    public void setAssessmentArrayList(ArrayList<Assessment> assessmentArrayList) {
+        this.assessmentArrayList = assessmentArrayList;
     }
 }

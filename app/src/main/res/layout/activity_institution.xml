@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".Activity.AdminHomeActivity">
+    tools:context=".Activity.InstitutionActivity">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <RelativeLayout
             android:id="@+id/relative_home"
             android:layout_width="match_parent"
@@ -19,8 +19,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textColor="@color/white"
-                android:textSize="28sp"
+                android:textColor="@color/black"
+                android:textSize="26sp"
                 android:textStyle="bold|normal"
                 android:textAllCaps="true"
                 android:gravity="center_horizontal"
@@ -45,40 +45,37 @@
                 android:layout_margin="10dp"
                 app:contentPaddingBottom="5dp"
                 app:contentPaddingTop="10dp"
-                android:id="@+id/groups_view"
-                android:onClick="GroupClicked">
+                android:id="@+id/my_profile_view">
 
                 <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:orientation="vertical">
 
                     <ImageButton
-                        android:onClick="GroupClicked"
-                        android:id="@+id/groups_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_users_group"
+                        android:src="@drawable/ic_college"
                         android:backgroundTint="@android:color/white"
                         android:layout_gravity="center"
                         android:layout_marginBottom="20dp"/>
 
                     <TextView
-                    android:onClick="GroupClicked"
-                    android:id="@+id/groups"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/groups"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:padding="1dp"/>
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/view_my_profile"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:padding="1dp"/>
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/my_requests_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -86,7 +83,6 @@
                 app:cardCornerRadius="3dp"
                 android:layout_margin="10dp"
                 app:contentPaddingBottom="5dp"
-                android:onClick="SkillClicked"
                 app:contentPaddingTop="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -94,19 +90,19 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:onClick="SkillClicked"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_skills"
+                        android:src="@drawable/ic_team"
                         android:layout_gravity="center"
+                        android:tint="@color/black"
                         android:backgroundTint="@android:color/white"
                         android:layout_marginBottom="20dp"/>
 
                     <TextView
-                        android:onClick="SkillClicked"
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/skills"
+                        android:text="@string/principals"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_gravity="center"
@@ -117,63 +113,15 @@
 
         </LinearLayout>
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/linear_3"-->
-            <!--android:layout_below="@id/linear_1"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:paddingTop="5dp">-->
-
-            <!--<androidx.cardview.widget.CardView-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="0.5"-->
-                <!--app:cardElevation="5dp"-->
-                <!--app:cardCornerRadius="3dp"-->
-                <!--android:layout_margin="10dp"-->
-                <!--app:contentPaddingBottom="5dp"-->
-                <!--android:onClick="SkillClicked"-->
-                <!--app:contentPaddingTop="10dp">-->
-                <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:orientation="vertical">-->
-
-                    <!--<ImageButton-->
-                        <!--android:onClick="SkillClicked"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:src="@drawable/ic_skills"-->
-                        <!--android:layout_gravity="center"-->
-                        <!--android:backgroundTint="@android:color/white"-->
-                        <!--android:layout_marginBottom="20dp"/>-->
-
-                    <!--<TextView-->
-                        <!--android:onClick="SkillClicked"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="@string/skills"-->
-                        <!--android:textSize="20sp"-->
-                        <!--android:textStyle="bold"-->
-                        <!--android:layout_gravity="center"-->
-                        <!--android:padding="1dp"/>-->
-                <!--</LinearLayout>-->
-
-            <!--</androidx.cardview.widget.CardView>-->
-
-        <!--</LinearLayout>-->
-
         <LinearLayout
+            android:layout_below="@+id/linear_1"
             android:id="@+id/linear_2"
-            android:layout_below="@id/linear_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="5dp">
 
             <androidx.cardview.widget.CardView
-                android:onClick="RankClicked"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -182,65 +130,62 @@
                 android:layout_margin="10dp"
                 app:contentPaddingBottom="5dp"
                 app:contentPaddingTop="10dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:onClick="RankClicked"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_star"
-                        android:layout_gravity="center"
-                        android:backgroundTint="@android:color/white"
-                        android:layout_marginBottom="20dp"/>
-
-                    <TextView
-                        android:onClick="RankClicked"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ranks"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_gravity="center"
-                        android:padding="1dp"/>
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:onClick="InstitutionClicked"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                app:cardElevation="5dp"
-                app:cardCornerRadius="3dp"
-                android:layout_margin="10dp"
-                app:contentPaddingBottom="5dp"
-                app:contentPaddingTop="10dp">
-                <LinearLayout
-                    android:onClick="InstitutionClicked"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <ImageButton
-                        android:onClick="InstitutionClicked"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_college"
+                        android:backgroundTint="@android:color/white"
+                        android:tint="@color/black"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="20dp"/>
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/courses_offered"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:padding="1dp"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="3dp"
+                android:layout_margin="10dp"
+                app:contentPaddingBottom="5dp"
+                app:contentPaddingTop="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_group"
                         android:layout_gravity="center"
                         android:backgroundTint="@android:color/white"
                         android:layout_marginBottom="20dp"/>
 
-
                     <TextView
-                        android:onClick="InstitutionClicked"
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/institutions"
+                        android:text="@string/view_candidates"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_gravity="center"
@@ -250,6 +195,92 @@
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@+id/linear_2"
+            android:id="@+id/linear_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="3dp"
+                android:layout_margin="10dp"
+                app:contentPaddingBottom="5dp"
+                app:contentPaddingTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_users_group"
+                        android:tint="@color/black"
+                        android:backgroundTint="@android:color/white"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="20dp"/>
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/view_assessors"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:padding="1dp"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="3dp"
+                android:layout_margin="10dp"
+                app:contentPaddingBottom="5dp"
+                app:contentPaddingTop="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_help"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@android:color/white"
+                        android:layout_marginBottom="20dp"/>
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/view_results"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:padding="1dp"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+
+
 
     </RelativeLayout>
 

@@ -96,6 +96,20 @@ public class CandidateProjectsAdapter extends RecyclerView.Adapter {
         this.notifyDataSetChanged();
     }
 
+    public void addCandidateProject(CandidateProject candidateProject) {
+
+        if (getCandidateProjectArrayList()==null){
+
+            setCandidateProjectArrayList(new ArrayList<CandidateProject>());
+        }
+
+        getCandidateProjectArrayList().add(candidateProject);
+
+        this.notifyDataSetChanged();
+    }
+
+
+
     public static class ProjectViewHolder extends RecyclerView.ViewHolder{
 
         TextView title_view, location, client_contact, client_name;

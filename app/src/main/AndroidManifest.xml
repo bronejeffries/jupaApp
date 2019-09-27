@@ -11,10 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.CandidateProjectDetailViewActivity"></activity>
+        <activity android:name=".Activity.NewInstitutionActivity"></activity>
+        <activity android:name=".Activity.InstitutionsActivity" />
+        <activity android:name=".Activity.InstitutionActivity" />
+        <activity android:name=".Activity.CandidateProjectDetailViewActivity" />
         <activity android:name=".Activity.GroupSearchActivity" />
         <activity android:name=".Activity.ProjectAssessmentsActivity" />
-        <activity android:name=".Activity.AssessementActivity" />
+        <activity android:name=".Activity.AssessmentActivity" />
         <activity android:name=".Activity.GroupQuestionsActivity" />
         <activity android:name=".Activity.CandidateProjectActivity" />
         <activity android:name=".Activity.CandidatesDisplayActivity" />

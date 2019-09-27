@@ -39,7 +39,7 @@ public class AdminHomeActivity extends AppCompatActivity {
     CardView groups, skills, ranks, institutions;
     ImageButton groups_icon, skills_icon;
     AlertDialog groupsDialog;
-    final static String GROUPS_SHOW = "group", SKILLS_SHOW = "skill", RANKS_SHOW = "rank" ;
+    final static String GROUPS_SHOW = "group", SKILLS_SHOW = "skill", RANKS_SHOW = "rank", INSTITUTIONS_SHOW="institutions";
     private ArrayList<Skill> skillArrayList;
     private SkillsAdapter skillsAdapter;
     private RanksAdapter ranksAdapter;
@@ -70,6 +70,10 @@ public class AdminHomeActivity extends AppCompatActivity {
         showActivity(RANKS_SHOW);
     }
 
+    public void InstitutionClicked(View view){
+        showActivity(INSTITUTIONS_SHOW);
+    }
+
     private void showActivity(String clicked) {
 
         switch (clicked){
@@ -85,10 +89,20 @@ public class AdminHomeActivity extends AppCompatActivity {
             case RANKS_SHOW:
                 LaunchRanksBottomSheetDialog();
                 break;
+
+            case INSTITUTIONS_SHOW:
+                LaunchInstitutionsActivity();
 //
             default:
                 Toast.makeText(this, "Wrong Option", Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+    private void LaunchInstitutionsActivity() {
+
+        Intent intent = new Intent(this,InstitutionsActivity.class);
+        startActivity(intent);
 
     }
 

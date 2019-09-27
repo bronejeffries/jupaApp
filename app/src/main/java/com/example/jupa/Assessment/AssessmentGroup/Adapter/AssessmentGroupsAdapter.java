@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.jupa.Activity.AssessementActivity;
+import com.example.jupa.Activity.AssessmentActivity;
 import com.example.jupa.Assessment.AssessmentGroup.AssessmentGroup;
 import com.example.jupa.R;
 
@@ -87,8 +87,8 @@ public class AssessmentGroupsAdapter extends RecyclerView.Adapter {
     }
 
     public void makeAssessment(AssessmentGroup assessmentGroup){
-        Intent assessmentIntent = new Intent(context, AssessementActivity.class);
-        assessmentIntent.putExtra(AssessementActivity.ASSESSMENT_GROUP_EXTRA, assessmentGroup);
+        Intent assessmentIntent = new Intent(context, AssessmentActivity.class);
+        assessmentIntent.putExtra(AssessmentActivity.ASSESSMENT_GROUP_EXTRA, assessmentGroup);
         context.startActivity(assessmentIntent);
 
     }

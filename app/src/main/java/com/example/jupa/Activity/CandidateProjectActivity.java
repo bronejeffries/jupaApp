@@ -140,8 +140,9 @@ public class CandidateProjectActivity extends AppCompatActivity {
             Toast.makeText(CandidateProjectActivity.this, candidateBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
 
             if (candidateProject!=null){
-                ProfileActivity.candidateProjectsAdapter.getCandidateProjectArrayList().add(candidateProject);
-                ProfileActivity.candidateProjectsAdapter.notifyDataSetChanged();
+
+                ProfileActivity.candidateProjectsAdapter.addCandidateProject(candidateProject);
+
             }
             showProgress.dismiss();
 

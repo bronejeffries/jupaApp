@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,13 +15,18 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.jupa.Candidate.Api.CandidateBackgroundApiTasks;
 import com.example.jupa.Candidate.Candidate;
 import com.example.jupa.Group.Api.GroupBackgroundApiTasks;
 import com.example.jupa.Group.Group;
 import com.example.jupa.Helpers.LoggedInUser;
+import com.example.jupa.Question.Api.QuestionApiBackgroundTasks;
+import com.example.jupa.Question.QuestionCategory;
 import com.example.jupa.R;
 import com.example.jupa.Helpers.showProgressbar;
 
@@ -30,8 +36,9 @@ public class UserHomeActivity extends AppCompatActivity {
     CardView ViewMyProfileCard,ViewMyRequestsCard, ViewCandidatesCard, ViewGroupDetailsCard, ViewIncomingRequestsCard, ViewManageQuestionsCard;
     public final static String CANDIDATE_ROLE = "Candidate", ASSESSOR_ROLE= "Assessor", GROUP_ADMIN_ROLE = "Group Admin", ADMINISTRATOR_ROLE = "Administrator";
     GroupBackgroundApiTasks groupBackgroundApiTasks;
-    Group candidateGroup;
-    showProgressbar showprogress;
+    public static QuestionApiBackgroundTasks questionApiBackgroundTasks;
+    static Group candidateGroup;
+    showProgressbar showProgress;
     public static String loggedInUserRole;
 
     @Override
@@ -39,19 +46,20 @@ public class UserHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
 
-        showprogress = new showProgressbar(this);
-        showprogress.setMessage("Loading information....a moment");
+        showProgress = new showProgressbar(this);
+        showProgress.setMessage("Loading information....a moment");
         groupBackgroundApiTasks = GroupBackgroundApiTasks.getInstance(this);
+        questionApiBackgroundTasks = QuestionApiBackgroundTasks.getInstance(this);
         ViewMyProfileCard = (CardView)findViewById(R.id.my_profile_view);
         ViewMyRequestsCard = (CardView)findViewById(R.id.my_requests_view);
         ViewCandidatesCard = (CardView)findViewById(R.id.assessor_candidates_view);
         ViewGroupDetailsCard = (CardView)findViewById(R.id.group_admin_group_details);
         ViewIncomingRequestsCard = (CardView)findViewById(R.id.group_admin_in_coming_requests);
         ViewManageQuestionsCard = (CardView)findViewById(R.id.group_admin_manage_group_questions);
-
         thisCandidate = LoggedInUser.getInstance().getLoggedInCandidate();
         loggedInUserRole = thisCandidate.getRole();
 
+        showProgress.show();
         new getCandidateGroup().execute(thisCandidate.getId());
 
     }
@@ -116,13 +124,14 @@ public class UserHomeActivity extends AppCompatActivity {
 
     public void ViewGroupIncomingRequests(View view){
 
+
     }
 
 
     public void ManageGroupQuestions(View view){
 
         AlertDialog.Builder manageQuestionsAlertDialog = new AlertDialog.Builder(this);
-        final String[] manageQuestionsAlertDialogOptions = {"View Group Questions","Add New QuestionCategory", "Add New Question"};
+        final String[] manageQuestionsAlertDialogOptions = {"View Group Questions","Add New QuestionCategory"};
         manageQuestionsAlertDialog.setItems(manageQuestionsAlertDialogOptions, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -133,10 +142,7 @@ public class UserHomeActivity extends AppCompatActivity {
                         viewGroupQuestions();
                         break;
                     case 1:
-                        AddNewQuestionCategory();
-                        break;
-                    case 2:
-                        AddNewQuestion();
+                        AddNewQuestionCategory(UserHomeActivity.this);
                         break;
                 }
 
@@ -159,10 +165,22 @@ public class UserHomeActivity extends AppCompatActivity {
 
     }
 
-    private void AddNewQuestionCategory() {
+    public static void AddNewQuestionCategory(Context context) {
 
-        AlertDialog.Builder addNewCategoryDialog = new AlertDialog.Builder(this);
-        LinearLayout addCategoryLinearLayout = (LinearLayout) LayoutInflater.from(UserHomeActivity.this).inflate(R.layout.addquestioncategory,null,false);
+        AlertDialog.Builder addNewCategoryDialog = new AlertDialog.Builder(context);
+        LinearLayout addCategoryLinearLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.addquestioncategory,null,false);
+        final EditText category = (EditText)addCategoryLinearLayout.findViewById(R.id.category_input);
+        Button save_btn = (Button) addCategoryLinearLayout.findViewById(R.id.save_category_btn);
+
+        save_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                QuestionCategory questionCategory = new QuestionCategory(category.getText().toString(), candidateGroup.getId());
+
+            }
+        });
+
         addNewCategoryDialog.setView(addCategoryLinearLayout);
         addNewCategoryDialog.setTitle("Add New Question Category");
         addNewCategoryDialog.create().show();
@@ -217,6 +235,35 @@ public class UserHomeActivity extends AppCompatActivity {
     }
 
 
+    public static class addQuestionCategory extends AsyncTask<QuestionCategory,Void, QuestionCategory>{
+
+        @Override
+        protected void onPostExecute(QuestionCategory questionCategory) {
+
+            super.onPostExecute(questionCategory);
+        }
+
+        @Override
+        protected QuestionCategory doInBackground(QuestionCategory... questionCategories) {
+            QuestionCategory returnedQuestionCategory;
+
+            synchronized (questionApiBackgroundTasks){
+
+                questionApiBackgroundTasks.createQuestionCategory(questionCategories[0]);
+                try {
+                    questionApiBackgroundTasks.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                returnedQuestionCategory = questionApiBackgroundTasks.getQuestionCategory();
+            }
+
+
+            return returnedQuestionCategory;
+        }
+    }
+
     public class getCandidateGroup extends AsyncTask<Integer,Void,Group>{
 
         @Override
@@ -229,7 +276,7 @@ public class UserHomeActivity extends AppCompatActivity {
                 Toast.makeText(UserHomeActivity.this, "Failed to load user information, please consider logging in again", Toast.LENGTH_SHORT).show();
             }
 
-            showprogress.dismiss();
+            showProgress.dismiss();
 
         }
 
