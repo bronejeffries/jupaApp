@@ -105,6 +105,8 @@ public class UserHomeActivity extends AppCompatActivity {
 
     public void ViewMyRequests(View view){
 
+        Intent myRequestsIntent = new Intent(this,MyRequestsActivity.class);
+        startActivity(myRequestsIntent);
     }
 
     public void ViewCandidates(View view){
@@ -200,7 +202,6 @@ public class UserHomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
-
         inflater.inflate(R.menu.userhomemenu,menu);
 
         return true;

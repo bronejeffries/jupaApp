@@ -51,6 +51,7 @@ public class AssessmentActivity extends AppCompatActivity {
     public static LinkedHashMap<Integer, Assessment> assessmentLinkedHashMap;
     public static HashMap<String,Integer> gradesMap;
     public static ArrayList<Assessment> archivedAssessment = new ArrayList<>();
+    public static String[] grade_array;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,12 +94,13 @@ public class AssessmentActivity extends AppCompatActivity {
 
     private void makeGrades() {
 
-        String[] grade_array = getResources().getStringArray(R.array.grades_array);
-
+        grade_array = getResources().getStringArray(R.array.grades_array_values);
         gradesMap = new HashMap<>();
 
-        for (int i = 0;i<grade_array.length;i++){
+        for (int i = 0; i< grade_array.length; i++){
+
             gradesMap.put(grade_array[i],i);
+
         }
 
     }

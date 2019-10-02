@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:icon="@drawable/ic_assignment_turned_in_black_24dp"
-        android:title="@string/submit"
-        android:id="@+id/assessment_submit"
-        app:showAsAction="ifRoom"
+        android:title="@string/view_assessed_candidates"
+        android:id="@+id/assessed_candidates"
+        app:showAsAction="never"
         />
 
 </menu>

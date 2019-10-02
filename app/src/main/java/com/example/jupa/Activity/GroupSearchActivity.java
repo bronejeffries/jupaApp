@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.example.jupa.Candidate.Candidate;
 import com.example.jupa.Group.Api.GroupBackgroundApiTasks;
 import com.example.jupa.Group.Group;
-import com.example.jupa.Group.GroupsList;
+import com.example.jupa.Helpers.GroupsList;
 import com.example.jupa.R;
 import com.example.jupa.Rank.Api.RankBackgroundApiTasks;
 import com.example.jupa.Rank.Rank;
@@ -141,6 +141,7 @@ public class GroupSearchActivity extends AppCompatActivity {
             showResult(candidateArrayList);
 
             }else {
+
                 Toast.makeText(GroupSearchActivity.this, groupBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
@@ -175,7 +176,6 @@ public class GroupSearchActivity extends AppCompatActivity {
         startActivity(groupActivityIntent);
 
     }
-
 
     public static class searchObject{
 
@@ -234,3 +234,4 @@ public class GroupSearchActivity extends AppCompatActivity {
 
 
 }
+

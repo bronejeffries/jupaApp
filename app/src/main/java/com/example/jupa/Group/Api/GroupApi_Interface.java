@@ -14,7 +14,7 @@ public interface GroupApi_Interface {
 
     @FormUrlEncoded
     @POST("add_group.php")
-    Call<GroupApiData> addGroup(@Field("group_name") String groupName, @Field("group_code")String groupCode);
+    Call<GroupApiData> addGroup(@Field("group_name") String groupName, @Field("group_code")String groupCode, @Field("user_id") int User_id);
 
     @GET("get_group_byID.php")
     Call<GroupApiData> getGroupById(@Query("group_id") int group_ID);

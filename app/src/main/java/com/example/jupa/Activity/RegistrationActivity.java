@@ -19,7 +19,7 @@ import com.example.jupa.Candidate.Category.Api.CandidateCategoryBackgroundApiTas
 import com.example.jupa.Group.Adapter.GroupsAdapter;
 import com.example.jupa.Group.Api.GroupBackgroundApiTasks;
 import com.example.jupa.Group.Group;
-import com.example.jupa.Group.GroupsList;
+import com.example.jupa.Helpers.GroupsList;
 import com.example.jupa.R;
 import com.example.jupa.Helpers.showProgressbar;
 

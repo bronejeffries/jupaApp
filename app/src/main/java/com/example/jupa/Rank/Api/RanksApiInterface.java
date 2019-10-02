@@ -12,7 +12,7 @@ public interface RanksApiInterface {
 
     @FormUrlEncoded
     @POST("add_rank.php")
-    Call<RankApiData> addNewRank(@Field("rank_name") String rank_name, @Field("rank_code") String rank_code);
+    Call<RankApiData> addNewRank(@Field("rank_name") String rank_name, @Field("rank_code") String rank_code, @Field("user_id") int User_id);
 
     @GET("fetch_all_ranks.php")
     Call<RanksLIstApiData> getAllRanks();

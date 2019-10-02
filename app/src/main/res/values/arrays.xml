@@ -23,4 +23,10 @@
         <item>Has No Knowledge</item>
     </string-array>
 
+    <string-array name="grades_array_values">
+        <item>80</item>
+        <item>50</item>
+        <item>30</item>
+    </string-array>
+
 </resources>

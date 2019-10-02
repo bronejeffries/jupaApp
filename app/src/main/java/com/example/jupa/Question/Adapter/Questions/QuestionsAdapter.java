@@ -89,7 +89,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
                     Assessment assessmentRetrieved = AssessmentActivity.assessmentLinkedHashMap.get(question.getQuestion_id());
                     ((questionViewHolder)holder).otherRemarks.setText(assessmentRetrieved.getOther_remarks());
                     ((questionViewHolder)holder).archive_assessment.setText("Assessed");
-                    ((questionViewHolder)holder).archive_assessment.setClickable(false);
+                    ((questionViewHolder)holder).archive_assessment.setEnabled(false);
                     Log.e(TAG, "onBindViewHolder: "+AssessmentActivity.gradesMap.get(assessmentRetrieved.getGrade()));
                     Integer gradeSelectionIndex = AssessmentActivity.gradesMap.get(assessmentRetrieved.getGrade());
 
@@ -105,7 +105,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(View view) {
 
-                        String grade = ((questionViewHolder)holder).grade_spinner.getSelectedItem().toString();
+                        int selected_grade_position = ((questionViewHolder)holder).grade_spinner.getSelectedItemPosition();
+                        String grade = AssessmentActivity.grade_array[selected_grade_position];
                         String other_remarks = ((questionViewHolder)holder).otherRemarks.getText().toString();
                         int assessment_group_id = AssessmentActivity.assessmentGroup.getId();
                         int question_id = question.getQuestion_id();
@@ -114,6 +115,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
                         archivedAssessment.add(assessment);
                         Toast.makeText(context, "Assessment archived "+grade, Toast.LENGTH_SHORT).show();
                         ((questionViewHolder)holder).archive_assessment.setText("Archived");
+                        ((questionViewHolder)holder).archive_assessment.setEnabled(false);
                         ((questionViewHolder)holder).archive_assessment.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
 
                     }

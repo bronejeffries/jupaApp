@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.AssessorRequestActivity">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/page_title"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dip"
+            android:padding="12dip"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="@string/become_assessor_request"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/form_card"
+            android:layout_below="@+id/page_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="8dip"
+            app:cardCornerRadius="5dip">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginBottom="8dip"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dip"
+                        android:textSize="18sp"
+                        android:textStyle="normal"
+                        android:text="@string/reg_no"
+                        android:textColor="@color/black"/>
+
+                    <EditText
+                        android:id="@+id/regno._input"
+                        android:textSize="18sp"
+                        android:padding="12dip"
+                        android:hint="@string/reg_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="8dip"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dip"
+                        android:textSize="18sp"
+                        android:textStyle="normal"
+                        android:text="@string/years_of_experience"
+                        android:textColor="@color/black"/>
+
+                    <EditText
+                        android:id="@+id/experience_input"
+                        android:textSize="18sp"
+                        android:padding="12dip"
+                        android:hint="@string/years_of_experience"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginBottom="8dip"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dip"
+                        android:textSize="18sp"
+                        android:textStyle="normal"
+                        android:text="@string/institution_name"
+                        android:textColor="@color/black"/>
+
+                    <Spinner
+                        android:id="@+id/institution_attachment_input"
+                        android:textSize="18sp"
+                        android:padding="12dip"
+                        android:hint="@string/years_of_experience"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginBottom="8dip"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dip"
+                        android:textSize="18sp"
+                        android:textStyle="normal"
+                        android:text="@string/present_qualifications"
+                        android:textColor="@color/black"/>
+
+                    <EditText
+                        android:id="@+id/qualifications_input"
+                        android:textSize="18sp"
+                        android:padding="12dip"
+                        android:gravity="start|top"
+                        android:inputType="textMultiLine"
+                        android:lines="6"
+                        android:hint="@string/present_qualifications"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="8dip"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dip"
+                        android:textSize="18sp"
+                        android:textStyle="normal"
+                        android:text="@string/reason_for_application"
+                        android:textColor="@color/black"/>
+
+                    <EditText
+                        android:id="@+id/reason_for_application_input"
+                        android:textSize="18sp"
+                        android:padding="12dip"
+                        android:gravity="start|top"
+                        android:inputType="textMultiLine"
+                        android:lines="6"
+                        android:hint="@string/reason_for_application"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/request_submission_btn"
+            android:layout_below="@+id/form_card"
+            android:layout_margin="8dip"
+            android:textColor="@color/white"
+            android:text="@string/submit"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:background="@color/colorPrimary"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+
+
+</ScrollView>

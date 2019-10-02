@@ -29,7 +29,7 @@ public interface QuestionsApiInterface {
 
     @FormUrlEncoded
     @POST("add_qtn_category.php")
-    Call<QuestionCategoryApiData> addQuestionCategory(@Field("group_id") int category_id);
+    Call<QuestionCategoryApiData> addQuestionCategory(@Field("group_id") int category_id, @Field("user_id") int User_id);
 
 
 

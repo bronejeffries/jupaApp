@@ -107,4 +107,18 @@
     <string name="about">About</string>
     <string name="about_the_institution">Say Something About the institution</string>
     <string name="attach_badge">Attach Badge</string>
+    <string name="website">Website</string>
+    <string name="facebook">Facebook</string>
+    <string name="view_assessed_candidates">View Assessed Candidates</string>
+    <string name="file_new_request">File New Request</string>
+    <string name="become_assessor_request">Become Assessor Request</string>
+    <string name="apply_for_a_higher_rank">Higher Rank Application</string>
+    <string name="years_of_experience">Years of experience</string>
+    <string name="rank_applied_for">Rank Applied For</string>
+    <string name="present_qualifications">Present Qualifications</string>
+    <string name="reason_for_applying">Reason For Applying For This Rank</string>
+    <string name="reason_for_application">Reason For Application</string>
+    <string name="code">Code</string>
+    <string name="candidate">Candidate</string>
+    <string name="institution">Institution</string>
 </resources>

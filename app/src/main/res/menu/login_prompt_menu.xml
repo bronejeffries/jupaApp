@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_group"
+        android:title="@string/candidate"
+        android:id="@+id/candidate_login"/>
+
+    <item
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_old_school"
+        android:title="@string/institution"
+        android:id="@+id/institution_login"/>
+
+</menu>

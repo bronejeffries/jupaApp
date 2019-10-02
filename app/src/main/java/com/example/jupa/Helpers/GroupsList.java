@@ -1,9 +1,10 @@
-package com.example.jupa.Group;
+package com.example.jupa.Helpers;
 
 import android.content.Context;
 
 import com.example.jupa.Candidate.Category.CandidateCategory;
 import com.example.jupa.Group.Api.GroupBackgroundApiTasks;
+import com.example.jupa.Group.Group;
 import com.example.jupa.Rank.Rank;
 
 import java.util.ArrayList;
