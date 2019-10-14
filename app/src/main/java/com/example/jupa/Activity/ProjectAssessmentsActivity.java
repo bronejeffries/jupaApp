@@ -55,17 +55,22 @@ public class ProjectAssessmentsActivity extends AppCompatActivity {
 
         add_new_assessment_group = (Button)findViewById(R.id.start_new_assessment_group);
 
-        if (UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.ASSESSOR_ROLE)){
+        if (UserHomeActivity.loggedInUserRole!=null){
 
-            add_new_assessment_group.setVisibility(View.VISIBLE);
-            add_new_assessment_group.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showStartNewAssessmentBottomSheet();
-                }
-            });
+            if (UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.ASSESSOR_ROLE)){
+
+                add_new_assessment_group.setVisibility(View.VISIBLE);
+                add_new_assessment_group.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showStartNewAssessmentBottomSheet();
+                    }
+                });
+
+            }
 
         }
+
 
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -93,7 +98,7 @@ public class ProjectAssessmentsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int assessor_id = LoggedInUser.getInstance().getLoggedInCandidate().getId();
                 String name = nameInput.getText().toString();
-                AssessmentGroup newAssessorGroup = new AssessmentGroup(candidateProject.getProject_id(),name,assessor_id);
+                AssessmentGroup newAssessorGroup = new AssessmentGroup(candidateProject.getProject_id(),name,assessor_id,candidateProject.getCandidate_id());
                 saveAssessmentGroup(newAssessorGroup);
             }
         });

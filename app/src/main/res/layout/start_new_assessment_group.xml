@@ -43,10 +43,11 @@
         <Button
             android:id="@+id/save_assessment_group_btn"
             android:layout_gravity="center_horizontal"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/button_gradient_background"
             android:textColor="@color/white"
             android:text="@string/start_new"
             android:textSize="21sp"
+            android:textAllCaps="false"
             android:padding="5dp"
             android:textStyle="bold|normal"
             android:layout_width="wrap_content"

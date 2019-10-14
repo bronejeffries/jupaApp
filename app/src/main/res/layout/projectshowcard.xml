@@ -142,10 +142,13 @@
                 android:layout_height="wrap_content">
 
                 <Button
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/ic_expand_more_black_24dp"
+                    android:drawableEnd="@drawable/ic_expand_more_black_24dp"
                     android:id="@+id/view_project_btn"
                     android:textColor="@color/white"
                     android:layout_gravity="center_vertical|end"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/button_gradient_background"
                     android:text="@string/view_profile"
                     android:textSize="18sp"
                     android:padding="5dip"

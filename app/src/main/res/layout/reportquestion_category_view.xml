@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="6dip" >
+
+    <TextView
+        android:text="@string/category"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:id="@+id/categoryView"
+        android:gravity="start"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/category_progressLoader"
+        android:layout_margin="6dp"
+        android:layout_below="@+id/categoryView"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:id="@+id/category_questions_recycler_view"
+        android:layout_below="@+id/categoryView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+</RelativeLayout>

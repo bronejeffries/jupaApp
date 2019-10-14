@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.jupa.Candidate.Project.CandidateProject;
+import com.example.jupa.Helpers.LoggedInInstitution;
+import com.example.jupa.Helpers.LoggedInUser;
 import com.example.jupa.R;
 
 
@@ -21,6 +23,7 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
     TextView location, date_of_completion, client_names, client_contact, client_mail, description, client_address, title;
     Button assess_btn;
     RelativeLayout photo_View;
+    boolean permission = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,22 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
         assess_btn = (Button)findViewById(R.id.assess_project_btn);
         title = (TextView)findViewById(R.id.project_title_input);
         photo_View = (RelativeLayout)findViewById(R.id.header_layout);
+
+        checkPermission();
         populateViews();
+
+    }
+
+    public void checkPermission(){
+
+
+        if (UserHomeActivity.thisCandidate != null){
+
+                permission = UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.ASSESSOR_ROLE)
+                        && !UserHomeActivity.thisCandidate.getId().equals(candidateProject.getCandidate_id());
+
+        }
+
     }
 
     private void populateViews() {
@@ -52,12 +70,20 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
         description.setText(candidateProject.getDescription());
         client_address.setText(candidateProject.getClient_address());
 
-        assess_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAssessments(candidateProject);
-            }
-        });
+        if (permission){
+
+            assess_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showAssessments(candidateProject);
+                }
+            });
+
+        }else {
+
+            assess_btn.setVisibility(View.GONE);
+
+        }
 
     }
 
@@ -68,6 +94,5 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
         startActivity(showAssessmentIntent);
 
     }
-
 
 }

@@ -30,9 +30,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
     Spinner groupSpinner,  category, genderSpinner;
-    EditText firstname,lastname,familyname, mobile_no, other_no, email, dob, address, education, regNo;
+    EditText firstname,lastname,familyname, mobile_no, other_no, email, dob, address, education;
     String firstnameText, lastnameText, familynameText, mobile_noText, other_noText, emailText, dobText,
-            addressText, educationText, genderText, groupText, categoryText, regNoText;
+            addressText, educationText, genderText, groupText, categoryText;
 
     Button save_btn;
     showProgressbar showprogress;
@@ -67,8 +67,6 @@ public class RegistrationActivity extends AppCompatActivity {
         other_no = (EditText)findViewById(R.id.other_no_input);
         address = (EditText)findViewById(R.id.address_input);
         education = (EditText)findViewById(R.id.education_input);
-
-        regNo = (EditText)findViewById(R.id.regno__input);
 
         email = (EditText)findViewById(R.id.email_input);
         dob = (EditText)findViewById(R.id.dob_input);
@@ -112,7 +110,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
         }
         categoryText = category.getSelectedItem()!=null?category.getSelectedItem().toString():null;
-        regNoText = regNo.getText().toString();
         Integer group_id;
         Group group = groupsList.findGroupByName(groupText);
         group_id = (group!=null)?group.getId():null;
@@ -121,7 +118,7 @@ public class RegistrationActivity extends AppCompatActivity {
         CandidateCategory candidateCategory = groupsList.findCandidateCategoryByName(categoryText);
         category_id = candidateCategory!=null?candidateCategory.getId():null;
 
-        Candidate newCandidate = new Candidate(null,regNoText,firstnameText,lastnameText,familynameText,
+        Candidate newCandidate = new Candidate(null,null,firstnameText,lastnameText,familynameText,
                 genderText,emailText,dobText,mobile_noText,other_noText,null,addressText,educationText,group_id,category_id,
                 null,null,null,null);
 
@@ -248,21 +245,26 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
 
-    public class sendRegistrationData extends AsyncTask<Candidate,Void,String>{
+    public class sendRegistrationData extends AsyncTask<Candidate,Void,Candidate>{
 
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(Candidate candidate) {
 
             showprogress.dismiss();
-            Toast.makeText(RegistrationActivity.this, s, Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationActivity.this, candidateBackgroundApiTasks.getMessage(), Toast.LENGTH_LONG).show();
 
+            if (candidate!=null){
+
+              finish();
+
+            }
         }
 
         @Override
-        protected String doInBackground(Candidate... candidates) {
+        protected Candidate doInBackground(Candidate... candidates) {
 
-            String message;
+            Candidate returnedCandidate;
 
             synchronized (candidateBackgroundApiTasks){
 
@@ -273,11 +275,11 @@ public class RegistrationActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                message = candidateBackgroundApiTasks.getMessage();
+                returnedCandidate = candidateBackgroundApiTasks.getCandidate();
 
             }
 
-            return message;
+            return returnedCandidate;
         }
     }
 

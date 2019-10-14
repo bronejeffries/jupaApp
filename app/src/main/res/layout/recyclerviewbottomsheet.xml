@@ -26,6 +26,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:src="@android:drawable/ic_input_add"
+        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
+        app:backgroundTint="@color/colorPrimaryDark"
         android:id="@+id/bottom_sheet_fab" />
 </RelativeLayout>

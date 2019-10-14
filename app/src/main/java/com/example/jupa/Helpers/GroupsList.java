@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.jupa.Candidate.Category.CandidateCategory;
 import com.example.jupa.Group.Api.GroupBackgroundApiTasks;
 import com.example.jupa.Group.Group;
+import com.example.jupa.Institution.Institution;
 import com.example.jupa.Rank.Rank;
 
 import java.util.ArrayList;
@@ -15,12 +16,11 @@ public class GroupsList {
 
     public  Context context;
     public GroupBackgroundApiTasks groupBackgroundApiTasks;
-    public  List<String> spinnerArray, categorySpinnerArray,ranksSpinnerArray;
+    public  List<String> spinnerArray, categorySpinnerArray,ranksSpinnerArray, institutionSpinnerArray;
     private ArrayList<Group> groupArrayList;
     private ArrayList<CandidateCategory> candidateCategoryArrayList;
     private ArrayList<Rank> rankArrayList;
-
-
+    private ArrayList<Institution> institutionArrayList;
 
 
     public GroupsList(Context context) {
@@ -80,6 +80,12 @@ public class GroupsList {
         makeCategoryList();
     }
 
+    public void makeInstitutionListFrom(ArrayList<Institution> arrayList){
+
+        institutionArrayList = arrayList;
+        makeInstitutionList();
+    }
+
     public void makeRankListFrom(ArrayList<Rank> arrayList){
 
         rankArrayList = arrayList;
@@ -94,6 +100,21 @@ public class GroupsList {
             for (Rank rank: rankArrayList) {
                 ranksSpinnerArray.add(rank.getName());
             }
+        }
+
+    }
+
+    private void makeInstitutionList() {
+
+        setInstitutionSpinnerArray(new ArrayList<String>());
+
+        if (institutionArrayList !=null){
+
+            for (Institution institution : institutionArrayList  ) {
+                String institution_name = institution.getName()+" ("+institution.getCenter_No()+")";
+                institutionSpinnerArray.add(institution_name);
+            }
+
         }
 
     }
@@ -155,6 +176,7 @@ public class GroupsList {
             }
         }
         return rankFound;
+
     }
 
     public List<String> getCategorySpinnerArray() {
@@ -171,5 +193,21 @@ public class GroupsList {
 
     public void setRanksSpinnerArray(List<String> ranksSpinnerArray) {
         this.ranksSpinnerArray = ranksSpinnerArray;
+    }
+
+    public List<String> getInstitutionSpinnerArray() {
+        return institutionSpinnerArray;
+    }
+
+    public void setInstitutionSpinnerArray(List<String> institutionSpinnerArray) {
+        this.institutionSpinnerArray = institutionSpinnerArray;
+    }
+
+    public ArrayList<Institution> getInstitutionArrayList() {
+        return institutionArrayList;
+    }
+
+    public void setInstitutionArrayList(ArrayList<Institution> institutionArrayList) {
+        this.institutionArrayList = institutionArrayList;
     }
 }

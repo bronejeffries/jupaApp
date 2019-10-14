@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.jupa.Activity.UserHomeActivity;
 import com.example.jupa.Rank.Rank;
 import com.example.jupa.Helpers.RetrofitSingleton;
 
@@ -40,7 +41,7 @@ public class RankBackgroundApiTasks {
 
     public void createRank(Rank rank){
 
-        Call<RankApiData> call = ranksApiInterface.addNewRank(rank.getName(),rank.getCode());
+        Call<RankApiData> call = ranksApiInterface.addNewRank(rank.getName(),rank.getCode(), UserHomeActivity.thisCandidate.getId());
         call.enqueue(new Callback<RankApiData>() {
             @Override
             public void onResponse(Call<RankApiData> call, Response<RankApiData> response) {

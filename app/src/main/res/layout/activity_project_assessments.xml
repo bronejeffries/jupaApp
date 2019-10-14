@@ -35,7 +35,7 @@
         android:layout_alignParentBottom="true"
         android:padding="8dip"
         android:textColor="@color/white"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/button_gradient_background"
         android:text="@string/start_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

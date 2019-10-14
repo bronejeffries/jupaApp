@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.jupa.Candidate.Candidate;
 import com.example.jupa.Helpers.GroupsList;
@@ -17,6 +18,8 @@ import com.example.jupa.Helpers.showProgressbar;
 import com.example.jupa.R;
 import com.example.jupa.Rank.Api.RankBackgroundApiTasks;
 import com.example.jupa.Rank.Rank;
+import com.example.jupa.Request.Api.RequestApiBackgroundTasks;
+import com.example.jupa.Request.RequestApplicationObject;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,7 @@ public class RankRequestActivity extends AppCompatActivity {
 
     showProgressbar showProgress;
     RankBackgroundApiTasks rankBackgroundApiTasks;
+    RequestApiBackgroundTasks requestApiBackgroundTasks;
     GroupsList groupsList;
     ArrayList<Rank> rankArrayList;
     Candidate ApplyingCandidate;
@@ -44,8 +48,8 @@ public class RankRequestActivity extends AppCompatActivity {
 
         showProgress = new showProgressbar(this);
         rankBackgroundApiTasks = RankBackgroundApiTasks.getInstance(this);
-
-        ApplyingCandidate = LoggedInUser.getInstance().getLoggedInCandidate();
+        requestApiBackgroundTasks = RequestApiBackgroundTasks.getInstance(this);
+        ApplyingCandidate = UserHomeActivity.thisCandidate;
 
         regNoInput = (EditText)findViewById(R.id.regno__input);
         regNoInput.setText(ApplyingCandidate.getRegistration_no());
@@ -55,7 +59,6 @@ public class RankRequestActivity extends AppCompatActivity {
         reason = (EditText)findViewById(R.id.reason_for_application_input);
         rank_appliedFor = (Spinner)findViewById(R.id.rank_applied_input);
         submitRequest = (Button)findViewById(R.id.request_submission_btn);
-
 
         submitRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +70,11 @@ public class RankRequestActivity extends AppCompatActivity {
                 qualificationText = present_qualification.getText().toString();
                 reasonText = reason.getText().toString();
 
+                RequestApplicationObject requestApplicationObject = new RequestApplicationObject(RequestApplicationViewActivity.RANK_REQUEST_TYPE,
+                                                                        ApplyingCandidate.getId(),regNoText,experience_text,qualificationText,reasonText,
+                                                                        ApplyingCandidate.getGroup(),0,rank.getId(),null);
+
+                submitRequestApplication(requestApplicationObject);
             }
         });
 
@@ -83,6 +91,58 @@ public class RankRequestActivity extends AppCompatActivity {
         new getRanks().execute();
 
     }
+
+    private void submitRequestApplication(RequestApplicationObject requestApplicationObject) {
+
+        showProgress.setMessage("Submitting Application..");
+        showProgress.show();
+        new submitRequest().execute(requestApplicationObject);
+
+    }
+
+
+    public class submitRequest extends AsyncTask<RequestApplicationObject,Void,RequestApplicationObject>{
+
+
+        @Override
+        protected void onPostExecute(RequestApplicationObject requestApplicationObject) {
+
+            Toast.makeText(RankRequestActivity.this, requestApiBackgroundTasks.getMessage(), Toast.LENGTH_LONG).show();
+            showProgress.dismiss();
+
+            if (requestApplicationObject!=null){
+
+                MyRequestsActivity.requestApplicationAdapter.addItem(requestApplicationObject);
+                finish();
+            }
+
+
+        }
+
+        @Override
+        protected RequestApplicationObject doInBackground(RequestApplicationObject... requestApplicationObjects) {
+
+            RequestApplicationObject returnedApplication;
+
+            synchronized (requestApiBackgroundTasks){
+
+                requestApiBackgroundTasks.submitRequest(requestApplicationObjects[0]);
+
+                try {
+                    requestApiBackgroundTasks.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                returnedApplication = requestApiBackgroundTasks.getRequestApplicationObject();
+
+            }
+
+            return returnedApplication;
+
+        }
+
+    }
+
 
 
     public void populateRanksSpinner(){

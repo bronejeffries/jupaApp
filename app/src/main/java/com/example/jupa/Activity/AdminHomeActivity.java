@@ -39,7 +39,9 @@ public class AdminHomeActivity extends AppCompatActivity {
     CardView groups, skills, ranks, institutions;
     ImageButton groups_icon, skills_icon;
     AlertDialog groupsDialog;
-    final static String GROUPS_SHOW = "group", SKILLS_SHOW = "skill", RANKS_SHOW = "rank", INSTITUTIONS_SHOW="institutions";
+    final static String GROUPS_SHOW = "group", SKILLS_SHOW = "skill", RANKS_SHOW = "rank"
+            ,INSTITUTIONS_SHOW="institutions"
+            ,APPLICATIONS_SHOW = "applications";
     private ArrayList<Skill> skillArrayList;
     private SkillsAdapter skillsAdapter;
     private RanksAdapter ranksAdapter;
@@ -74,6 +76,12 @@ public class AdminHomeActivity extends AppCompatActivity {
         showActivity(INSTITUTIONS_SHOW);
     }
 
+
+    public void ApplicationsClicked(View view){
+        showActivity(APPLICATIONS_SHOW);
+    }
+
+
     private void showActivity(String clicked) {
 
         switch (clicked){
@@ -92,7 +100,12 @@ public class AdminHomeActivity extends AppCompatActivity {
 
             case INSTITUTIONS_SHOW:
                 LaunchInstitutionsActivity();
-//
+                break;
+
+            case APPLICATIONS_SHOW:
+                LaunchApplicationsActivity();
+                break;
+
             default:
                 Toast.makeText(this, "Wrong Option", Toast.LENGTH_SHORT).show();
         }
@@ -102,6 +115,14 @@ public class AdminHomeActivity extends AppCompatActivity {
     private void LaunchInstitutionsActivity() {
 
         Intent intent = new Intent(this,InstitutionsActivity.class);
+        startActivity(intent);
+
+    }
+
+    private void LaunchApplicationsActivity() {
+
+        Intent intent = new Intent(this,ApplicationsActivity.class);
+        intent.putExtra(ApplicationsActivity.ADMIN_VIEW,true);
         startActivity(intent);
 
     }
@@ -326,7 +347,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                 return true;
 
             case R.id.logout_link:
-                Intent logoutIntent = new Intent(this, LoginActivity.class);
+                Intent logoutIntent = new Intent(this, LoginPromptActivity.class);
                 startActivity(logoutIntent);
                 return true;
             default:

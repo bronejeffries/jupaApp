@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@android:color/transparent"
     tools:context=".Activity.MyRequestsActivity">
 
     <Button
@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/button_gradient_background"
         android:text="@string/file_new_request"
         android:textColor="@color/white"
         android:textSize="18sp"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/white"
+        android:background="@android:color/transparent"
         android:id="@+id/requests_recycler_view"
         android:layout_below="@+id/file_new_request"
         android:layout_width="match_parent"

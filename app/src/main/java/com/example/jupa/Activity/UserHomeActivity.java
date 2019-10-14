@@ -32,7 +32,7 @@ import com.example.jupa.Helpers.showProgressbar;
 
 public class UserHomeActivity extends AppCompatActivity {
 
-    Candidate thisCandidate;
+    public static Candidate thisCandidate;
     CardView ViewMyProfileCard,ViewMyRequestsCard, ViewCandidatesCard, ViewGroupDetailsCard, ViewIncomingRequestsCard, ViewManageQuestionsCard;
     public final static String CANDIDATE_ROLE = "Candidate", ASSESSOR_ROLE= "Assessor", GROUP_ADMIN_ROLE = "Group Admin", ADMINISTRATOR_ROLE = "Administrator";
     GroupBackgroundApiTasks groupBackgroundApiTasks;
@@ -126,6 +126,10 @@ public class UserHomeActivity extends AppCompatActivity {
 
     public void ViewGroupIncomingRequests(View view){
 
+        Intent intent = new Intent(this,ApplicationsActivity.class);
+        intent.putExtra(ApplicationsActivity.GROUP_ADMIN_VIEW,true);
+        intent.putExtra(ApplicationsActivity.GROUP_ID,thisCandidate.getGroup());
+        startActivity(intent);
 
     }
 
@@ -216,7 +220,7 @@ public class UserHomeActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.logout_link:
-                Intent logoutIntent = new Intent(this, LoginActivity.class);
+                Intent logoutIntent = new Intent(this, LoginPromptActivity.class);
                 startActivity(logoutIntent);
                 return true;
             default:

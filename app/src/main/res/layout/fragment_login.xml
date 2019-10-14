@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".InstitutionLoginActivity">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.LoginFragment">
     <RelativeLayout
         android:id="@+id/rel_1"
         android:layout_alignParentTop="true"
@@ -16,25 +14,15 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_below="@+id/rel_1"
-        android:id="@+id/rel_2"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent">
-
-    </RelativeLayout>
 
     <androidx.cardview.widget.CardView
-        app:cardBackgroundColor="@color/white"
-        app:contentPadding="10dp"
+        android:layout_margin="10dp"
+        app:contentPaddingBottom="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:cardElevation="10dp"
+        app:cardElevation="25dp"
         app:cardCornerRadius="5dp">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,8 +41,8 @@
                     android:textSize="20sp"
                     android:padding="15dp"
                     android:hint="@string/prompt_email"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/colorAccent"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
                     android:layout_height="match_parent" />
             </LinearLayout>
 
@@ -72,27 +60,36 @@
                     android:layout_width="0dp"
                     android:textSize="20sp"
                     android:padding="15dp"
-                    android:hint="@string/code"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/colorAccent"
+                    android:hint="@string/prompt_password"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
                     android:layout_height="match_parent" />
             </LinearLayout>
 
             <Button
-                android:textAllCaps="false"
                 android:elevation="10dp"
+                android:textAllCaps="false"
                 android:id="@+id/login_btn"
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_sign_in_short"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/button_gradient_background"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/register_link"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="@string/register"/>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-
 </RelativeLayout>

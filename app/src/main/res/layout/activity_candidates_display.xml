@@ -30,9 +30,21 @@
             android:layout_weight="0.2"
             android:text="@string/search"
             android:textColor="@color/white"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/button_gradient_background"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:gravity="start|center_vertical"
+        android:id="@+id/search_warning"
+        android:drawablePadding="5dp"
+        android:drawableLeft="@drawable/ic_close_black_24dp"
+        android:drawableStart="@drawable/ic_close_black_24dp"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
     <androidx.recyclerview.widget.RecyclerView

@@ -2,6 +2,7 @@ package com.example.jupa.Question.Api;
 
 import android.content.Context;
 
+import com.example.jupa.Activity.UserHomeActivity;
 import com.example.jupa.Helpers.LoggedInUser;
 import com.example.jupa.Helpers.RetrofitSingleton;
 import com.example.jupa.Question.Api.Question.QuestionApiData;
@@ -29,7 +30,6 @@ public class QuestionApiBackgroundTasks {
     public String SUCCESS = "1", FAILED = "0",message;
     static QuestionsApiInterface questionspiInterface = RetrofitSingleton.getRetrofitInstance().create(QuestionsApiInterface.class);
 
-
     public QuestionApiBackgroundTasks(Context context) {
         this.context = context;
     }
@@ -45,7 +45,7 @@ public class QuestionApiBackgroundTasks {
 
     public void createQuestionCategory(QuestionCategory questionCategory){
 
-        Call<QuestionCategoryApiData> call = questionspiInterface.addQuestionCategory(questionCategory.getId());
+        Call<QuestionCategoryApiData> call = questionspiInterface.addQuestionCategory(questionCategory.getId(), UserHomeActivity.thisCandidate.getId());
         call.enqueue(new Callback<QuestionCategoryApiData>() {
             @Override
             public void onResponse(Call<QuestionCategoryApiData> call, Response<QuestionCategoryApiData> response) {
@@ -83,7 +83,7 @@ public class QuestionApiBackgroundTasks {
 
     public void createQuestion(Question question){
 
-        Integer current_user_id = LoggedInUser.getInstance().getLoggedInCandidate().getId();
+        Integer current_user_id = UserHomeActivity.thisCandidate.getId();
         Call<QuestionApiData> call = questionspiInterface.addQuestionToCategory(question.getCategory_id(),question.getTitle(),question.getQuestion_code(),current_user_id);
 
         call.enqueue(new Callback<QuestionApiData>() {
@@ -97,7 +97,9 @@ public class QuestionApiBackgroundTasks {
                         setQuestion(response.body().getQuestion());
 
                     }else {
+
                         setQuestion(null);
+
                     }
 
                     setMessage(response.body().getMessage());
@@ -197,6 +199,47 @@ public class QuestionApiBackgroundTasks {
 
                     setMessage(t.getMessage());
                     setQuestionArrayList(null);
+                    QuestionApiBackgroundTasks.this.notifyAll();
+                }
+            }
+        });
+
+    }
+
+    public void getQuestionById(int question_id){
+
+        Call<QuestionApiData> call = questionspiInterface.getQuestion(question_id);
+
+        call.enqueue(new Callback<QuestionApiData>() {
+            @Override
+            public void onResponse(Call<QuestionApiData> call, Response<QuestionApiData> response) {
+
+                synchronized (QuestionApiBackgroundTasks.this){
+
+                    if (response.body().getSuccess().equals(SUCCESS)){
+
+                        setQuestion(response.body().getQuestion());
+
+                    }else {
+
+                        setQuestionArrayList(null);
+                    }
+
+                    setMessage(response.body().getMessage());
+                    QuestionApiBackgroundTasks.this.notifyAll();
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<QuestionApiData> call, Throwable t) {
+
+                synchronized (QuestionApiBackgroundTasks.this){
+
+                    setMessage(t.getMessage());
+                    setQuestion(null);
                     QuestionApiBackgroundTasks.this.notifyAll();
                 }
             }

@@ -8,7 +8,7 @@
         android:id="@+id/group_card_view"
         android:layout_width="match_parent"
         app:cardCornerRadius="3dp"
-        app:cardElevation="10dp"
+        app:cardElevation="15dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
 
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
-                android:src="@drawable/ic_group"
+                app:srcCompat="@drawable/ic_group"
                 android:tint="@color/colorAccent"
                 android:background="@color/white"/>
 
@@ -38,25 +38,25 @@
                     android:id="@+id/group_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
                     android:textAllCaps="true"
                     android:textStyle="bold"
-                    android:padding="8dp"
+                    android:layout_marginBottom="3dp"
                     android:text="@string/group_name"/>
+
                 <TextView
                     android:id="@+id/group_admin_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:gravity="start|center"
+                    android:gravity="start"
                     android:text="@string/assign_admin"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:drawableTint="@color/colorPrimary"
                     android:drawableRight="@android:drawable/ic_menu_edit"
                     android:drawableEnd="@android:drawable/ic_menu_edit"
                     android:drawablePadding="10dp"
                     />
-
 
             </LinearLayout>
 

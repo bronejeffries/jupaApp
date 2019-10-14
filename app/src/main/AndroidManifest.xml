@@ -11,8 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InstitutionLoginActivity"></activity>
-        <activity android:name=".Activity.LoginPromptActivity" />
+        <activity android:name=".Activity.EditProfileActivity"></activity>
+        <activity android:name=".Activity.ApplicationsActivity" />
+        <activity
+            android:name=".Activity.ResultSearchActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activity.InstitutionResultsActivity" />
+        <activity android:name=".Activity.RequestApplicationViewActivity" />
+        <activity android:name=".Activity.Assessment_reportActivity" />
+        <activity android:name=".Activity.LoginPromptActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activity.RankRequestActivity" />
         <activity android:name=".Activity.AssessorRequestActivity" />
         <activity android:name=".Activity.MyRequestsActivity" />
@@ -31,13 +44,6 @@
         <activity android:name=".Activity.GroupActivity" />
         <activity android:name=".Activity.AdminHomeActivity" />
         <activity android:name=".Activity.SplashActivity" />
-        <activity android:name=".Activity.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".Activity.RegistrationActivity" />
         <activity android:name=".Activity.GroupsActivity" />
         <activity android:name=".Activity.MainActivity" />

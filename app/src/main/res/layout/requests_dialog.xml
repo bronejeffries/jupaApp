@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="8dip"
+    app:cardBackgroundColor="@android:color/transparent"
     app:cardCornerRadius="5dip"
     app:contentPadding="6dip"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:background="@android:color/transparent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -17,7 +18,7 @@
             android:enabled="false"
             android:layout_margin="5dip"
             android:id="@+id/assessor_request_btn"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/button_gradient_background"
             android:textAllCaps="false"
             android:textSize="18sp"
             android:text="@string/become_assessor_request"
@@ -30,7 +31,7 @@
             android:enabled="false"
             android:layout_margin="5dip"
             android:id="@+id/rank_request_btn"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/button_gradient_background"
             android:textAllCaps="false"
             android:textSize="19sp"
             android:text="@string/apply_for_a_higher_rank"

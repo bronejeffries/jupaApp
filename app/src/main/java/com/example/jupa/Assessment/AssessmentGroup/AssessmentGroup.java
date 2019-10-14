@@ -20,10 +20,16 @@ public class AssessmentGroup implements Parcelable {
     @SerializedName("assessor_id")
     int assessor_id;
 
-    public AssessmentGroup(Integer project_id, String name, int assessor_id) {
+    @SerializedName("Candidate_id")
+    int candidate_id;
+
+    public AssessmentGroup(Integer project_id, String name, int assessor_id, int Candidate_id) {
+
         this.project_id = project_id;
         this.name = name;
         this.assessor_id = assessor_id;
+        this.candidate_id = Candidate_id;
+
     }
 
     protected AssessmentGroup(Parcel in) {
@@ -35,6 +41,7 @@ public class AssessmentGroup implements Parcelable {
         name = in.readString();
         id = in.readInt();
         assessor_id = in.readInt();
+        candidate_id = in.readInt();
     }
 
     @Override
@@ -48,6 +55,7 @@ public class AssessmentGroup implements Parcelable {
         dest.writeString(name);
         dest.writeInt(id);
         dest.writeInt(assessor_id);
+        dest.writeInt(candidate_id);
     }
 
     @Override
@@ -97,5 +105,13 @@ public class AssessmentGroup implements Parcelable {
 
     public void setAssessor_id(int assessor_id) {
         this.assessor_id = assessor_id;
+    }
+
+    public int getCandidate_id() {
+        return candidate_id;
+    }
+
+    public void setCandidate_id(int candidate_id) {
+        this.candidate_id = candidate_id;
     }
 }

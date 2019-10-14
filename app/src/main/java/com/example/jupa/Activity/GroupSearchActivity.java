@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,7 +39,7 @@ public class GroupSearchActivity extends AppCompatActivity {
     Button search_btn;
     ProgressBar progressBar;
     GroupBackgroundApiTasks groupBackgroundApiTasks;
-    public static GroupSearchActivity.searchObject activitySearchObject;
+    public GroupSearchActivity.searchObject activitySearchObject;
     final static int LIMIT = 20;
     private Rank rank;
 
@@ -136,6 +138,7 @@ public class GroupSearchActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Candidate> candidateArrayList) {
 
             progressBar.setVisibility(View.GONE);
+
             if (candidateArrayList.size()>0 ){
 
             showResult(candidateArrayList);
@@ -173,14 +176,15 @@ public class GroupSearchActivity extends AppCompatActivity {
         groupActivityIntent.putExtra(GroupActivity.SEARCH_LIST,candidateArrayList);
         groupActivityIntent.putExtra(GroupActivity.GROUP_TAG, group);
         groupActivityIntent.putExtra(ProfileActivity.RANK_EXTRA,rank);
+        groupActivityIntent.putExtra(GroupActivity.SEARCH_OBJECT_EXTRA,activitySearchObject);
         startActivity(groupActivityIntent);
 
     }
 
-    public static class searchObject{
+    public static class searchObject implements Parcelable {
 
-        Integer rank_id, group_id, last, limit;
-        String status;
+        Integer rank_id, group_id, last, limit,institution_id,assessor_id;
+        String status,member_level,requestType;
 
 
         public searchObject(Integer rank_id, Integer group_id, Integer last, Integer limit, String status) {
@@ -189,6 +193,86 @@ public class GroupSearchActivity extends AppCompatActivity {
             this.last = last;
             this.limit = limit;
             this.status = status;
+        }
+
+        protected searchObject(Parcel in) {
+            if (in.readByte() == 0) {
+                rank_id = null;
+            } else {
+                rank_id = in.readInt();
+            }
+            if (in.readByte() == 0) {
+                group_id = null;
+            } else {
+                group_id = in.readInt();
+            }
+            if (in.readByte() == 0) {
+                last = null;
+            } else {
+                last = in.readInt();
+            }
+            if (in.readByte() == 0) {
+                limit = null;
+            } else {
+                limit = in.readInt();
+            }
+            if (in.readByte() == 0) {
+                institution_id = null;
+            } else {
+                institution_id = in.readInt();
+            }
+            if (in.readByte() == 0) {
+                assessor_id = null;
+            } else {
+                assessor_id = in.readInt();
+            }
+            status = in.readString();
+            member_level = in.readString();
+            requestType = in.readString();
+        }
+
+        public static final Creator<searchObject> CREATOR = new Creator<searchObject>() {
+            @Override
+            public searchObject createFromParcel(Parcel in) {
+                return new searchObject(in);
+            }
+
+            @Override
+            public searchObject[] newArray(int size) {
+                return new searchObject[size];
+            }
+        };
+
+        public String getRequestType() {
+            return requestType;
+        }
+
+        public void setRequestType(String requestType) {
+            this.requestType = requestType;
+        }
+
+        public Integer getAssessor_id() {
+            return assessor_id;
+        }
+
+        public void setAssessor_id(Integer assessor_id) {
+            this.assessor_id = assessor_id;
+        }
+
+        public Integer getInstitution_id() {
+            return institution_id;
+        }
+
+        public void setInstitution_id(Integer institution_id) {
+            this.institution_id = institution_id;
+        }
+
+        public String getMember_level() {
+            return member_level;
+        }
+
+        public void setMember_level(String member_level) {
+            this.member_level = member_level;
         }
 
         public Integer getRank_id() {
@@ -229,6 +313,55 @@ public class GroupSearchActivity extends AppCompatActivity {
 
         public void setStatus(String status) {
             this.status = status;
+        }
+
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            if (rank_id == null) {
+                parcel.writeByte((byte) 0);
+            } else {
+                parcel.writeByte((byte) 1);
+                parcel.writeInt(rank_id);
+            }
+            if (group_id == null) {
+                parcel.writeByte((byte) 0);
+            } else {
+                parcel.writeByte((byte) 1);
+                parcel.writeInt(group_id);
+            }
+            if (last == null) {
+                parcel.writeByte((byte) 0);
+            } else {
+                parcel.writeByte((byte) 1);
+                parcel.writeInt(last);
+            }
+            if (limit == null) {
+                parcel.writeByte((byte) 0);
+            } else {
+                parcel.writeByte((byte) 1);
+                parcel.writeInt(limit);
+            }
+            if (institution_id == null) {
+                parcel.writeByte((byte) 0);
+            } else {
+                parcel.writeByte((byte) 1);
+                parcel.writeInt(institution_id);
+            }
+            if (assessor_id == null) {
+                parcel.writeByte((byte) 0);
+            } else {
+                parcel.writeByte((byte) 1);
+                parcel.writeInt(assessor_id);
+            }
+            parcel.writeString(status);
+            parcel.writeString(member_level);
+            parcel.writeString(requestType);
         }
     }
 

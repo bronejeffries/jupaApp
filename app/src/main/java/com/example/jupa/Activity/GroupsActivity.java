@@ -5,6 +5,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.jupa.Group.Adapter.GroupsAdapter;
 import com.example.jupa.Group.Api.GroupBackgroundApiTasks;
 import com.example.jupa.Group.Group;
+import com.example.jupa.Institution.Institution;
 import com.example.jupa.R;
 import com.example.jupa.Helpers.showProgressbar;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -26,7 +28,9 @@ import java.util.ArrayList;
 public class GroupsActivity extends AppCompatActivity {
 
 
-    public static final String INTENT_EXTRA = "intent_extra" ;
+    public static final String INTENT_EXTRA = "intent_extra", INTENT_PURPOSE = "purpose",
+                                INSTITUTION_EXTRA = "institution";
+
     FloatingActionButton floatingActionButton;
     BottomSheetDialog addGroupDialog;
     RecyclerView recyclerView;
@@ -35,6 +39,10 @@ public class GroupsActivity extends AppCompatActivity {
     showProgressbar showprogress;
     private GroupBackgroundApiTasks groupBackgroundApiTasks;
     private String message;
+    public static String viewPurpose;
+    public static Institution institution;
+    Intent intent;
+    public static boolean institution_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +54,27 @@ public class GroupsActivity extends AppCompatActivity {
         showprogress.setMessage("Loading..");
         showprogress.show();
 
+        intent = getIntent();
+        institution = intent.getParcelableExtra(INSTITUTION_EXTRA);
+
         floatingActionButton = (FloatingActionButton)findViewById(R.id.fab);
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAddGroupDialog();
-            }
-        });
+        if (institution == null){
+
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showAddGroupDialog();
+                }
+            });
+
+        }else {
+
+            institution_view = true;
+            viewPurpose = intent.getStringExtra(INTENT_PURPOSE);
+
+        }
+
 
         adapter = GroupsAdapter.getInstance(groupArrayList,this);
         groupArrayList = adapter.getGroupArrayList();
@@ -137,7 +158,6 @@ public class GroupsActivity extends AppCompatActivity {
             return returnedGroup;
         }
     }
-
 
     private void showAddGroupDialog() {
 

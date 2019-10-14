@@ -1,5 +1,7 @@
 package com.example.jupa.Group.Api;
 
+import com.example.jupa.Candidate.Api.CandidateListApiData;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -30,6 +32,19 @@ public interface GroupApi_Interface {
                                                               @Query("enroll_status") String status, @Query("last") Integer last,
                                                               @Query("limit") Integer limit );
 
+    @GET("get_candidates_ingroup_byinstitute.php")
+    Call<GroupCandidatesListApiData> searchInsititutionCandidatesInAgroup(@Query("group_id") Integer group_id, @Query("institution_id") Integer institution_id,
+                                                              @Query("member_level") String member_level, @Query("last") Integer last,
+                                                              @Query("limit") Integer limit );
+
+    @GET("get_memberlevels_byinstitution.php")
+    Call<CandidateListApiData> searchInsititutionCandidatesbyMemberLevel(@Query("institution_id") Integer institution_id,
+                                                                          @Query("member_level") String member_level, @Query("last") Integer last,
+                                                                          @Query("limit") Integer limit );
+
+    @GET("get_candidates_byassessor.php")
+    Call<CandidateListApiData> getCandidatesByAssessor(@Query("assessor_id") Integer assessor_id, @Query("institution_id") Integer institution_id, @Query("last") Integer last,
+                                                       @Query("limit") Integer limit);
 
 
 }

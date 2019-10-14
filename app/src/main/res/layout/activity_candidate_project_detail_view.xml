@@ -46,7 +46,7 @@
 
                 <TextView
                     android:text="@string/location"
-                    android:textSize="22sp"
+                    android:textSize="14sp"
                     android:padding="12dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                 <TextView
                     android:hint="@string/location"
                     android:textColorHint="@color/colorAccent"
-                    android:textSize="21sp"
+                    android:textSize="13sp"
                     android:textStyle="normal"
                     android:id="@+id/project_location_input"
                     android:layout_width="match_parent"
@@ -71,7 +71,7 @@
 
                 <TextView
                     android:text="@string/description"
-                    android:textSize="22sp"
+                    android:textSize="14sp"
                     android:padding="12dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                 <TextView
                     android:hint="@string/location"
                     android:textColorHint="@color/colorAccent"
-                    android:textSize="21sp"
+                    android:textSize="13sp"
                     android:textStyle="normal"
                     android:id="@+id/project_description_input"
                     android:layout_width="match_parent"
@@ -96,7 +96,7 @@
 
                 <TextView
                     android:text="@string/date_of_completion"
-                    android:textSize="22sp"
+                    android:textSize="14sp"
                     android:padding="12dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                 <TextView
                     android:hint="@string/date_of_completion"
                     android:textColorHint="@color/colorAccent"
-                    android:textSize="21sp"
+                    android:textSize="13sp"
                     android:textStyle="normal"
                     android:id="@+id/project_date_completion_input"
                     android:layout_width="match_parent"
@@ -121,7 +121,7 @@
 
                 <TextView
                     android:text="@string/client_name"
-                    android:textSize="22sp"
+                    android:textSize="14sp"
                     android:padding="12dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
@@ -130,7 +130,7 @@
                 <TextView
                     android:hint="@string/client_name"
                     android:textColorHint="@color/colorAccent"
-                    android:textSize="21sp"
+                    android:textSize="13sp"
                     android:textStyle="normal"
                     android:id="@+id/project_client_name_input"
                     android:layout_width="match_parent"
@@ -146,7 +146,7 @@
 
                 <TextView
                     android:text="@string/client_contact"
-                    android:textSize="22sp"
+                    android:textSize="14sp"
                     android:padding="12dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
@@ -155,7 +155,7 @@
                 <TextView
                     android:hint="@string/client_contact"
                     android:textColorHint="@color/colorAccent"
-                    android:textSize="21sp"
+                    android:textSize="13sp"
                     android:textStyle="normal"
                     android:id="@+id/project_client_contact_input"
                     android:layout_width="match_parent"
@@ -172,7 +172,7 @@
 
                 <TextView
                     android:text="@string/client_email"
-                    android:textSize="22sp"
+                    android:textSize="14sp"
                     android:padding="12dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
@@ -181,7 +181,7 @@
                 <TextView
                     android:hint="@string/client_email"
                     android:textColorHint="@color/colorAccent"
-                    android:textSize="21sp"
+                    android:textSize="13sp"
                     android:textStyle="normal"
                     android:id="@+id/project_client_email_input"
                     android:layout_width="match_parent"
@@ -198,7 +198,7 @@
 
                 <TextView
                     android:text="@string/client_address"
-                    android:textSize="22sp"
+                    android:textSize="14sp"
                     android:padding="12dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
@@ -207,7 +207,7 @@
                 <TextView
                     android:hint="@string/client_address"
                     android:textColorHint="@color/colorAccent"
-                    android:textSize="21sp"
+                    android:textSize="13sp"
                     android:textStyle="normal"
                     android:id="@+id/project_client_address_input"
                     android:layout_width="match_parent"
@@ -226,7 +226,7 @@
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/button_gradient_background"
                     android:text="@string/view_assessments"
                     android:textColor="@color/white"
                     android:textSize="18sp"

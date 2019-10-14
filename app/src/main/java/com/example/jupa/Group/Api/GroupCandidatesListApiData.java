@@ -1,25 +1,15 @@
 package com.example.jupa.Group.Api;
 
 import com.example.jupa.Candidate.Candidate;
+import com.example.jupa.Question.Api.ApiObject;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class GroupCandidatesListApiData {
-
-    @SerializedName("success")
-    String success;
+public class GroupCandidatesListApiData extends ApiObject {
 
     @SerializedName("data")
     ArrayList<Candidate> groupCandidates;
-
-    public String getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(String success) {
-        this.success = success;
-    }
 
     public ArrayList<Candidate> getGroupCandidates() {
         return groupCandidates;

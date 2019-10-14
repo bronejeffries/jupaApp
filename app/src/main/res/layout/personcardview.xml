@@ -18,7 +18,7 @@
             android:gravity="start|center_vertical"
             android:padding="8dp"
             android:id="@+id/name"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="normal|bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,6 +26,8 @@
             />
 
         <LinearLayout
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -36,7 +38,7 @@
                 android:layout_width="0dip"
                 android:layout_weight="0.3"
                 android:src="@drawable/construction_icon_png_5"
-                android:layout_height="175dip" />
+                android:layout_height="match_parent" />
 
             <LinearLayout
                 android:gravity="center_horizontal|center"
@@ -56,7 +58,7 @@
                         android:layout_weight="0.2"
                         android:layout_height="wrap_content"
                         android:text="@string/role"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         />
                     <TextView
@@ -65,10 +67,7 @@
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/role"
-                        android:textSize="18sp"
-                        android:drawableEnd="@android:drawable/ic_menu_edit"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:drawableTint="@color/colorPrimary"
+                        android:textSize="15sp"
                         />
                 </LinearLayout>
 
@@ -81,7 +80,7 @@
                         android:layout_weight="0.3"
                         android:layout_height="wrap_content"
                         android:text="@string/status"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         />
                     <TextView
@@ -90,7 +89,7 @@
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/status"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         />
                 </LinearLayout>
 
@@ -103,7 +102,7 @@
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/country"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         />
 
@@ -113,7 +112,7 @@
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/country"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         />
 
                 </LinearLayout>
@@ -127,7 +126,7 @@
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/available"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         />
                     <TextView
@@ -136,7 +135,7 @@
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/available"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         />
                 </LinearLayout>
 
@@ -149,13 +148,14 @@
                         android:layout_width="0dip"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
-                        android:textSize="21sp"
+                        android:textSize="13sp"
                         android:gravity="end|center_vertical"
                         android:textColor="@color/colorPrimary"
                         android:text="@string/view_profile"
                         android:drawableEnd="@android:drawable/arrow_down_float"
                         android:drawableRight="@android:drawable/arrow_down_float"
                         android:drawableTint="@color/colorPrimaryDark"
+                        android:drawablePadding="6dp"
                         />
                 </LinearLayout>
 

@@ -1,6 +1,8 @@
 package com.example.jupa.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,6 +12,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -26,6 +31,7 @@ import com.example.jupa.Candidate.Category.CandidateCategory;
 import com.example.jupa.Candidate.Category.Api.CandidateCategoryBackgroundApiTasks;
 import com.example.jupa.Group.Api.GroupBackgroundApiTasks;
 import com.example.jupa.Group.Group;
+import com.example.jupa.Helpers.LoggedInInstitution;
 import com.example.jupa.Helpers.LoggedInUser;
 import com.example.jupa.R;
 import com.example.jupa.Rank.Rank;
@@ -50,7 +56,8 @@ public class ProfileActivity extends AppCompatActivity {
     SkillsAdapter skillsAdapter;
     TextView profile_name, rankView, role, status, available, date_available ,address ,country, state, city, contact, email, date_of_birth, group_name, category,bottom_sheet_title;
     ProgressBar rankProgressLoader, categoryProgressLoader,groupProgressLoader;
-    FloatingActionButton createNew;
+    FloatingActionButton createNew,showReportbtn, Viewmore, viewAssessorCandidate;
+    CardView moreCardView;
     Integer candidate_id;
     showProgressbar showProgress;
     CandidateBackgroundApiTasks candidateBackgroundApiTasks;
@@ -58,10 +65,12 @@ public class ProfileActivity extends AppCompatActivity {
     RankBackgroundApiTasks rankBackgroundApiTasks;
     GroupBackgroundApiTasks groupBackgroundApiTasks;
     public Candidate loggedInCandidate =  LoggedInUser.getInstance().getLoggedInCandidate();
-    Boolean ProfileOwner = false, groupAdmin = false;
+    Boolean ProfileOwner = false, groupAdmin = false, expanded_more = false;
     private Rank candidateRank;
     private CandidateCategory candidateCategory;
     private Group group;
+    public boolean candidates_view;
+    public static boolean profile_edited =false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -82,9 +91,6 @@ public class ProfileActivity extends AppCompatActivity {
         group = intent.getParcelableExtra(GroupActivity.GROUP_TAG);
 
         candidate_id = candidate.getId();
-
-        ProfileOwner = loggedInCandidate.getId().equals(candidate_id);
-
 
         profile_name = (TextView)findViewById(R.id.profile_name);
 
@@ -128,6 +134,29 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+
+        showReportbtn = (FloatingActionButton)findViewById(R.id.view_assessment_report);
+
+        moreCardView = (CardView)findViewById(R.id.more_card);
+        Viewmore = (FloatingActionButton)findViewById(R.id.view_more);
+        viewAssessorCandidate = (FloatingActionButton)findViewById(R.id.view_candidates);
+        Viewmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!getExpanded_more()){
+
+                    moreCardView.setVisibility(View.VISIBLE);
+                    setExpanded_more(true);
+
+                }else {
+
+                    moreCardView.setVisibility(View.GONE);
+                    setExpanded_more(false);
+
+                }
+            }
+        });
+
 
         populateViews();
 //        attachOnClickListenerToAttachAssessor();
@@ -182,6 +211,23 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    public void viewCandidatesClicked(View view){
+
+        candidates_view = true;
+        Intent candidates_intent = new Intent(ProfileActivity.this,GroupActivity.class);
+        candidates_intent.putExtra(GroupActivity.ASSESSOR,candidate);
+        candidates_intent.putExtra(GroupActivity.CANDIDATES_VIEW,candidates_view);
+        candidates_intent.putExtra(GroupActivity.INSTITUTION,LoggedInInstitution.getInstance().getLoggedInInstitution());
+        startActivity(candidates_intent);
+
+    }
+
+    public void showReportClicked(View view){
+
+        Intent intent = new Intent(ProfileActivity.this,Assessment_reportActivity.class);
+        startActivity(intent);
+
+    }
 
 //    public void attachOnClickListenerToAttachAssessor() {
 //
@@ -243,36 +289,36 @@ public class ProfileActivity extends AppCompatActivity {
         email.setText(candidate.getEmail());
         date_of_birth.setText(candidate.getDate_of_birth());
 
-        if (!UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.GROUP_ADMIN_ROLE)){
+        if (loggedInCandidate!=null) {
 
-            status.setCompoundDrawables(null,null,null,null);
+            ProfileOwner = loggedInCandidate.getId().equals(candidate_id);
 
-        }else{
+            if (!UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.GROUP_ADMIN_ROLE)){
+
+                status.setCompoundDrawables(null,null,null,null);
+
+            }else{
 
 //  TODO: attach status click listener
 
+            }
+
+        }else {
+
+            status.setCompoundDrawables(null,null,null,null);
+            ProfileOwner = false;
+
         }
 
-        if (!ProfileOwner){
-            available.setCompoundDrawables(null,null,null,null);
-            address.setCompoundDrawables(null,null,null,null);
-            country.setCompoundDrawables(null,null,null,null);
-            state.setCompoundDrawables(null,null,null,null);
-            city.setCompoundDrawables(null,null,null,null);
-            contact.setCompoundDrawables(null,null,null,null);
-            email.setCompoundDrawables(null,null,null,null);
-            date_of_birth.setCompoundDrawables(null,null,null,null);
-            group_name.setCompoundDrawables(null,null,null,null);
-            category.setCompoundDrawables(null,null,null,null);
-            date_available.setCompoundDrawables(null,null,null,null);
-        }
 
 ////        fetch the candidate's rank
         if (candidateRank == null){
             rankProgressLoader.setVisibility(View.VISIBLE);
             new getCandidateRank().execute(candidate.getRank_id());
         }else {
+
             rankView.setText(candidateRank.getName());
+
         }
 //
 ////        fetch the candidate's category
@@ -334,6 +380,7 @@ public class ProfileActivity extends AppCompatActivity {
         skillsAdapter = new SkillsAdapter(candidate.getCandidateSkills(),this);
         skillsListView.setAdapter(skillsAdapter);
 //        Toast.makeText(this, String.valueOf(skillsAdapter.getCount()), Toast.LENGTH_SHORT).show();
+
     }
 
     private void populateProjects() {
@@ -388,7 +435,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-
     public class getCandidateCategory extends AsyncTask<Integer,Void,CandidateCategory>{
 
         @Override
@@ -398,7 +444,7 @@ public class ProfileActivity extends AppCompatActivity {
                 candidateCategory = returnedcategory;
                 category.setText(candidateCategory.getName());
             }else {
-                Toast.makeText(ProfileActivity.this, rankBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, candidateCategoryBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
             categoryProgressLoader.setVisibility(View.GONE);
@@ -423,6 +469,55 @@ public class ProfileActivity extends AppCompatActivity {
 
             return returnedCandidateCategory;
         }
+    }
+
+    public class updateCandidate extends AsyncTask<Candidate,Void,Candidate>{
+
+        @Override
+        protected void onPostExecute(Candidate returnedCandidate) {
+
+            if (returnedCandidate!=null){
+
+                candidate = returnedCandidate;
+
+            }else {
+
+                Toast.makeText(ProfileActivity.this, candidateBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+
+        }
+
+        @Override
+        protected Candidate doInBackground(Candidate... candidates) {
+
+            Candidate returnedCandidate;
+
+            synchronized (candidateBackgroundApiTasks){
+
+
+                candidateBackgroundApiTasks.updateCandidate(candidates[0]);
+
+                try {
+
+
+                    candidateBackgroundApiTasks.wait();
+
+
+                } catch (InterruptedException e) {
+
+                    e.printStackTrace();
+
+                }
+
+                returnedCandidate = candidateBackgroundApiTasks.getCandidate();
+
+            }
+
+            return returnedCandidate;
+
+        }
+
     }
 
     public class getCandidateGroup extends AsyncTask<Integer,Void,Group>{
@@ -501,5 +596,44 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    public Boolean getExpanded_more() {
+        return expanded_more;
+    }
 
+    public void setExpanded_more(Boolean expanded_more) {
+        this.expanded_more = expanded_more;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.profile_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case R.id.edit_profile:
+                Intent intent = new Intent(ProfileActivity.this,EditProfileActivity.class);
+                intent.putExtra(EditProfileActivity.CANDIDATE_EXTRA,candidate);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Toast.makeText(this, "Im back Restart "+String.valueOf(profile_edited), Toast.LENGTH_SHORT).show();
+
+    }
 }

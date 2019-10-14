@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/white"
     tools:context=".Activity.GroupsActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/groups_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:listitem="@layout/groupcard_view"
         android:clipToPadding="false"
         android:scrollbars="vertical">
     </androidx.recyclerview.widget.RecyclerView>
-
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -24,10 +24,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:backgroundTint="@color/colorAccent"
-        android:src="@android:drawable/ic_input_add"
-        app:fabCustomSize="80dp"/>
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"/>
 
 
 </RelativeLayout>

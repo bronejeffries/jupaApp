@@ -83,12 +83,15 @@ public class Candidate implements Parcelable {
     @SerializedName("city_id")
     Integer city_id;
 
+    @SerializedName("institution_id")
+    Integer institution_id;
 
     ArrayList<Skill> candidateSkills;
 
     Group Candidate_group;
 
     ArrayList<CandidateProject> CandidateProjectsList = new ArrayList<>();
+
 
 
     public Candidate(@Nullable Integer id, String registration_no, String first_name, String last_name, String family_name, String gender, String email, String date_of_birth, String mobile_number, String other_number, String photo_url, String address, String education, Integer group, Integer category_id ,@Nullable Integer rank_id,@Nullable Integer country_id,@Nullable Integer state_id, @Nullable Integer city_id) {
@@ -103,12 +106,8 @@ public class Candidate implements Parcelable {
         this.mobile_number = mobile_number;
         this.other_number = other_number;
         this.photo_url = photo_url;
-        this.available = "available";
-        this.date_available = "Now";
         this.address = address;
-        this.role = "Candidate";
         this.education = education;
-        this.status = "Pending";
         this.group = group;
         this.rank_id = rank_id;
         this.country_id = country_id;
@@ -116,6 +115,7 @@ public class Candidate implements Parcelable {
         this.city_id = city_id;
         this.category_id = category_id;
     }
+
 
     protected Candidate(Parcel in) {
         if (in.readByte() == 0) {
@@ -169,9 +169,90 @@ public class Candidate implements Parcelable {
         } else {
             city_id = in.readInt();
         }
+        if (in.readByte() == 0) {
+            institution_id = null;
+        } else {
+            institution_id = in.readInt();
+        }
         candidateSkills = in.createTypedArrayList(Skill.CREATOR);
         Candidate_group = in.readParcelable(Group.class.getClassLoader());
         CandidateProjectsList = in.createTypedArrayList(CandidateProject.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
+        dest.writeString(registration_no);
+        dest.writeString(first_name);
+        dest.writeString(last_name);
+        dest.writeString(family_name);
+        dest.writeString(gender);
+        dest.writeString(email);
+        dest.writeString(date_of_birth);
+        dest.writeString(mobile_number);
+        dest.writeString(other_number);
+        dest.writeString(photo_url);
+        dest.writeString(available);
+        dest.writeString(date_available);
+        dest.writeString(address);
+        dest.writeString(role);
+        if (category_id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(category_id);
+        }
+        dest.writeString(education);
+        dest.writeString(status);
+        if (group == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(group);
+        }
+        if (rank_id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(rank_id);
+        }
+        if (country_id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(country_id);
+        }
+        if (state_id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(state_id);
+        }
+        if (city_id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(city_id);
+        }
+        if (institution_id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(institution_id);
+        }
+        dest.writeTypedList(candidateSkills);
+        dest.writeParcelable(Candidate_group, flags);
+        dest.writeTypedList(CandidateProjectsList);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Candidate> CREATOR = new Creator<Candidate>() {
@@ -398,74 +479,12 @@ public class Candidate implements Parcelable {
         return this.getFirst_name()+" "+this.getLast_name()+" "+this.getFamily_name();
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public Integer getInstitution_id() {
+        return institution_id;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        if (id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(id);
-        }
-        parcel.writeString(registration_no);
-        parcel.writeString(first_name);
-        parcel.writeString(last_name);
-        parcel.writeString(family_name);
-        parcel.writeString(gender);
-        parcel.writeString(email);
-        parcel.writeString(date_of_birth);
-        parcel.writeString(mobile_number);
-        parcel.writeString(other_number);
-        parcel.writeString(photo_url);
-        parcel.writeString(available);
-        parcel.writeString(date_available);
-        parcel.writeString(address);
-        parcel.writeString(role);
-        if (category_id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(category_id);
-        }
-        parcel.writeString(education);
-        parcel.writeString(status);
-        if (group == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(group);
-        }
-        if (rank_id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(rank_id);
-        }
-        if (country_id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(country_id);
-        }
-        if (state_id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(state_id);
-        }
-        if (city_id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(city_id);
-        }
-        parcel.writeTypedList(candidateSkills);
-        parcel.writeParcelable(Candidate_group, i);
-        parcel.writeTypedList(CandidateProjectsList);
+    public void setInstitution_id(Integer institution_id) {
+        this.institution_id = institution_id;
     }
 }
 

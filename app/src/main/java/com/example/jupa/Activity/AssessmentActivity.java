@@ -36,7 +36,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
 
     public static Candidate assessedCandidate;
-    CandidateProject candidateProject;
+    public static CandidateProject candidateProject;
     Intent intent;
     public final static String ASSESSMENT_GROUP_EXTRA = "assessment_group";
     public static AssessmentGroup assessmentGroup;
@@ -71,7 +71,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
         assessedCandidate = ProfileActivity.candidate;
 
-        categoriesAdapter = new CategoriesAdapter(true,null,this);
+        categoriesAdapter = new CategoriesAdapter(true,null,this,false);
         linearLayoutManager = new LinearLayoutManager(this);
 
         questionCategoriesRecyclerView = (RecyclerView)findViewById(R.id.questions_recycler_view);
@@ -87,8 +87,7 @@ public class AssessmentActivity extends AppCompatActivity {
         showProgress.setMessage("Loading questions");
         showProgress.show();
 
-        new fetchAssessments().execute(assessmentGroup.getId());
-
+        new fetchAssessments().execute(assessedCandidate.getId());
 
     }
 
@@ -151,7 +150,8 @@ public class AssessmentActivity extends AppCompatActivity {
         alert.setPositiveButton(getResources().getString(R.string.add_group), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                showProgress.setMessage("Saving..");
+                showProgress.show();
                 new makeAssessments().execute(archivedAssessment);
 
             }
@@ -214,7 +214,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
             synchronized (candidateBackgroundApiTasks){
 
-                candidateBackgroundApiTasks.getAssessmentsInAssessmentGroup(integers[0]);
+                candidateBackgroundApiTasks.getCandidateAssessment(integers[0]);
                 try {
                     candidateBackgroundApiTasks.wait();
                 } catch (InterruptedException e) {
@@ -227,13 +227,15 @@ public class AssessmentActivity extends AppCompatActivity {
         }
     }
 
-
-    public class makeAssessments extends  AsyncTask<ArrayList<Assessment>,Void,Void>{
+    public class makeAssessments extends  AsyncTask<ArrayList<Assessment>,Void,Void> {
 
         @Override
         protected void onPostExecute(Void aVoid) {
 
-            Toast.makeText(AssessmentActivity.this, "Assessments Saved Successfully", Toast.LENGTH_SHORT).show();
+            showProgress.dismiss();
+            archivedAssessment.clear();
+            Toast.makeText(AssessmentActivity.this, candidateBackgroundApiTasks.getMessage(), Toast.LENGTH_SHORT).show();
+            onBackPressed();
 
         }
 

@@ -14,11 +14,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jupa.Candidate.Api.CandidateBackgroundApiTasks;
 import com.example.jupa.Candidate.Candidate;
 import com.example.jupa.Candidate.Adapters.CandidatesAdapter;
+import com.example.jupa.Helpers.LoggedInUser;
 import com.example.jupa.R;
 
 import java.util.ArrayList;
@@ -27,13 +29,14 @@ public class CandidatesDisplayActivity extends AppCompatActivity {
 
 
     EditText searchArea;
+    TextView search_warning;
     ProgressBar progressBar;
     Button searchButton;
     RecyclerView recyclerView;
     CandidatesAdapter candidatesAdapter;
     ArrayList<Candidate> candidateArrayList;
     CandidateBackgroundApiTasks candidateBackgroundApiTasks;
-
+    Boolean warningCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,9 @@ public class CandidatesDisplayActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar = (ProgressBar)findViewById(R.id.search_progress_bar);
         searchButton = (Button) findViewById(R.id.search_btn);
+        search_warning = (TextView)findViewById(R.id.search_warning);
+
+        warningCheck = LoggedInUser.getInstance().getLoggedInCandidate() != null;
 
         candidateBackgroundApiTasks = CandidateBackgroundApiTasks.getInstance(this);
 
@@ -84,7 +90,30 @@ public class CandidatesDisplayActivity extends AppCompatActivity {
 
     private void runSearch(String toString) {
 
+        dismissWarning();
         new fetchCandidateProfile().execute(toString);
+
+    }
+
+    private void dismissWarning(){
+
+        search_warning.setVisibility(View.GONE);
+
+    }
+
+    public void showWarning(Candidate candidate){
+
+        if (warningCheck){
+
+            if (!UserHomeActivity.thisCandidate.getGroup().equals(candidate.getGroup())){
+
+                search_warning.setText(getResources().getString(R.string.assessor_warning));
+                search_warning.setVisibility(View.VISIBLE);
+
+            }
+
+        }
+
 
     }
 
@@ -99,6 +128,8 @@ public class CandidatesDisplayActivity extends AppCompatActivity {
                 candidatesAdapter.getArrayList().add(candidate);
                 candidatesAdapter.notifyDataSetChanged();
                 recyclerView.setVisibility(View.VISIBLE);
+
+                showWarning(candidate);
 
             }else {
 

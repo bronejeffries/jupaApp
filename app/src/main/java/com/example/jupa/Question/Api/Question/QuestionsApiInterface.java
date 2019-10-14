@@ -31,6 +31,8 @@ public interface QuestionsApiInterface {
     @POST("add_qtn_category.php")
     Call<QuestionCategoryApiData> addQuestionCategory(@Field("group_id") int category_id, @Field("user_id") int User_id);
 
+    @GET("get_qtn_byid.php")
+    Call<QuestionApiData> getQuestion(@Query("question_id") int question_id );
 
 
 

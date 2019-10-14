@@ -1,13 +1,17 @@
 package com.example.jupa.Institution.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.jupa.Activity.InstitutionActivity;
 import com.example.jupa.Institution.Institution;
 import com.example.jupa.R;
 
@@ -46,7 +50,10 @@ public class InstitutionsAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+
+        CardView cardView = (CardView) LayoutInflater.from(context).inflate(R.layout.institution_item_view,parent,false);
+
+        return new InstitutionViewHolder(cardView);
     }
 
     @Override
@@ -55,9 +62,7 @@ public class InstitutionsAdapter extends RecyclerView.Adapter {
         if (getItemCount()>0){
 
             Institution institution = getInstitutionArrayList().get(position);
-            ((InstitutionViewHolder)holder).nameView.setText(institution.getName());
-            String center_show = "( "+institution.getName()+" )";
-            ((InstitutionViewHolder)holder).centerView.setText(center_show);
+            ((InstitutionViewHolder)holder).bind(institution);
 
         }
 
@@ -72,15 +77,36 @@ public class InstitutionsAdapter extends RecyclerView.Adapter {
     }
 
 
-    public static class InstitutionViewHolder extends RecyclerView.ViewHolder{
+    private class InstitutionViewHolder extends RecyclerView.ViewHolder{
 
+        Institution thisInstitution;
         View view;
-        TextView nameView,centerView;
+        TextView nameView;
         public InstitutionViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
             nameView = (TextView)itemView.findViewById(R.id.institutions_name);
-            centerView = (TextView)itemView.findViewById(R.id.institutions_center);
+        }
+
+        public void bind(Institution institution){
+
+            this.thisInstitution = institution;
+            nameView.setText(institution.getTitltleRepresentation());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showInstitution();
+                }
+            });
+
+        }
+
+        public void showInstitution(){
+
+            Intent intent = new Intent(context, InstitutionActivity.class);
+            intent.putExtra(InstitutionActivity.INSTITUTION_EXTRA,this.thisInstitution);
+            context.startActivity(intent);
+
         }
     }
 

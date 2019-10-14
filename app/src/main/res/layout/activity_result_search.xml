@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ResultSearchActivity">
+
+    <EditText
+        android:id="@+id/search_area"
+        android:textColorHint="@color/white"
+        android:hint="@string/search"
+        android:layout_alignParentTop="true"
+        android:drawableEnd="@drawable/ic_search_black_24dp"
+        android:drawableRight="@drawable/ic_search_black_24dp"
+        android:background="@color/colorPrimary"
+        android:textSize="13sp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="45dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/search_area"
+        android:id="@+id/filtered_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

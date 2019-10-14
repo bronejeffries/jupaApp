@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.jupa.Activity.UserHomeActivity;
+import com.example.jupa.Candidate.Api.CandidateListApiData;
 import com.example.jupa.Candidate.Candidate;
 import com.example.jupa.Group.Group;
 import com.example.jupa.Activity.GroupSearchActivity;
@@ -118,7 +120,7 @@ public class GroupBackgroundApiTasks {
 
     public void addNewGroup(Group group){
 
-        Call<GroupApiData> call = groupApi_interface.addGroup(group.getGroup_name(),group.getGroup_code());
+        Call<GroupApiData> call = groupApi_interface.addGroup(group.getGroup_name(),group.getGroup_code(), UserHomeActivity.thisCandidate.getId());
         call.enqueue(new Callback<GroupApiData>() {
             @Override
             public void onResponse(Call<GroupApiData> call, Response<GroupApiData> response) {
@@ -232,13 +234,57 @@ public class GroupBackgroundApiTasks {
 
     }
 
+    public void fetchAssessorCandidates(GroupSearchActivity.searchObject searchObject){
 
-    public void SearchGroupCandidates(GroupSearchActivity.searchObject newsearchObject){
+        Log.e(TAG, "fetchAssessorCandidates: "+searchObject.getGroup_id()+" "+searchObject.getLast() );
 
-        Log.e(TAG, "SearchGroupCandidates: "+newsearchObject.getGroup_id()+" "+newsearchObject.getRank_id()+" "+newsearchObject.getStatus()+" "+newsearchObject.getLast() );
 
-        Call<GroupCandidatesListApiData> call = groupApi_interface.searchCandidatesInAgroup(newsearchObject.getGroup_id(),
-                newsearchObject.getRank_id(), newsearchObject.getStatus(),newsearchObject.getLast(),newsearchObject.getLimit());
+        Call<CandidateListApiData> call = groupApi_interface.getCandidatesByAssessor(searchObject.getAssessor_id(),searchObject.getInstitution_id()
+                                                                , searchObject.getLast(),searchObject.getLimit());
+
+        call.enqueue(new Callback<CandidateListApiData>() {
+            @Override
+            public void onResponse(Call<CandidateListApiData> call, Response<CandidateListApiData> response) {
+
+                synchronized (GroupBackgroundApiTasks.this){
+
+                    Log.e(TAG, "onResponse: "+response.body().getCandidateArrayList().toString());
+
+                    if (response.body().getSuccess().equals(SUCCESS)){
+
+                        setGroupCandidatesList(response.body().getCandidateArrayList());
+
+                    }else {
+
+                        setGroupCandidatesList(null);
+
+                    }
+                    setMessage(response.body().getMessage());
+                    GroupBackgroundApiTasks.this.notifyAll();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CandidateListApiData> call, Throwable t) {
+
+                synchronized (GroupBackgroundApiTasks.this){
+                    setGroupCandidatesList(null);
+                    setMessage(t.getMessage());
+                    GroupBackgroundApiTasks.this.notifyAll();
+                }
+
+            }
+        });
+
+    }
+
+    public void SearchGroupCandidates(GroupSearchActivity.searchObject newSearchObject){
+
+        Log.e(TAG, "SearchGroupCandidates: "+newSearchObject.getGroup_id()+" "+newSearchObject.getRank_id()+" "+newSearchObject.getStatus()+" "+newSearchObject.getLast() );
+
+        Call<GroupCandidatesListApiData> call = groupApi_interface.searchCandidatesInAgroup(newSearchObject.getGroup_id(),
+                newSearchObject.getRank_id(), newSearchObject.getStatus(),newSearchObject.getLast(),newSearchObject.getLimit());
 
         call.enqueue(new Callback<GroupCandidatesListApiData>() {
             @Override
@@ -250,7 +296,7 @@ public class GroupBackgroundApiTasks {
                     if (response.body().getSuccess().equals(SUCCESS)){
                         setGroupCandidatesList(response.body().getGroupCandidates());
                     }
-                    setMessage(response.body().getSuccess());
+                    setMessage(response.body().getMessage());
                     GroupBackgroundApiTasks.this.notifyAll();
                 }
 
@@ -272,6 +318,98 @@ public class GroupBackgroundApiTasks {
         });
 
     }
+
+    public void SearchGroupInstituionCandidates(GroupSearchActivity.searchObject newSearchObject){
+
+        Log.e(TAG, "SearchGroupCandidates: "+newSearchObject.getGroup_id()+" "+newSearchObject.getInstitution_id()+" "+newSearchObject.getMember_level()+" "+newSearchObject.getLast());
+
+        Call<GroupCandidatesListApiData> call = groupApi_interface.searchInsititutionCandidatesInAgroup(newSearchObject.getGroup_id(),
+                                                                    newSearchObject.getInstitution_id(),newSearchObject.getMember_level(),
+                                                                    newSearchObject.getLast(),newSearchObject.getLimit());
+
+        call.enqueue(new Callback<GroupCandidatesListApiData>() {
+            @Override
+            public void onResponse(Call<GroupCandidatesListApiData> call, Response<GroupCandidatesListApiData> response) {
+
+                synchronized (GroupBackgroundApiTasks.this){
+
+                    Log.e(TAG, "onResponse: "+response.body().getGroupCandidates().toString());
+
+                    if (response.body().getSuccess().equals(SUCCESS)){
+                        setGroupCandidatesList(response.body().getGroupCandidates());
+                    }
+                    setMessage(response.body().getMessage());
+                    GroupBackgroundApiTasks.this.notifyAll();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GroupCandidatesListApiData> call, Throwable t) {
+
+                synchronized (GroupBackgroundApiTasks.this){
+
+                    setGroupCandidatesList(new ArrayList<Candidate>());
+                    setMessage(t.getMessage());
+                    GroupBackgroundApiTasks.this.notifyAll();
+                    t.printStackTrace();
+
+                }
+
+            }
+        });
+
+    }
+
+    public void SearchInstituionCandidatesByLevel(GroupSearchActivity.searchObject newSearchObject){
+
+        Log.e(TAG, "SearchGroupCandidates: "+newSearchObject.getGroup_id()+" "+newSearchObject.getInstitution_id()+" "+newSearchObject.getMember_level()+" "+newSearchObject.getLast());
+
+        Call<CandidateListApiData> call = groupApi_interface.searchInsititutionCandidatesbyMemberLevel(newSearchObject.getInstitution_id(),newSearchObject.getMember_level(),
+                newSearchObject.getLast(),newSearchObject.getLimit());
+
+        call.enqueue(new Callback<CandidateListApiData>() {
+            @Override
+            public void onResponse(Call<CandidateListApiData> call, Response<CandidateListApiData> response) {
+
+                synchronized (GroupBackgroundApiTasks.this){
+
+                    Log.e(TAG, "onResponse: "+response.body().getCandidateArrayList().toString());
+
+                    if (response.body().getSuccess().equals(SUCCESS)){
+
+                        setGroupCandidatesList(response.body().getCandidateArrayList());
+
+                    }else {
+
+                        setGroupCandidatesList(null);
+
+                    }
+
+                    setMessage(response.body().getMessage());
+                    GroupBackgroundApiTasks.this.notifyAll();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CandidateListApiData> call, Throwable t) {
+
+                synchronized (GroupBackgroundApiTasks.this){
+
+                    setGroupCandidatesList(null);
+                    setMessage(t.getMessage());
+                    GroupBackgroundApiTasks.this.notifyAll();
+                    t.printStackTrace();
+
+                }
+
+            }
+        });
+
+    }
+
 
 
     public Group getGroup() {

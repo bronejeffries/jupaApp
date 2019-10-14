@@ -14,9 +14,12 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import com.example.jupa.Activity.GroupsActivity;
+import com.example.jupa.Activity.InstitutionActivity;
 import com.example.jupa.Group.Group;
 import com.example.jupa.Activity.GroupActivity;
 import com.example.jupa.Activity.GroupSearchActivity;
+import com.example.jupa.Institution.Institution;
 import com.example.jupa.R;
 
 import java.util.ArrayList;
@@ -85,9 +88,20 @@ public class GroupsAdapter extends RecyclerView.Adapter {
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, GroupSearchActivity.class);
+                    Intent intent;
+                    if (GroupsActivity.institution_view){
+
+                        intent = new Intent(context,GroupActivity.class);
+
+                    }else {
+
+                        intent = new Intent(context, GroupSearchActivity.class);
+
+                    }
+
                     intent.putExtra(GroupActivity.GROUP_TAG,group);
                     context.startActivity(intent);
+
                 }
             });
 
@@ -116,4 +130,5 @@ public class GroupsAdapter extends RecyclerView.Adapter {
         getGroupArrayList().add(group);
         notifyDataSetChanged();
     }
+
 }

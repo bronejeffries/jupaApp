@@ -7,7 +7,7 @@
     tools:context=".Activity.ProfileActivity">
 
     <RelativeLayout
-        android:paddingBottom="25dip"
+        android:paddingBottom="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -15,7 +15,7 @@
             android:id="@+id/view_offset"
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
-            android:layout_height="230dip"
+            android:layout_height="230dp"
             android:background="@color/colorPrimary">
         </RelativeLayout>
 
@@ -23,13 +23,13 @@
             android:id="@+id/profile_details_card"
             android:layout_below="@+id/profile_name"
             app:cardCornerRadius="10dp"
-            app:cardElevation="20dip"
-            app:contentPaddingTop="15dip"
-            app:contentPaddingBottom="15dip"
-            android:layout_marginRight="5dip"
-            android:layout_marginEnd="5dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginStart="5dip"
+            app:cardElevation="15dp"
+            app:contentPaddingTop="15dp"
+            app:contentPaddingBottom="15dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -44,81 +44,81 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.4"
                         android:layout_height="wrap_content"
                         android:text="@string/rank"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|center"
+                        android:gravity="start"
                         android:id="@+id/rank_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.6"
                         android:layout_height="wrap_content"
                         android:text="@string/rank"
-                        android:textSize="19sp"
+                        android:textSize="15sp"
                         />
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/rank_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/categoryView"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.3"
                         android:layout_height="wrap_content"
                         android:text="@string/role"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|center"
+                        android:gravity="start"
                         android:id="@+id/role_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.7"
                         android:layout_height="wrap_content"
                         android:text="@string/role"
-                        android:textSize="19sp"
+                        android:textSize="15sp"
                         />
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/role_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.3"
                         android:layout_height="wrap_content"
                         android:text="@string/status"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|center"
+                        android:gravity="start"
                         android:id="@+id/status_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/status"
-                        android:textSize="19sp"
+                        android:textSize="15sp"
                         android:drawableRight="@android:drawable/ic_menu_edit"
                         android:drawableEnd="@android:drawable/ic_menu_edit"
                         android:drawableTint="@color/colorPrimary"
@@ -126,367 +126,337 @@
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/status_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/available"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|center"
+                        android:gravity="start"
                         android:id="@+id/available_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/available"
-                        android:textSize="19sp"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:drawableEnd="@android:drawable/ic_menu_edit"
-                        android:drawableTint="@color/colorPrimary"
+                        android:textSize="15sp"
                         />
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/available_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/date_available"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|center"
+                        android:gravity="start"
                         android:id="@+id/available_date_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/date_available"
-                        android:textSize="19sp"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:drawableEnd="@android:drawable/ic_menu_edit"
-                        android:drawableTint="@color/colorPrimary"
+                        android:textSize="15sp"
                         />
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/available_date_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/address"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|start"
+                        android:gravity="start"
                         android:id="@+id/country"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/address"
-                        android:textSize="19sp"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:drawableEnd="@android:drawable/ic_menu_edit"
-                        android:drawableTint="@color/colorPrimary"
+                        android:textSize="15sp"
                         />
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/address_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
                 </LinearLayout>
 
 
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/country"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|start"
+                        android:gravity="start"
                         android:id="@+id/country_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/country"
-                        android:textSize="19sp"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:drawableEnd="@android:drawable/ic_menu_edit"
-                        android:drawableTint="@color/colorPrimary"
+                        android:textSize="15sp"
                         />
 
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/country_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/state"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|center"
+                        android:gravity="start"
                         android:id="@+id/state_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/state"
-                        android:textSize="19sp"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:drawableEnd="@android:drawable/ic_menu_edit"
-                        android:drawableTint="@color/colorPrimary"
+                        android:textSize="15sp"
                         />
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/state_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/city"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|center"
+                        android:gravity="start"
                         android:id="@+id/city_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/city"
-                        android:textSize="19sp"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:drawableEnd="@android:drawable/ic_menu_edit"
-                        android:drawableTint="@color/colorPrimary"
+                        android:textSize="15sp"
                         />
 
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/city_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
 
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/contact"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|center"
+                        android:gravity="start"
                         android:id="@+id/contact_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/contact"
-                        android:textSize="19sp"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:drawableEnd="@android:drawable/ic_menu_edit"
-                        android:drawableTint="@color/colorPrimary"
+                        android:textSize="15sp"
                         />
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/contract_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.2"
                         android:layout_height="wrap_content"
                         android:text="@string/email"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|center"
+                        android:gravity="end"
                         android:id="@+id/email_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.8"
                         android:layout_height="wrap_content"
                         android:text="@string/email"
-                        android:textSize="19sp"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:drawableEnd="@android:drawable/ic_menu_edit"
-                        android:drawableTint="@color/colorPrimary"
+                        android:textSize="15sp"
                         />
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/email_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/date_of_birth"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|center"
+                        android:gravity="start"
                         android:id="@+id/dob_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/date_of_birth"
-                        android:textSize="19sp"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:drawableEnd="@android:drawable/ic_menu_edit"
-                        android:drawableTint="@color/colorPrimary"
+                        android:textSize="15sp"
                         />
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/dob_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/group_name"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|center"
+                        android:gravity="start"
                         android:id="@+id/group_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/group_name"
-                        android:textSize="19sp"
+                        android:textSize="15sp"
                         />
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/group_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/category"
-                        android:textSize="21sp"
+                        android:textSize="17sp"
                         android:textStyle="bold"
                         />
                     <TextView
-                        android:gravity="center_horizontal|center"
+                        android:gravity="start"
                         android:id="@+id/category_profile_view"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="@string/category"
-                        android:textSize="19sp"
-                        android:drawableRight="@android:drawable/ic_menu_edit"
-                        android:drawableEnd="@android:drawable/ic_menu_edit"
-                        android:drawableTint="@color/colorPrimary"
+                        android:textSize="15sp"
                         />
                     <ProgressBar
                         android:visibility="gone"
                         android:id="@+id/category_progress"
-                        android:layout_width="18dip"
-                        android:layout_height="18dip" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -496,8 +466,9 @@
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
-            android:gravity="end|center_vertical"
-            android:layout_marginTop="25dip"
+            android:id="@+id/btn_layout"
+            android:gravity="start|center_vertical"
+            android:layout_marginTop="25dp"
             android:layout_below="@id/profile_details_card"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -505,42 +476,42 @@
 
             <Button
                 android:id="@+id/view_projects"
-                android:layout_margin="8dip"
-                android:background="@color/colorAccent"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_gradient_accent"
                 android:textColor="@color/white"
                 android:text="@string/projects"
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:layout_width="wrap_content"
-                android:layout_height="26dip" />
+                android:layout_height="26dp" />
 
             <Button
                 android:id="@+id/view_skills"
-                android:layout_margin="8dip"
+                android:layout_margin="8dp"
                 android:background="@color/design_default_color_primary"
                 android:textColor="@color/white"
                 android:text="@string/skills"
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:layout_width="wrap_content"
-                android:layout_height="26dip" />
+                android:layout_height="26dp" />
             <Button
                 android:id="@+id/view_specialities"
-                android:layout_margin="8dip"
-                android:background="@color/colorPrimary"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_gradient_background"
                 android:textColor="@color/white"
                 android:text="@string/specialities"
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:layout_width="wrap_content"
-                android:layout_height="26dip" />
+                android:layout_height="26dp" />
 
         </LinearLayout>
 
-
+        
         <ImageView
             android:id="@+id/profile_image"
-            android:layout_marginTop="20dip"
+            android:layout_marginTop="20dp"
             android:src="@drawable/construction_icon_png_5"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
@@ -548,16 +519,114 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:layout_marginTop="5dip"
+            android:layout_marginTop="5dp"
             android:layout_below="@id/profile_image"
             android:textColor="@color/colorPrimaryDark"
             android:id="@+id/profile_name"
             android:textStyle="bold|normal"
             android:text="@string/tumwesigye_godwin"
             android:layout_width="wrap_content"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/view_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_more_vert_white_24dp"
+            app:elevation="20dp"
+            app:backgroundTint="@color/colorPrimary"
+            android:layout_below="@+id/btn_layout"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:visibility="gone"
+            android:id="@+id/more_card"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/view_more"
+            app:cardElevation="20dp"
+            app:cardBackgroundColor="@color/white_trans"
+            android:foreground="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:gravity="start|center_vertical"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:onClick="showReportClicked"
+                        android:id="@+id/view_assessment_report"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_margin="4dp"
+                        app:backgroundTint="@color/colorPrimary"
+                        app:srcCompat="@drawable/ic_assignment_turned_in_black_24dp"
+                        app:elevation="8dp"
+                        />
+
+                    <TextView
+                        android:onClick="showReportClicked"
+                        android:textStyle="bold"
+                        android:layout_margin="8dp"
+                        android:text="@string/assessment_report"
+                        android:textSize="14sp"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:onClick="viewCandidatesClicked"
+                        android:id="@+id/view_candidates"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_margin="4dp"
+                        app:srcCompat="@drawable/ic_group_white_24dp"
+                        app:elevation="8dp"
+                        />
+
+                    <TextView
+                        android:onClick="viewCandidatesClicked"
+                        android:layout_margin="4dp"
+                        android:text="@string/view_candidates"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
 
     </RelativeLayout>
 

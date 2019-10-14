@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.jupa.Helpers.showProgressbar;
 import com.example.jupa.Institution.Adapter.InstitutionsAdapter;
+import com.example.jupa.Institution.Api.InstitutionApiBackgroundTasks;
 import com.example.jupa.Institution.Institution;
 import com.example.jupa.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,6 +27,7 @@ public class InstitutionsActivity extends AppCompatActivity {
     ArrayList<Institution> institutionArrayList;
     public static InstitutionsAdapter institutionsAdapter;
     showProgressbar showProgress;
+    InstitutionApiBackgroundTasks institutionApiBackgroundTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class InstitutionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_institutions);
 
         showProgress = new showProgressbar(this);
+
+        institutionApiBackgroundTasks = InstitutionApiBackgroundTasks.getInstance(this);
 
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView = (RecyclerView)findViewById(R.id.institutions_recycler_view);
@@ -85,7 +89,23 @@ public class InstitutionsActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<Institution> doInBackground(Void... voids) {
-            return null;
+
+            ArrayList<Institution> returnedArrayList;
+
+            synchronized (institutionApiBackgroundTasks){
+
+                institutionApiBackgroundTasks.getAllInstitutions();
+                try {
+                    institutionApiBackgroundTasks.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                returnedArrayList = institutionApiBackgroundTasks.getInstitutionArrayList();
+
+            }
+
+            return returnedArrayList;
         }
     }
 

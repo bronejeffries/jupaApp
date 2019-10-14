@@ -267,7 +267,7 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:background="@color/colorPrimary"
+                android:background="@drawable/button_gradient_background"
                 android:text="@string/add_group"
                 android:textColor="@color/white"
                 android:textSize="18sp"

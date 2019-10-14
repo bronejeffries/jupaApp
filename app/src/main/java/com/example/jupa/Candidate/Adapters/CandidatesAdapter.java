@@ -144,6 +144,11 @@ public class CandidatesAdapter extends RecyclerView.Adapter {
 
     public void updateArrayList(ArrayList<Candidate> candidateArrayList){
 
+        if (getArrayList()==null){
+
+            setArrayList(new ArrayList<Candidate>());
+
+        }
         this.getArrayList().addAll(candidateArrayList);
         this.notifyDataSetChanged();
 

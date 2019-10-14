@@ -22,7 +22,6 @@ public class Question implements Parcelable {
     @SerializedName("unique_no")
     String question_code;
 
-
     public Question(int user_id, int category_id, String title, String question_code) {
         this.user_id = user_id;
         this.category_id = category_id;
