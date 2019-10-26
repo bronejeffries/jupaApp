@@ -1,14 +1,19 @@
 package com.example.jupa.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -120,7 +125,7 @@ public class RequestApplicationViewActivity extends AppCompatActivity {
                 approval_status = RequestApplicationAdapter.REJECTED;
                 thisRequestApplicationObject.setStatus(approval_status);
                 thisRequestApplicationObject.setUser_id(candidate_viewing.getId());
-                update_request();
+                showCommentDialog();
 
             }
         });
@@ -142,6 +147,37 @@ public class RequestApplicationViewActivity extends AppCompatActivity {
 
     }
 
+    private void showCommentDialog() {
+
+        final EditText comment_edit_Text;
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.attach_comment_bottom_sheet,null,false);
+        comment_edit_Text = (EditText)relativeLayout.findViewById(R.id.attach_comment_input);
+
+        alertBuilder.setView(relativeLayout);
+        alertBuilder.setPositiveButton(R.string.add_group, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                String comment = comment_edit_Text.getText().toString();
+                thisRequestApplicationObject.setComment(comment);
+                update_request();
+            }
+        });
+
+        alertBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                dialogInterface.dismiss();
+
+            }
+        });
+
+        alertBuilder.create().show();
+
+    }
+
 
     public void checkApplicationType(){
 
@@ -156,6 +192,7 @@ public class RequestApplicationViewActivity extends AppCompatActivity {
                 setRankType(true);
                 setTitleText(getResources().getString(R.string.apply_for_a_higher_rank));
                 break;
+
         }
 
     }

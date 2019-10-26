@@ -12,7 +12,7 @@
     </string-array>
 
     <string-array name="status_array">
-        <item>- - - - - - - - - </item>
+        <item>-------</item>
         <item>Pending</item>
         <item>VERIFIED</item>
     </string-array>

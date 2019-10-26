@@ -15,6 +15,21 @@
             android:layout_width="match_parent"
             android:background="@drawable/construction_icon_png_5"
             android:layout_height="370dp">
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/not_verified"
+                android:drawableEnd="@drawable/ic_close_black_24dp"
+                android:drawableRight="@drawable/ic_close_black_24dp"
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:textSize="13sp"
+                android:textStyle="bold|normal"
+                android:gravity="end|center_vertical"
+                android:text="@string/this_account_is_not_verified"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,6 +93,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:visibility="gone"
                 android:onClick="ViewMyRequests"
                 android:id="@+id/my_requests_view"
                 android:layout_width="0dp"

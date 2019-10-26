@@ -244,7 +244,7 @@ public class ProfileActivity extends AppCompatActivity {
 //    private void showAssessorsDialog() {
 //        BottomSheetDialog attachAssessorBottomSheet = new BottomSheetDialog(this);
 //
-//        RelativeLayout attachLayout = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.attach_assessor_bottom_sheet,null,false);
+//        RelativeLayout attachLayout = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.attach_comment_bottom_sheet,null,false);
 //        final Spinner assessors_spinner = (Spinner)attachLayout.findViewById(R.id.assessor_spinner);
 //        populateAssessorSpinner(assessors_spinner);
 //        Button attach_button = (Button)attachLayout.findViewById(R.id.save_assessor_btn);

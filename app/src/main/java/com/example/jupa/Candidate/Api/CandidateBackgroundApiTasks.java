@@ -67,6 +67,7 @@ public class CandidateBackgroundApiTasks {
         Call<CandidateApiData> call = candidateApi_interface.addNewCandidate(newcandidate.getFirst_name(),newcandidate.getMobile_number(),newcandidate.getEmail(), newcandidate.getDate_of_birth(),
                 newcandidate.getLast_name(),newcandidate.getFamily_name(),newcandidate.getOther_number(),newcandidate.getGender(), newcandidate.getCategory_id(),newcandidate.getCountry_id(),
                 newcandidate.getState_id(),newcandidate.getCity_id(),newcandidate.getAddress(),newcandidate.getEducation(),newcandidate.getGroup());
+
         call.enqueue(new Callback<CandidateApiData>() {
             @Override
             public void onResponse(Call<CandidateApiData> call, Response<CandidateApiData> response) {
@@ -75,11 +76,17 @@ public class CandidateBackgroundApiTasks {
 
                     Log.e(TAG, "onResponse: "+response.toString() );
 
-//                    if (response.body().getSuccess().equals(SUCCESS)){
-//
-//                    }
-//                    setMessage(response.body().getMessage());
+
+                    if (response.body().getSuccess().equals(SUCCESS)){
+
+
+
+                    }
+
+                    setMessage(response.body().getMessage());
+
                     CandidateBackgroundApiTasks.this.notifyAll();
+
                 }
 
 

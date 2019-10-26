@@ -89,24 +89,36 @@ public class RequestApiBackgroundTasks {
 
     public void getAllApplications(GroupSearchActivity.searchObject searchObject){
 
+        Log.e(TAG, "getAllApplications: "+searchObject.getLast()+" "+searchObject.getLimit());
+
         Call<RequestListApiData> call = requestsApiInterface.getAllApplications(searchObject.getLimit(),searchObject.getLast());
+
         call.enqueue(new Callback<RequestListApiData>() {
             @Override
             public void onResponse(Call<RequestListApiData> call, Response<RequestListApiData> response) {
 
                 synchronized (RequestApiBackgroundTasks.this){
 
-                    if (response.body().getSuccess().equals(SUCCESS)){
+                    try {
 
-                        setRequestApplicationObjectArrayList(response.body().getRequestApplicationsArrayList());
+                        if (response.body().getSuccess().equals(SUCCESS)){
+                            setRequestApplicationObjectArrayList(response.body().getRequestApplicationsArrayList());
+                            Log.e(TAG, "onResponse: "+response.body().requestApplicationsArrayList.size() );
 
-                    }else {
+                        }else {
+
+                            setRequestApplicationObjectArrayList(null);
+
+                        }
+
+                        setMessage(response.body().getMessage());
+
+                    }catch (NullPointerException e){
 
                         setRequestApplicationObjectArrayList(null);
 
                     }
 
-                    setMessage(response.body().getMessage());
                     RequestApiBackgroundTasks.this.notifyAll();
                 }
 

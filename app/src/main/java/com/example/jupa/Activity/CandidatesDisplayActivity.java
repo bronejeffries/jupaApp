@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 public class CandidatesDisplayActivity extends AppCompatActivity {
 
-
     EditText searchArea;
     TextView search_warning;
     ProgressBar progressBar;

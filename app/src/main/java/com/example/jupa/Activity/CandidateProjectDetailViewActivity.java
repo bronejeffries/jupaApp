@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.jupa.Candidate.Candidate;
 import com.example.jupa.Candidate.Project.CandidateProject;
 import com.example.jupa.Helpers.LoggedInInstitution;
 import com.example.jupa.Helpers.LoggedInUser;
@@ -24,6 +25,7 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
     Button assess_btn;
     RelativeLayout photo_View;
     boolean permission = false;
+    Candidate project_owner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_candidate_project_detail_view);
         intent = getIntent();
         candidateProject = intent.getParcelableExtra(CANDIDATE_PROJECT);
+        project_owner = ProfileActivity.candidate;
         location = (TextView)findViewById(R.id.project_location_input);
         date_of_completion = (TextView)findViewById(R.id.project_date_completion_input);
         client_names = (TextView)findViewById(R.id.project_client_name_input);
@@ -53,7 +56,8 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
         if (UserHomeActivity.thisCandidate != null){
 
                 permission = UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.ASSESSOR_ROLE)
-                        && !UserHomeActivity.thisCandidate.getId().equals(candidateProject.getCandidate_id());
+                        && !UserHomeActivity.thisCandidate.getId().equals(candidateProject.getCandidate_id())
+                        && UserHomeActivity.thisCandidate.getGroup().equals(project_owner.getGroup());
 
         }
 

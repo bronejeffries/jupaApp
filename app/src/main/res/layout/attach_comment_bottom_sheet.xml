@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/attach_assessor"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/attach_comment"
+        android:textSize="18sp"
+        android:padding="12dp"
+        android:textStyle="normal|bold"/>
+
+
+    <EditText
+        android:textColor="@color/black"
+        android:hint="@string/attach_comment"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:gravity="start"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/attach_assessor"
+        android:id="@+id/attach_comment_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</RelativeLayout>

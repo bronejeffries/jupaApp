@@ -67,7 +67,7 @@ public class ApplicationsActivity extends AppCompatActivity {
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
-                if (scrollDone){
+                if (scrollDone && !getReloading()){
 
                     if (waitTimes.equals(0)){
 
@@ -85,11 +85,13 @@ public class ApplicationsActivity extends AppCompatActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
                 if (!recyclerView.canScrollVertically(-1)){
 
                     if (!getReloading()){
 
                         scrollDone = true;
+
                         waitTimes = 4;
 
                     }
@@ -99,6 +101,7 @@ public class ApplicationsActivity extends AppCompatActivity {
                     scrollDone = false;
 
                 }
+
             }
 
 
@@ -131,8 +134,6 @@ public class ApplicationsActivity extends AppCompatActivity {
 
         loaderView.setVisibility(View.VISIBLE);
         setReloading(true);
-
-        last += searchObject.getLimit();
         searchObject.setLast(last);
 
         new fetchApplications().execute(searchObject);
@@ -167,10 +168,11 @@ public class ApplicationsActivity extends AppCompatActivity {
                     requestApplicationAdapter.addItems(requestApplicationObjects);
 
                 }
+                last += searchObject.getLimit();
 
             }else {
 
-                Toast.makeText(ApplicationsActivity.this, requestApiBackgroundTasks.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ApplicationsActivity.this, requestApiBackgroundTasks.getMessage(), Toast.LENGTH_LONG).show();
 
             }
             stopReload();

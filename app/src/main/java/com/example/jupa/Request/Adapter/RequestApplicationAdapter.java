@@ -105,7 +105,7 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
 
     private class applicationViewHolder extends RecyclerView.ViewHolder{
 
-        Context context;
+
         TextView roleView, applicationType, applicationStatus, viewApplicationDetails,name;
 
         public applicationViewHolder(@NonNull View itemView) {
@@ -122,6 +122,8 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
 
         public void bind(final RequestApplicationObject requestApplicationObject, final int position){
 
+            name.setText(requestApplicationObject.getCandidate().getName());
+            roleView.setText(requestApplicationObject.getCandidate().getRole());
             getStatusInfo(requestApplicationObject.getStatus(),this.applicationStatus);
             applicationType.setText(requestApplicationObject.getRequest_type());
             viewApplicationDetails.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +134,7 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
 
                 }
             });
+
         }
 
     }

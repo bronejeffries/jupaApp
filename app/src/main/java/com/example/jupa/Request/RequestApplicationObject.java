@@ -5,7 +5,10 @@ import android.os.Parcelable;
 
 import androidx.annotation.Nullable;
 
+import com.example.jupa.Candidate.Candidate;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class RequestApplicationObject implements Parcelable {
 
@@ -51,6 +54,9 @@ public class RequestApplicationObject implements Parcelable {
     @SerializedName("comment")
     String comment;
 
+    @SerializedName("candidate")
+    Candidate candidate;
+
     public RequestApplicationObject(String request_type, int candidate_id, String regNo, String experience, String qualification, String reason, int group_id, int status, @Nullable Integer rank_id, @Nullable Integer institution_id) {
 
         this.request_type = request_type;
@@ -94,6 +100,7 @@ public class RequestApplicationObject implements Parcelable {
             user_id = in.readInt();
         }
         comment = in.readString();
+        candidate = in.readParcelable(Candidate.class.getClassLoader());
     }
 
     @Override
@@ -127,6 +134,7 @@ public class RequestApplicationObject implements Parcelable {
             dest.writeInt(user_id);
         }
         dest.writeString(comment);
+        dest.writeParcelable(candidate, flags);
     }
 
     @Override
@@ -145,6 +153,14 @@ public class RequestApplicationObject implements Parcelable {
             return new RequestApplicationObject[size];
         }
     };
+
+    public Candidate getCandidate() {
+        return candidate;
+    }
+
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
+    }
 
     public String getComment() {
         return comment;

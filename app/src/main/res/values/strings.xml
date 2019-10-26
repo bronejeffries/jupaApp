@@ -133,7 +133,6 @@
     <string name="you_submitted">You submitted an application</string>
     <string name="forward">forward</string>
     <string name="comment">Comment</string>
-    <integer name="passmark">50</integer>
     <string name="assessor_warning">Unfortunately you can\'t assess this candidate </string>
     <string name="applications">Applications</string>
     <string name="current_candidates">Current Candidates</string>
@@ -143,4 +142,8 @@
     <string name="all_assessors">All Assessors</string>
     <string name="assessors">Assessors</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="attach_comment">Attach Comment</string>
+    <string name="cancel">Cancel</string>
+    <string name="this_account_is_not_verified">This account is not verified</string>
+    <string name="contacts">Contacts</string>
 </resources>

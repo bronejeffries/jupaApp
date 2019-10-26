@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jupa.Candidate.Api.CandidateBackgroundApiTasks;
@@ -34,12 +35,14 @@ public class UserHomeActivity extends AppCompatActivity {
 
     public static Candidate thisCandidate;
     CardView ViewMyProfileCard,ViewMyRequestsCard, ViewCandidatesCard, ViewGroupDetailsCard, ViewIncomingRequestsCard, ViewManageQuestionsCard;
+    TextView not_verified;
     public final static String CANDIDATE_ROLE = "Candidate", ASSESSOR_ROLE= "Assessor", GROUP_ADMIN_ROLE = "Group Admin", ADMINISTRATOR_ROLE = "Administrator";
     GroupBackgroundApiTasks groupBackgroundApiTasks;
     public static QuestionApiBackgroundTasks questionApiBackgroundTasks;
     static Group candidateGroup;
     showProgressbar showProgress;
     public static String loggedInUserRole;
+    public static Boolean ACCOUNT_STATUS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class UserHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_home);
 
         showProgress = new showProgressbar(this);
-        showProgress.setMessage("Loading information....a moment");
+        showProgress.setMessage("Checking information....a moment");
         groupBackgroundApiTasks = GroupBackgroundApiTasks.getInstance(this);
         questionApiBackgroundTasks = QuestionApiBackgroundTasks.getInstance(this);
         ViewMyProfileCard = (CardView)findViewById(R.id.my_profile_view);
@@ -58,8 +61,12 @@ public class UserHomeActivity extends AppCompatActivity {
         ViewManageQuestionsCard = (CardView)findViewById(R.id.group_admin_manage_group_questions);
         thisCandidate = LoggedInUser.getInstance().getLoggedInCandidate();
         loggedInUserRole = thisCandidate.getRole();
+        not_verified = findViewById(R.id.not_verified);
+
+        ACCOUNT_STATUS = thisCandidate.getStatus() != null && thisCandidate.getStatus().equals((getResources().getStringArray(R.array.status_array)[2]));
 
         showProgress.show();
+
         new getCandidateGroup().execute(thisCandidate.getId());
 
     }
@@ -67,22 +74,31 @@ public class UserHomeActivity extends AppCompatActivity {
 ///////////////////    check the user role and display the appropriate views //////////////////
     private void ManageDisplay() {
 
-        switch (loggedInUserRole){
+        if (ACCOUNT_STATUS){
 
-            case ASSESSOR_ROLE:
-                makeVisible(ViewCandidatesCard);
-                break;
+            makeVisible(ViewMyRequestsCard);
+            switch (loggedInUserRole){
 
-            case GROUP_ADMIN_ROLE:
-                makeVisible(ViewGroupDetailsCard);
-                makeVisible(ViewIncomingRequestsCard);
-                makeVisible(ViewManageQuestionsCard);
-                break;
+                case ASSESSOR_ROLE:
+                    makeVisible(ViewCandidatesCard);
+                    break;
 
-            case ADMINISTRATOR_ROLE:
-                Intent adminHomeIntent = new Intent(this, AdminHomeActivity.class);
-                startActivity(adminHomeIntent);
-                break;
+                case GROUP_ADMIN_ROLE:
+                    makeVisible(ViewGroupDetailsCard);
+                    makeVisible(ViewIncomingRequestsCard);
+                    makeVisible(ViewManageQuestionsCard);
+                    break;
+
+                case ADMINISTRATOR_ROLE:
+                    Intent adminHomeIntent = new Intent(this, AdminHomeActivity.class);
+                    startActivity(adminHomeIntent);
+                    break;
+            }
+
+        }else {
+
+            not_verified.setVisibility(View.VISIBLE);
+
         }
 
     }
@@ -277,8 +293,11 @@ public class UserHomeActivity extends AppCompatActivity {
             if (group!=null){
                 candidateGroup = group;
                 ManageDisplay();
+
             }else {
-                Toast.makeText(UserHomeActivity.this, "Failed to load user information, please consider logging in again", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(UserHomeActivity.this, "Failed to load user information, please consider logging in again", Toast.LENGTH_LONG).show();
+
             }
 
             showProgress.dismiss();
