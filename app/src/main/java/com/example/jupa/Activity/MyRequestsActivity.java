@@ -74,17 +74,17 @@ public class MyRequestsActivity extends AppCompatActivity {
 
         AlertDialog.Builder requestTypeDialog = new AlertDialog.Builder(this);
         CardView cardViewDialog = (CardView) LayoutInflater.from(this).inflate(R.layout.requests_dialog,null,false);
-        assessor_choice = (Button)cardViewDialog.findViewById(R.id.assessor_request_btn);
+//        assessor_choice = (Button)cardViewDialog.findViewById(R.id.assessor_request_btn);
         rank_choice = (Button)cardViewDialog.findViewById(R.id.rank_request_btn);
 
-            assessor_choice.setEnabled(true);
-            assessor_choice.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    requestalertDialog.dismiss();
-                    showAssessorRequestActivity();
-                }
-            });
+//            assessor_choice.setEnabled(true);
+//            assessor_choice.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    requestalertDialog.dismiss();
+//                    showAssessorRequestActivity();
+//                }
+//            });
 
             rank_choice.setEnabled(true);
             rank_choice.setOnClickListener(new View.OnClickListener() {
@@ -99,12 +99,14 @@ public class MyRequestsActivity extends AppCompatActivity {
         requestTypeDialog.setView(cardViewDialog);
         requestalertDialog = requestTypeDialog.create();
         requestalertDialog.show();
+
     }
 
     private void showAssessorRequestActivity() {
 
         Intent assessorRequestIntent = new Intent(this,AssessorRequestActivity.class);
         startActivity(assessorRequestIntent);
+
     }
 
     private void showRankRequestActivity() {

@@ -199,6 +199,7 @@ public class UserHomeActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 QuestionCategory questionCategory = new QuestionCategory(category.getText().toString(), candidateGroup.getId());
+                new addQuestionCategory().execute(questionCategory);
 
             }
         });
@@ -236,7 +237,7 @@ public class UserHomeActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.logout_link:
-                Intent logoutIntent = new Intent(this, LoginPromptActivity.class);
+                Intent logoutIntent = new Intent(this, MainActivity.class);
                 startActivity(logoutIntent);
                 return true;
             default:
@@ -291,6 +292,7 @@ public class UserHomeActivity extends AppCompatActivity {
         protected void onPostExecute(Group group) {
 
             if (group!=null){
+
                 candidateGroup = group;
                 ManageDisplay();
 

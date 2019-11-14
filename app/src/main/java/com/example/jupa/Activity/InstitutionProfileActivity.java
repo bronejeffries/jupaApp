@@ -1,4 +1,4 @@
-package com.example.jupa;
+package com.example.jupa.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.jupa.Activity.InstitutionActivity;
 import com.example.jupa.Institution.Institution;
+import com.example.jupa.R;
 
 public class InstitutionProfileActivity extends AppCompatActivity {
 
@@ -21,7 +22,9 @@ public class InstitutionProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_institution_profile);
 
         intent = getIntent();

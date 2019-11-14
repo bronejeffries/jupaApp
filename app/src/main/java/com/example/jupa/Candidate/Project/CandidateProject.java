@@ -45,6 +45,9 @@ public class CandidateProject implements Parcelable {
     @SerializedName("project_photo")
     String project_photo;
 
+
+    Boolean verified;
+
     public CandidateProject(@Nullable Integer project_id, Integer candidate_id, String title, String location, String date_of_completion, String client_name, String client_contact, String client_email, String client_address, String description, Integer status, @Nullable String project_photo) {
         this.project_id = project_id;
         this.candidate_id = candidate_id;
@@ -59,6 +62,7 @@ public class CandidateProject implements Parcelable {
         this.status = status;
         this.project_photo = project_photo;
     }
+
 
     protected CandidateProject(Parcel in) {
         if (in.readByte() == 0) {
@@ -85,6 +89,45 @@ public class CandidateProject implements Parcelable {
             status = in.readInt();
         }
         project_photo = in.readString();
+        byte tmpVerified = in.readByte();
+        verified = tmpVerified == 0 ? null : tmpVerified == 1;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (project_id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(project_id);
+        }
+        if (candidate_id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(candidate_id);
+        }
+        dest.writeString(title);
+        dest.writeString(location);
+        dest.writeString(date_of_completion);
+        dest.writeString(client_name);
+        dest.writeString(client_contact);
+        dest.writeString(client_email);
+        dest.writeString(client_address);
+        dest.writeString(description);
+        if (status == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(status);
+        }
+        dest.writeString(project_photo);
+        dest.writeByte((byte) (verified == null ? 0 : verified ? 1 : 2));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<CandidateProject> CREATOR = new Creator<CandidateProject>() {
@@ -195,39 +238,11 @@ public class CandidateProject implements Parcelable {
         this.project_photo = project_photo;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public Boolean getVerified() {
+        return verified;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        if (project_id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(project_id);
-        }
-        if (candidate_id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(candidate_id);
-        }
-        parcel.writeString(title);
-        parcel.writeString(location);
-        parcel.writeString(date_of_completion);
-        parcel.writeString(client_name);
-        parcel.writeString(client_contact);
-        parcel.writeString(client_email);
-        parcel.writeString(client_address);
-        parcel.writeString(description);
-        if (status == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(status);
-        }
-        parcel.writeString(project_photo);
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
     }
 }

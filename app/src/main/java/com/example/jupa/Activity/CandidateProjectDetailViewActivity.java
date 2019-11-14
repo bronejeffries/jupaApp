@@ -1,11 +1,18 @@
 package com.example.jupa.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,10 +29,11 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
     CandidateProject candidateProject;
     Intent intent;
     TextView location, date_of_completion, client_names, client_contact, client_mail, description, client_address, title;
-    Button assess_btn;
+    Button assess_btn,verifyProjectBtn;
     RelativeLayout photo_View;
     boolean permission = false;
     Candidate project_owner;
+    AlertDialog verifyDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +52,7 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
         assess_btn = (Button)findViewById(R.id.assess_project_btn);
         title = (TextView)findViewById(R.id.project_title_input);
         photo_View = (RelativeLayout)findViewById(R.id.header_layout);
-
+        verifyProjectBtn = (Button)findViewById(R.id.verify_project_btn);
         checkPermission();
         populateViews();
 
@@ -86,7 +94,7 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
         }else {
 
             assess_btn.setVisibility(View.GONE);
-
+            verifyProjectBtn.setVisibility(View.GONE);
         }
 
     }
@@ -96,6 +104,82 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
         Intent showAssessmentIntent = new Intent(this, ProjectAssessmentsActivity.class);
         showAssessmentIntent.putExtra(ProjectAssessmentsActivity.CANDIDATE_PROJECT_EXTRA,candidateProject);
         startActivity(showAssessmentIntent);
+
+    }
+
+    public void verifyProject(View view){
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        final String[] contacts = {candidateProject.getClient_contact()};
+        final String[] contactsDisplay = {"Use client contact\n"+candidateProject.getClient_contact(),"Use a custom number","Cancel"};
+
+        alertDialogBuilder.setItems(contactsDisplay, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                switch (i){
+
+                    case 0:
+
+                        launchMessageSetUp(contacts[0].toString());
+                        break;
+
+                    case 1:
+                        launchCustomSetUp();
+                        break;
+
+                    case 2:
+                        dialogInterface.dismiss();
+                        break;
+                }
+            }
+        });
+
+        verifyDialog = alertDialogBuilder.create();
+        verifyDialog.show();
+
+    }
+
+    private void launchCustomSetUp() {
+
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        CardView cardView = (CardView) LayoutInflater.from(this).inflate(R.layout.custom_project_verification,null,false);
+        final EditText editText = (EditText)cardView.findViewById(R.id.custom_number);
+        Button confirm_verify = (Button)cardView.findViewById(R.id.custom_verify_btn);
+
+        confirm_verify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String customNumber = editText.getText().toString();
+                launchMessageSetUp(customNumber);
+            }
+        });
+
+        alertBuilder.setView(cardView);
+
+        alertBuilder.create().show();
+
+    }
+
+    private void launchMessageSetUp(String Number) {
+
+        Log.e("launch", "launchMessageSetUp: "+Number );
+
+//        TODO: generate Code and initiate message action intent
+
+        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+        smsIntent.setData(Uri.parse("smsto:"+Number));
+        smsIntent.putExtra("sms_body"  , "Test ");
+
+        try {
+
+            startActivity(smsIntent);
+
+        }catch (android.content.ActivityNotFoundException e){
+
+
+
+        }
 
     }
 

@@ -174,7 +174,7 @@
                         android:onClick="ViewCandidates"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/view_candidates"
+                        android:text="@string/assess"
                         android:textSize="18sp"
                         android:gravity="center"
                         android:textStyle="bold"

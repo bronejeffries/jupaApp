@@ -535,26 +535,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="26dp" />
 
-            <Button
-                android:id="@+id/view_skills"
-                android:layout_margin="8dp"
-                android:background="@color/design_default_color_primary"
-                android:textColor="@color/white"
-                android:text="@string/skills"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="26dp" />
-            <Button
-                android:id="@+id/view_specialities"
-                android:layout_margin="8dp"
-                android:background="@drawable/button_gradient_background"
-                android:textColor="@color/white"
-                android:text="@string/specialities"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="26dp" />
+            <!--<Button-->
+                <!--android:id="@+id/view_skills"-->
+                <!--android:layout_margin="8dp"-->
+                <!--android:background="@color/design_default_color_primary"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:text="@string/skills"-->
+                <!--android:textAllCaps="false"-->
+                <!--android:textSize="18sp"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="26dp" />-->
+            <!--<Button-->
+                <!--android:id="@+id/view_specialities"-->
+                <!--android:layout_margin="8dp"-->
+                <!--android:background="@drawable/button_gradient_background"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:text="@string/specialities"-->
+                <!--android:textAllCaps="false"-->
+                <!--android:textSize="18sp"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="26dp" />-->
 
         </LinearLayout>
 
@@ -649,6 +649,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/view_assessor_candidates"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">

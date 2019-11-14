@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:contentPaddingBottom="@dimen/drawable_padding"
+    app:cardCornerRadius="5dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:padding="@dimen/drawable_padding"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:text="@string/enter_custom_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:inputType="phone"
+            android:id="@+id/custom_number"
+            android:layout_margin="@dimen/btn_layout_margintop"
+            android:padding="@dimen/drawable_padding"
+            android:textSize="13sp"
+            android:hint="@string/enter_custom_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/custom_verify_btn"
+            android:padding="@dimen/drawable_padding"
+            android:textColor="@color/white"
+            android:text="@string/verify_project"
+            android:layout_gravity="center"
+            android:background="@drawable/button_primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

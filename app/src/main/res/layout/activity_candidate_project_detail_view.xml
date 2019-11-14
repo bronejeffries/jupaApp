@@ -47,13 +47,14 @@
                 <TextView
                     android:text="@string/location"
                     android:textSize="14sp"
-                    android:padding="12dp"
+                    android:padding="6dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <TextView
                     android:hint="@string/location"
+                    android:padding="6dp"
                     android:textColorHint="@color/colorAccent"
                     android:textSize="13sp"
                     android:textStyle="normal"
@@ -72,12 +73,13 @@
                 <TextView
                     android:text="@string/description"
                     android:textSize="14sp"
-                    android:padding="12dp"
+                    android:padding="6dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:padding="6dp"
                     android:hint="@string/location"
                     android:textColorHint="@color/colorAccent"
                     android:textSize="13sp"
@@ -97,12 +99,13 @@
                 <TextView
                     android:text="@string/date_of_completion"
                     android:textSize="14sp"
-                    android:padding="12dp"
+                    android:padding="6dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:padding="6dp"
                     android:hint="@string/date_of_completion"
                     android:textColorHint="@color/colorAccent"
                     android:textSize="13sp"
@@ -122,12 +125,13 @@
                 <TextView
                     android:text="@string/client_name"
                     android:textSize="14sp"
-                    android:padding="12dp"
+                    android:padding="6dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:padding="6dp"
                     android:hint="@string/client_name"
                     android:textColorHint="@color/colorAccent"
                     android:textSize="13sp"
@@ -147,12 +151,13 @@
                 <TextView
                     android:text="@string/client_contact"
                     android:textSize="14sp"
-                    android:padding="12dp"
+                    android:padding="6dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:padding="6dp"
                     android:hint="@string/client_contact"
                     android:textColorHint="@color/colorAccent"
                     android:textSize="13sp"
@@ -173,12 +178,13 @@
                 <TextView
                     android:text="@string/client_email"
                     android:textSize="14sp"
-                    android:padding="12dp"
+                    android:padding="6dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:padding="6dp"
                     android:hint="@string/client_email"
                     android:textColorHint="@color/colorAccent"
                     android:textSize="13sp"
@@ -199,12 +205,13 @@
                 <TextView
                     android:text="@string/client_address"
                     android:textSize="14sp"
-                    android:padding="12dp"
+                    android:padding="6dp"
                     android:textStyle="bold|normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:padding="6dp"
                     android:hint="@string/client_address"
                     android:textColorHint="@color/colorAccent"
                     android:textSize="13sp"
@@ -221,7 +228,7 @@
                 android:layout_marginBottom="2dp"
                 android:paddingRight="15dip"
                 android:paddingEnd="15dip"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -235,6 +242,19 @@
                     android:id="@+id/assess_project_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+                <Button
+                    android:onClick="verifyProject"
+                    android:background="@drawable/button_gradient_background"
+                    android:text="@string/verify_project"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textAllCaps="false"
+                    android:textStyle="normal"
+                    android:id="@+id/verify_project_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
 
             </LinearLayout>
 

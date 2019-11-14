@@ -218,7 +218,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
-                    android:text="Group"
+                    android:text="@string/group"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:padding="10dp"/>

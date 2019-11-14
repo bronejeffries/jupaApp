@@ -13,12 +13,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/button_gradient_background"
+        android:background="@drawable/button_primary"
         android:text="@string/file_new_request"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textAllCaps="false"
-        android:padding="12dip"
+        android:padding="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

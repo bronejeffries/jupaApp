@@ -1,7 +1,9 @@
 package com.example.jupa.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +33,7 @@ public class RankRequestActivity extends AppCompatActivity {
     GroupsList groupsList;
     ArrayList<Rank> rankArrayList;
     Candidate ApplyingCandidate;
+    RequestApplicationObject createdRequestApplicationObject;
 
     String regNoText, experience_text, qualificationText, reasonText;
     Rank rank;
@@ -100,6 +103,40 @@ public class RankRequestActivity extends AppCompatActivity {
 
     }
 
+    public void showPaymentChoice(){
+
+        AlertDialog.Builder choice = new AlertDialog.Builder(this);
+        choice.setMessage("Application has been successfully submitted\n Make Application Payment.");
+        choice.setTitle("Application Payment");
+        choice.setPositiveButtonIcon(getResources().getDrawable(R.drawable.ic_check_black_24dp));
+        choice.setPositiveButton("Now", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                Toast.makeText(RankRequestActivity.this, "Not yet Implemented", Toast.LENGTH_SHORT).show();
+                createdRequestApplicationObject.setPaid(false);
+                MyRequestsActivity.requestApplicationAdapter.addItem(createdRequestApplicationObject);
+                finish();
+
+            }
+        });
+
+
+        choice.setNegativeButtonIcon(getResources().getDrawable(R.drawable.ic_close_black_24dp));
+        choice.setNegativeButton("Later", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                createdRequestApplicationObject.setPaid(false);
+                MyRequestsActivity.requestApplicationAdapter.addItem(createdRequestApplicationObject);
+                finish();
+
+            }
+        });
+
+        choice.show();
+
+    }
 
     public class submitRequest extends AsyncTask<RequestApplicationObject,Void,RequestApplicationObject>{
 
@@ -111,11 +148,9 @@ public class RankRequestActivity extends AppCompatActivity {
             showProgress.dismiss();
 
             if (requestApplicationObject!=null){
-
-                MyRequestsActivity.requestApplicationAdapter.addItem(requestApplicationObject);
-                finish();
+                createdRequestApplicationObject = requestApplicationObject;
+                showPaymentChoice();
             }
-
 
         }
 

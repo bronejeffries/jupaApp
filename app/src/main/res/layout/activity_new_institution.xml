@@ -273,9 +273,10 @@
             android:layout_height="wrap_content">
 
             <Button
+                android:onClick="selectBadge"
                 android:id="@+id/attach_image"
                 android:layout_gravity="center"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/button_primary"
                 android:clickable="false"
                 android:text="@string/attach_badge"
                 android:textSize="16sp"
@@ -292,7 +293,7 @@
                 android:inputType="text"
                 android:textSize="21sp"
                 android:textStyle="normal"
-                android:id="@+id/project_image_view"
+                android:id="@+id/institution_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"/>
         </LinearLayout>

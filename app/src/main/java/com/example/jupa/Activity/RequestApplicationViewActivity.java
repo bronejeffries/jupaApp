@@ -342,7 +342,7 @@ public class RequestApplicationViewActivity extends AppCompatActivity {
 
     public void checkViewLevel(){
 
-        if (!candidate_viewing.getId().equals(thisRequestApplicationObject.getCandidate_id())){
+        if (!candidate_viewing.getId().equals(thisRequestApplicationObject.getCandidate_id())&&thisRequestApplicationObject.getPaid()){
 
             if (UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.GROUP_ADMIN_ROLE)){
 

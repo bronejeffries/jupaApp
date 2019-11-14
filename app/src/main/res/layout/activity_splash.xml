@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.SplashActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_centerInParent="true"
+        app:civ_circle_background_color="@color/white"
+        android:src="@drawable/construction_icon_png_5"
+        app:civ_fill_color="@color/white"
+        app:civ_border_overlay="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:layout_marginBottom="@dimen/btn_layout_margintop"
+        android:id="@+id/jupa_intro"
+        android:textStyle="bold|normal"
+        android:textSize="17sp"
+        android:textColor="@color/white"
+        android:text="@string/jupa_intro_words"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

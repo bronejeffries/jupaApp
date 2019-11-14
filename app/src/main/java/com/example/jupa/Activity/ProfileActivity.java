@@ -11,12 +11,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -71,6 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Group group;
     public boolean candidates_view;
     public static boolean profile_edited =false;
+    LinearLayout viewcandidatesLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -118,6 +121,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         view_projects = (Button)findViewById(R.id.view_projects);
 
+        viewcandidatesLayout = (LinearLayout)findViewById(R.id.view_assessor_candidates);
+
         view_projects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,15 +130,15 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        view_skills = (Button)findViewById(R.id.view_skills);
-        view_skills.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                showSkillsBottomSheet();
-
-            }
-        });
+//        view_skills = (Button)findViewById(R.id.view_skills);
+//        view_skills.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                showSkillsBottomSheet();
+//
+//            }
+//        });
 
         showReportbtn = (FloatingActionButton)findViewById(R.id.view_assessment_report);
 
@@ -289,9 +294,18 @@ public class ProfileActivity extends AppCompatActivity {
         email.setText(candidate.getEmail());
         date_of_birth.setText(candidate.getDate_of_birth());
 
+
         if (loggedInCandidate!=null) {
 
             ProfileOwner = loggedInCandidate.getId().equals(candidate_id);
+
+            Log.e("profile", "populateViews: "+ProfileOwner );
+
+            if(ProfileOwner && UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.ASSESSOR_ROLE)){
+
+                viewcandidatesLayout.setVisibility(View.VISIBLE);
+
+            }
 
             if (!UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.GROUP_ADMIN_ROLE)){
 
@@ -633,7 +647,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
 
-        Toast.makeText(this, "Im back Restart "+String.valueOf(profile_edited), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Im back Restart "+String.valueOf(profile_edited), Toast.LENGTH_SHORT).show();
 
     }
 }

@@ -347,7 +347,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                 return true;
 
             case R.id.logout_link:
-                Intent logoutIntent = new Intent(this, LoginPromptActivity.class);
+                Intent logoutIntent = new Intent(this, MainActivity.class);
                 startActivity(logoutIntent);
                 return true;
             default:

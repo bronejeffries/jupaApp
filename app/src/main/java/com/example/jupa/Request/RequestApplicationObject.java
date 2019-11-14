@@ -57,6 +57,15 @@ public class RequestApplicationObject implements Parcelable {
     @SerializedName("candidate")
     Candidate candidate;
 
+    @SerializedName("isPaid")
+    Boolean paid;
+
+    @SerializedName("amount")
+    Integer amount;
+
+
+
+
     public RequestApplicationObject(String request_type, int candidate_id, String regNo, String experience, String qualification, String reason, int group_id, int status, @Nullable Integer rank_id, @Nullable Integer institution_id) {
 
         this.request_type = request_type;
@@ -101,6 +110,13 @@ public class RequestApplicationObject implements Parcelable {
         }
         comment = in.readString();
         candidate = in.readParcelable(Candidate.class.getClassLoader());
+        byte tmpPaid = in.readByte();
+        paid = tmpPaid == 0 ? null : tmpPaid == 1;
+        if (in.readByte() == 0) {
+            amount = null;
+        } else {
+            amount = in.readInt();
+        }
     }
 
     @Override
@@ -135,6 +151,13 @@ public class RequestApplicationObject implements Parcelable {
         }
         dest.writeString(comment);
         dest.writeParcelable(candidate, flags);
+        dest.writeByte((byte) (paid == null ? 0 : paid ? 1 : 2));
+        if (amount == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(amount);
+        }
     }
 
     @Override
@@ -153,6 +176,22 @@ public class RequestApplicationObject implements Parcelable {
             return new RequestApplicationObject[size];
         }
     };
+
+    public Boolean getPaid() {
+        return paid!=null?paid:false;
+    }
+
+    public void setPaid(Boolean paid) {
+        this.paid = paid;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
 
     public Candidate getCandidate() {
         return candidate;
@@ -272,5 +311,10 @@ public class RequestApplicationObject implements Parcelable {
 
     public void setUser_id(Integer user_id) {
         this.user_id = user_id;
+    }
+
+    public String getPaymentStatus(){
+
+        return getPaid()?"Cleared":"Pending";
     }
 }

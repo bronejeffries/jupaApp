@@ -22,6 +22,7 @@ public class RequestApiBackgroundTasks {
     Context context;
     RequestApplicationObject requestApplicationObject;
     ArrayList<RequestApplicationObject> requestApplicationObjectArrayList;
+
     public String SUCCESS = "1", message;
 
     public static RequestApiBackgroundTasks instance = null;

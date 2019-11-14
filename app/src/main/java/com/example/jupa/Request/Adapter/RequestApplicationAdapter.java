@@ -106,7 +106,7 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
     private class applicationViewHolder extends RecyclerView.ViewHolder{
 
 
-        TextView roleView, applicationType, applicationStatus, viewApplicationDetails,name;
+        TextView roleView, applicationType, applicationStatus, viewApplicationDetails,name,payment_status;
 
         public applicationViewHolder(@NonNull View itemView) {
 
@@ -117,6 +117,7 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
             roleView = (TextView)itemView.findViewById(R.id.role_view);
             applicationType = (TextView)itemView.findViewById(R.id.type_view);
             applicationStatus = (TextView)itemView.findViewById(R.id.application_status);
+            payment_status = (TextView)itemView.findViewById(R.id.application_payment_status);
 
         }
 
@@ -126,6 +127,9 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
             roleView.setText(requestApplicationObject.getCandidate().getRole());
             getStatusInfo(requestApplicationObject.getStatus(),this.applicationStatus);
             applicationType.setText(requestApplicationObject.getRequest_type());
+
+            String status = requestApplicationObject.getPaymentStatus();
+            payment_status.setText(status);
             viewApplicationDetails.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -142,7 +146,7 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
 
     private class personalApplicationView extends RecyclerView.ViewHolder{
 
-        TextView textView, status_view;
+        TextView textView, status_view,payment_status;
 
         public personalApplicationView(@NonNull View itemView) {
 
@@ -150,6 +154,7 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
 
             textView = (TextView)itemView.findViewById(R.id.application_description);
             status_view = (TextView)itemView.findViewById(R.id.application_status);
+            payment_status = (TextView)itemView.findViewById(R.id.application_payment_status);
 
         }
 
@@ -165,7 +170,8 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
             String textViewInfo = application_intro+applicationText+record_date;
 
             getStatusInfo(requestApplicationObject.getStatus(),this.status_view);
-
+            String status = requestApplicationObject.getPaymentStatus();
+            payment_status.setText(status);
             textView.setText(textViewInfo);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -5,10 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.jupa.Helpers.LoggedInInstitution;
@@ -97,6 +94,14 @@ public class InstitutionActivity extends AppCompatActivity {
         Intent results_intent = new Intent(this, InstitutionResultsActivity.class);
         results_intent.putExtra(InstitutionResultsActivity.Institution_Extra,institution);
         startActivity(results_intent);
+
+    }
+
+    public void viewInstitutionProfile(View view){
+
+        Intent institution_intent = new Intent(this, InstitutionProfileActivity.class);
+        institution_intent.putExtra(InstitutionActivity.INSTITUTION_EXTRA,institution);
+        startActivity(institution_intent);
 
     }
 

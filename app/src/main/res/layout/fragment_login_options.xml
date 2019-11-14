@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.LoginOptionsFragment">
+
+    <RelativeLayout
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@color/white"
+            android:id="@+id/search_btns_layout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:background="@android:color/transparent"
+                android:padding="8dp"
+                android:gravity="start"
+                android:layout_marginTop="@dimen/btn_layout_margintop"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/candidate_login"
+                    android:layout_margin="8dp"
+                    app:contentPaddingTop="24dp"
+                    app:contentPaddingBottom="24dp"
+                    app:cardCornerRadius="8sp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardElevation="12dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:text="@string/candidate"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/assessor_login"
+                    android:layout_margin="8dp"
+                    app:contentPaddingTop="24dp"
+                    app:contentPaddingBottom="24dp"
+                    app:cardCornerRadius="8sp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardElevation="12dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:text="@string/assessor"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"/>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@android:color/transparent"
+                android:padding="8dp"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/association_login"
+                    android:layout_margin="8dp"
+                    app:contentPaddingTop="24dp"
+                    app:contentPaddingBottom="24dp"
+                    app:cardCornerRadius="8sp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardElevation="12dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:text="@string/association"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/institution_login"
+                    android:layout_margin="8dp"
+                    app:contentPaddingTop="24dp"
+                    app:contentPaddingBottom="24dp"
+                    app:cardCornerRadius="8sp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardElevation="12dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:text="@string/institution"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"/>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@android:color/transparent"
+                android:padding="8dp"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/administration_login"
+                    android:layout_margin="8dp"
+                    app:contentPaddingTop="24dp"
+                    app:contentPaddingBottom="24dp"
+                    app:cardCornerRadius="8sp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardElevation="12dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:text="@string/administration"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+</androidx.core.widget.NestedScrollView>
