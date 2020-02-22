@@ -36,10 +36,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
 
     public static Candidate assessedCandidate;
-    public static CandidateProject candidateProject;
     Intent intent;
-    public final static String ASSESSMENT_GROUP_EXTRA = "assessment_group";
-    public static AssessmentGroup assessmentGroup;
     TextView assessment_group_name, assessed_project;
     RecyclerView questionCategoriesRecyclerView;
     CategoriesAdapter categoriesAdapter;
@@ -63,13 +60,11 @@ public class AssessmentActivity extends AppCompatActivity {
         makeGrades();
 
         intent = getIntent();
-        assessmentGroup = intent.getParcelableExtra(ASSESSMENT_GROUP_EXTRA);
-        candidateProject = ProjectAssessmentsActivity.candidateProject;
 
         questionApiBackgroundTasks = QuestionApiBackgroundTasks.getInstance(this);
         candidateBackgroundApiTasks = CandidateBackgroundApiTasks.getInstance(this);
 
-        assessedCandidate = ProfileActivity.candidate;
+        assessedCandidate = intent.getParcelableExtra(RankRequestActivity.CANDIDATE_EXTRA);
 
         categoriesAdapter = new CategoriesAdapter(true,null,this,false);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -79,10 +74,10 @@ public class AssessmentActivity extends AppCompatActivity {
         questionCategoriesRecyclerView.setAdapter(categoriesAdapter);
 
         assessment_group_name = (TextView)findViewById(R.id.assessment_name);
-        assessed_project = (TextView)findViewById(R.id.assessed_project_name);
+//        assessed_project = (TextView)findViewById(R.id.assessed_project_name);
 
-        assessment_group_name.setText(assessmentGroup.getName());
-        assessed_project.setText(candidateProject.getTitle());
+        assessment_group_name.setText(assessedCandidate.getName());
+//        assessed_project.setText(candidateProject.getTitle());
 
         showProgress.setMessage("Loading questions");
         showProgress.show();

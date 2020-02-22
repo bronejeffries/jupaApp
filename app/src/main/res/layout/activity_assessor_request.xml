@@ -170,6 +170,11 @@
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
+
+                <include
+                    layout="@layout/recommendation_select_layout"
+                    />
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

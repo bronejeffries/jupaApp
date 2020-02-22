@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.jupa.Candidate.Candidate;
 import com.example.jupa.Candidate.Project.CandidateProject;
+import com.example.jupa.Helpers.LoadImageToView;
 import com.example.jupa.Helpers.LoggedInInstitution;
 import com.example.jupa.Helpers.LoggedInUser;
 import com.example.jupa.R;
@@ -29,7 +30,7 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
     CandidateProject candidateProject;
     Intent intent;
     TextView location, date_of_completion, client_names, client_contact, client_mail, description, client_address, title;
-    Button assess_btn,verifyProjectBtn;
+    Button verifyProjectBtn;
     RelativeLayout photo_View;
     boolean permission = false;
     Candidate project_owner;
@@ -49,7 +50,6 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
         client_mail = (TextView)findViewById(R.id.project_client_email_input);
         description = (TextView)findViewById(R.id.project_description_input);
         client_address = (TextView)findViewById(R.id.project_client_address_input);
-        assess_btn = (Button)findViewById(R.id.assess_project_btn);
         title = (TextView)findViewById(R.id.project_title_input);
         photo_View = (RelativeLayout)findViewById(R.id.header_layout);
         verifyProjectBtn = (Button)findViewById(R.id.verify_project_btn);
@@ -73,6 +73,7 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
 
     private void populateViews() {
 
+        LoadImageToView.setAsBackground(this,candidateProject.getProject_photo(),photo_View);
         title.setText(candidateProject.getTitle());
         location.setText(candidateProject.getLocation());
         date_of_completion.setText(candidateProject.getDate_of_completion());
@@ -82,28 +83,13 @@ public class CandidateProjectDetailViewActivity extends AppCompatActivity {
         description.setText(candidateProject.getDescription());
         client_address.setText(candidateProject.getClient_address());
 
-        if (permission){
 
-            assess_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showAssessments(candidateProject);
-                }
-            });
+        if (!permission){
 
-        }else {
-
-            assess_btn.setVisibility(View.GONE);
             verifyProjectBtn.setVisibility(View.GONE);
+
         }
 
-    }
-
-    private void showAssessments(CandidateProject candidateProject) {
-
-        Intent showAssessmentIntent = new Intent(this, ProjectAssessmentsActivity.class);
-        showAssessmentIntent.putExtra(ProjectAssessmentsActivity.CANDIDATE_PROJECT_EXTRA,candidateProject);
-        startActivity(showAssessmentIntent);
 
     }
 

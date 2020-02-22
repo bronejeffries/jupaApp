@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.InstitutionCoursesActivity">
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_alignParentTop="true"
+        android:text="@string/subjects"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:onClick="addCourseBottomSheet"
+        android:id="@+id/add_subject"
+        app:elevation="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/subjects"
+        tools:listitem="@layout/institution_item_view"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_below="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

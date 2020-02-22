@@ -7,6 +7,10 @@ import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
+import okhttp3.RequestBody;
+
 public class CandidateProject implements Parcelable {
 
     @SerializedName("project_id")
@@ -45,6 +49,7 @@ public class CandidateProject implements Parcelable {
     @SerializedName("project_photo")
     String project_photo;
 
+    String file_body;
 
     Boolean verified;
 
@@ -62,7 +67,6 @@ public class CandidateProject implements Parcelable {
         this.status = status;
         this.project_photo = project_photo;
     }
-
 
     protected CandidateProject(Parcel in) {
         if (in.readByte() == 0) {
@@ -89,6 +93,7 @@ public class CandidateProject implements Parcelable {
             status = in.readInt();
         }
         project_photo = in.readString();
+        file_body = in.readString();
         byte tmpVerified = in.readByte();
         verified = tmpVerified == 0 ? null : tmpVerified == 1;
     }
@@ -122,6 +127,7 @@ public class CandidateProject implements Parcelable {
             dest.writeInt(status);
         }
         dest.writeString(project_photo);
+        dest.writeString(file_body);
         dest.writeByte((byte) (verified == null ? 0 : verified ? 1 : 2));
     }
 
@@ -245,4 +251,14 @@ public class CandidateProject implements Parcelable {
     public void setVerified(Boolean verified) {
         this.verified = verified;
     }
+
+    public String getFile_body() {
+
+        return file_body;
+    }
+
+    public void setFile_body(String  file_body) {
+        this.file_body = file_body;
+    }
+
 }

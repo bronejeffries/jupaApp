@@ -11,6 +11,7 @@ import com.example.jupa.Request.RequestApplicationObject;
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -103,6 +104,7 @@ public class RequestApiBackgroundTasks {
                     try {
 
                         if (response.body().getSuccess().equals(SUCCESS)){
+
                             setRequestApplicationObjectArrayList(response.body().getRequestApplicationsArrayList());
                             Log.e(TAG, "onResponse: "+response.body().requestApplicationsArrayList.size() );
 
@@ -143,7 +145,7 @@ public class RequestApiBackgroundTasks {
 
     public void getAllGroupApplicationsByType(GroupSearchActivity.searchObject searchObject){
 
-        Log.e(ContentValues.TAG, "getAllGroupApplicationsByType: "+searchObject.getGroup_id()+" "+searchObject.getStatus()+" "+searchObject.getLast() );
+        Log.e(ContentValues.TAG, "getAllGroupApplicationsByType: "+searchObject.getGroup_id()+" "+searchObject.getLimit()+" "+searchObject.getLast() );
 
 
         Call<RequestListApiData> call = requestsApiInterface.getGroupApplicationsByType(searchObject.getGroup_id(),searchObject.getRequestType(),searchObject.getLimit(),searchObject.getLast());
@@ -229,12 +231,12 @@ public class RequestApiBackgroundTasks {
 
     public void submitRequest(RequestApplicationObject requestApplicationObject){
 
-        Log.e(TAG, "submitRequest: "+String.valueOf(requestApplicationObject.getInstitution_id()) );
-
         Call<RequestApiData> call = requestsApiInterface.makeRequest(requestApplicationObject.getRequest_type(),
                 requestApplicationObject.getCandidate_id(),requestApplicationObject.getRegNo(),requestApplicationObject.getExperience(),
-                requestApplicationObject.getQualification(),requestApplicationObject.getReason(),requestApplicationObject.getGroup_id(),requestApplicationObject.getRank_id(),
-                requestApplicationObject.getInstitution_id());
+                requestApplicationObject.getQualification(),requestApplicationObject.getReason(),requestApplicationObject.getGroup_id(),
+                requestApplicationObject.getAssociation_id(),requestApplicationObject.getRank_id(),requestApplicationObject.getInstitution_id(),
+                requestApplicationObject.getPaid_Value(),requestApplicationObject.getFile_body());
+
 
         call.enqueue(new Callback<RequestApiData>() {
             @Override
@@ -266,6 +268,7 @@ public class RequestApiBackgroundTasks {
 
                     setRequestApplicationObject(null);
                     setMessage(t.getMessage());
+                    Log.e(TAG, "onFailure: "+call);
                     RequestApiBackgroundTasks.this.notifyAll();
 
                 }
@@ -274,7 +277,6 @@ public class RequestApiBackgroundTasks {
             }
         });
     }
-
 
     public void approveRequest(RequestApplicationObject requestApplicationObject){
 
@@ -306,6 +308,44 @@ public class RequestApiBackgroundTasks {
 
             @Override
             public void onFailure(Call<RequestApiData> call, Throwable t) {
+
+
+                synchronized (RequestApiBackgroundTasks.this){
+
+                    setRequestApplicationObject(null);
+                    setMessage(t.getMessage());
+                    RequestApiBackgroundTasks.this.notifyAll();
+
+                }
+
+
+            }
+        });
+    }
+
+    public void payRequest(RequestApplicationObject requestApplicationObject,Integer ammount,String category){
+
+        Call<ResponseBody> call = requestsApiInterface.payApplication(requestApplicationObject.getRequest_id(),requestApplicationObject.getCandidate_id(),ammount,category);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                synchronized (RequestApiBackgroundTasks.this){
+                    if (response.isSuccessful()){
+                        setMessage("success");
+                    }else {
+                        setMessage(null);
+                    }
+                    RequestApiBackgroundTasks.this.notifyAll();
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
 
                 synchronized (RequestApiBackgroundTasks.this){

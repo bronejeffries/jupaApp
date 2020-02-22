@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.AssociationRegistrationActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:layout_below="@+id/association_details"
+            android:id="@+id/text_view"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="@string/contact_person_details"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            layout="@layout/candidate_details_layout"
+            android:layout_below="@id/text_view"
+            />
+
+        <TextView
+            android:id="@+id/text_view2"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="@string/association_details"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:layout_below="@id/text_view2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/association_details"
+            />
+
+
+        <Button
+            android:layout_below="@+id/candidate_details"
+            android:id="@+id/register_btn"
+            android:layout_margin="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_group"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_primary"
+            android:textSize="15sp"
+            android:textColor="@android:color/white"/>
+
+    </RelativeLayout>
+
+</ScrollView>

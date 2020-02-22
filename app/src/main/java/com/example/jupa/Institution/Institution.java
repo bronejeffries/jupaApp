@@ -5,6 +5,11 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public class Institution implements Parcelable {
 
     @SerializedName("institution_id")
@@ -46,6 +51,11 @@ public class Institution implements Parcelable {
     @SerializedName("secret_number")
     String secret_number;
 
+    @SerializedName("isPaid")
+    Integer paid;
+
+    String file_body;
+
     public Institution(String center_No, String name, String photo_url, String contactPerson, String telephone_number, String email_address, String physical_address, String about_institution, String website, String facebook) {
         this.center_No = center_No;
         this.name = name;
@@ -58,7 +68,6 @@ public class Institution implements Parcelable {
         this.website = website;
         this.facebook = facebook;
     }
-
 
     protected Institution(Parcel in) {
         if (in.readByte() == 0) {
@@ -82,6 +91,12 @@ public class Institution implements Parcelable {
             status = in.readInt();
         }
         secret_number = in.readString();
+        if (in.readByte() == 0) {
+            paid = null;
+        } else {
+            paid = in.readInt();
+        }
+        file_body = in.readString();
     }
 
     @Override
@@ -109,6 +124,13 @@ public class Institution implements Parcelable {
             dest.writeInt(status);
         }
         dest.writeString(secret_number);
+        if (paid == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(paid);
+        }
+        dest.writeString(file_body);
     }
 
     @Override
@@ -238,6 +260,33 @@ public class Institution implements Parcelable {
 
     }
 
+    public Boolean getPaid() {
+
+        return (this.getPaid_Value().equals(1));
+
+    }
+
+    public Integer getPaid_Value(){
+
+        return (paid!=null)?paid:0;
+
+    }
 
 
+    public void setPaid(Integer paid) {
+        this.paid = paid;
+    }
+
+    public String getFile_body() {
+
+        return this.file_body;
+    }
+
+    public void setFile_body(String file_body) {
+        this.file_body = file_body;
+    }
+
+    public String getStatusRepresentation() {
+        return this.getStatus().equals(1)?"verified":"not verified";
+    }
 }

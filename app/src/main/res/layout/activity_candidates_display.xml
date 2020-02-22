@@ -7,7 +7,7 @@
     tools:context=".Activity.CandidatesDisplayActivity">
 
     <LinearLayout
-        android:layout_marginTop="20dip"
+        android:layout_marginTop="20dp"
         android:id="@+id/search_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         <EditText
             android:hint="@string/search_by_registration_number"
             android:id="@+id/search_candidate"
-            android:layout_width="0dip"
+            android:layout_width="0dp"
             android:layout_weight="0.7"
             android:drawableLeft="@android:drawable/ic_menu_search"
             android:drawableStart="@android:drawable/ic_menu_search"
@@ -25,12 +25,12 @@
 
         <Button
             android:id="@+id/search_btn"
-            android:layout_margin="8dip"
-            android:layout_width="0dip"
+            android:layout_margin="8dp"
+            android:layout_width="0dp"
             android:layout_weight="0.2"
             android:text="@string/search"
             android:textColor="@color/white"
-            android:background="@drawable/button_gradient_background"
+            android:background="@drawable/button_primary"
             android:layout_height="wrap_content" />
     </LinearLayout>
 

@@ -44,20 +44,6 @@
                     android:layout_marginBottom="3dp"
                     android:text="@string/group_name"/>
 
-                <TextView
-                    android:id="@+id/group_admin_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="start"
-                    android:text="@string/assign_admin"
-                    android:textSize="14sp"
-                    android:drawableTint="@color/colorPrimary"
-                    android:drawableRight="@android:drawable/ic_menu_edit"
-                    android:drawableEnd="@android:drawable/ic_menu_edit"
-                    android:drawablePadding="10dp"
-                    />
-
             </LinearLayout>
 
 

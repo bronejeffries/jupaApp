@@ -14,9 +14,6 @@ public class Assessment extends FilterableObject implements Parcelable {
     @SerializedName("assessment_id")
     Integer assessment_id;
 
-    @SerializedName("assessment_group_id")
-    Integer assessment_group_id;
-
     @SerializedName("question_id")
     Integer question_id;
 
@@ -29,9 +26,6 @@ public class Assessment extends FilterableObject implements Parcelable {
     @SerializedName("candidate_id")
     Integer candidate_id;
 
-    @SerializedName("project_id")
-    Integer project_id;
-
     @SerializedName("assessor_id")
     Integer assessor_id;
 
@@ -41,13 +35,11 @@ public class Assessment extends FilterableObject implements Parcelable {
     @SerializedName("institute_remarks")
     String institute_remarks;
 
-    public Assessment(Integer assessment_group_id, Integer question_id, String grade, String other_remarks, Integer candidate_id, Integer project_id, Integer assessor_id, Integer institution_id) {
-        this.assessment_group_id = assessment_group_id;
+    public Assessment(Integer question_id, String grade, String other_remarks, Integer candidate_id, Integer assessor_id, Integer institution_id) {
         this.question_id = question_id;
         this.grade = grade;
         this.other_remarks = other_remarks;
         this.candidate_id = candidate_id;
-        this.project_id = project_id;
         this.assessor_id = assessor_id;
         this.institution_id = institution_id;
     }
@@ -60,11 +52,6 @@ public class Assessment extends FilterableObject implements Parcelable {
             assessment_id = in.readInt();
         }
         if (in.readByte() == 0) {
-            assessment_group_id = null;
-        } else {
-            assessment_group_id = in.readInt();
-        }
-        if (in.readByte() == 0) {
             question_id = null;
         } else {
             question_id = in.readInt();
@@ -75,11 +62,6 @@ public class Assessment extends FilterableObject implements Parcelable {
             candidate_id = null;
         } else {
             candidate_id = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            project_id = null;
-        } else {
-            project_id = in.readInt();
         }
         if (in.readByte() == 0) {
             assessor_id = null;
@@ -102,12 +84,6 @@ public class Assessment extends FilterableObject implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(assessment_id);
         }
-        if (assessment_group_id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(assessment_group_id);
-        }
         if (question_id == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -121,12 +97,6 @@ public class Assessment extends FilterableObject implements Parcelable {
         } else {
             dest.writeByte((byte) 1);
             dest.writeInt(candidate_id);
-        }
-        if (project_id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(project_id);
         }
         if (assessor_id == null) {
             dest.writeByte((byte) 0);
@@ -176,14 +146,6 @@ public class Assessment extends FilterableObject implements Parcelable {
         this.institution_id = institution_id;
     }
 
-    public Integer getAssessment_group_id() {
-        return assessment_group_id;
-    }
-
-    public void setAssessment_group_id(Integer assessment_group_id) {
-        this.assessment_group_id = assessment_group_id;
-    }
-
     public Integer getQuestion_id() {
         return question_id;
     }
@@ -222,14 +184,6 @@ public class Assessment extends FilterableObject implements Parcelable {
 
     public void setAssessment_id(Integer assessment_id) {
         this.assessment_id = assessment_id;
-    }
-
-    public Integer getProject_id() {
-        return project_id;
-    }
-
-    public void setProject_id(Integer project_id) {
-        this.project_id = project_id;
     }
 
     public String getInstitute_remarks() {

@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="6dip" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp" >
 
     <TextView
         android:drawableTint="@color/white"
         android:drawableEnd="@drawable/ic_expand_more_black_24dp"
         android:drawableRight="@drawable/ic_expand_more_black_24dp"
         android:text="@string/category"
-        android:textSize="21sp"
+        android:textSize="15sp"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
         android:id="@+id/categoryView"
         android:gravity="center"
-        android:padding="12dip"
+        android:padding="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <ProgressBar
         android:visibility="gone"
         android:id="@+id/category_progressLoader"
-        android:layout_margin="6dip"
+        android:layout_margin="6dp"
         android:layout_below="@+id/categoryView"
         android:layout_width="wrap_content"
-        android:layout_height="24dip" />
+        android:layout_height="21dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:visibility="gone"
-        android:layout_marginTop="10dip"
+        android:layout_marginTop="10dp"
         android:id="@+id/category_questions_recycler_view"
         android:layout_below="@+id/categoryView"
         android:layout_width="match_parent"
@@ -34,5 +36,28 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/add_question"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/drawable_padding"
+        android:layout_below="@id/category_questions_recycler_view"
+        android:text="@string/add_question"
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/category_options"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/drawable_padding"
+        android:layout_below="@id/add_question"
+        android:text="@string/category_options"
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

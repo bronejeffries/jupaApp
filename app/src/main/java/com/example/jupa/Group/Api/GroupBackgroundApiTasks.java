@@ -47,7 +47,6 @@ public class GroupBackgroundApiTasks {
         this.context = context;
     }
 
-
     public void fetchGroups(){
 
         Call<GrouplistApiData> call = groupApi_interface.getAllGroups();
@@ -59,8 +58,12 @@ public class GroupBackgroundApiTasks {
 
                     if (response.body().getSuccess().equals(SUCCESS)){
                         setGroupArrayList(response.body().getGroupArrayList());
-                    }
 
+                    }else {
+
+                        setGroupArrayList(null);
+
+                    }
                     GroupBackgroundApiTasks.this.notifyAll();
 
                 }
@@ -73,7 +76,7 @@ public class GroupBackgroundApiTasks {
                 synchronized (GroupBackgroundApiTasks.this){
 
                     t.printStackTrace();
-                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    setGroupArrayList(null);
                     GroupBackgroundApiTasks.this.notifyAll();
                 }
 
@@ -82,7 +85,6 @@ public class GroupBackgroundApiTasks {
 
 
     }
-
 
     public void getGroupCandidatesWithRole(int group_id, String member_level){
 
@@ -116,7 +118,6 @@ public class GroupBackgroundApiTasks {
         });
 
     }
-
 
     public void addNewGroup(Group group){
 
@@ -197,7 +198,6 @@ public class GroupBackgroundApiTasks {
 
 
     }
-
 
     public void fetchGroupCandidates(int group_id){
 
@@ -410,7 +410,48 @@ public class GroupBackgroundApiTasks {
 
     }
 
+    public void GetCandidatesByName(GroupSearchActivity.searchObject searchObject){
 
+        Log.e(TAG, "CandidatesByName: "+searchObject.getGroup_id()+" "+searchObject.getLast() );
+
+        Call<CandidateListApiData> call = groupApi_interface.getCandidatesByName(searchObject.getName(),searchObject.getLast(),searchObject.getLimit());
+
+        call.enqueue(new Callback<CandidateListApiData>() {
+            @Override
+            public void onResponse(Call<CandidateListApiData> call, Response<CandidateListApiData> response) {
+
+                synchronized (GroupBackgroundApiTasks.this){
+
+                    Log.e(TAG, "onResponse: "+response.body().getCandidateArrayList().toString());
+
+                    if (response.body().getSuccess().equals(SUCCESS)){
+
+                        setGroupCandidatesList(response.body().getCandidateArrayList());
+
+                    }else {
+
+                        setGroupCandidatesList(null);
+
+                    }
+                    setMessage(response.body().getMessage());
+                    GroupBackgroundApiTasks.this.notifyAll();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CandidateListApiData> call, Throwable t) {
+
+                synchronized (GroupBackgroundApiTasks.this){
+                    setGroupCandidatesList(null);
+                    setMessage(t.getMessage());
+                    GroupBackgroundApiTasks.this.notifyAll();
+                }
+
+            }
+        });
+
+    }
 
     public Group getGroup() {
         return group;

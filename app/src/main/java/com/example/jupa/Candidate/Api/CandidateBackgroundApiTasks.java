@@ -62,11 +62,13 @@ public class CandidateBackgroundApiTasks {
         this.context = context;
     }
 
-    public void registerNewCandidate(Candidate newcandidate){
+    public void registerNewCandidate(Candidate newCandidate){
 
-        Call<CandidateApiData> call = candidateApi_interface.addNewCandidate(newcandidate.getFirst_name(),newcandidate.getMobile_number(),newcandidate.getEmail(), newcandidate.getDate_of_birth(),
-                newcandidate.getLast_name(),newcandidate.getFamily_name(),newcandidate.getOther_number(),newcandidate.getGender(), newcandidate.getCategory_id(),newcandidate.getCountry_id(),
-                newcandidate.getState_id(),newcandidate.getCity_id(),newcandidate.getAddress(),newcandidate.getEducation(),newcandidate.getGroup());
+        Call<CandidateApiData> call = candidateApi_interface.addNewCandidate(newCandidate.getFirst_name(),newCandidate.getMobile_number(),
+                newCandidate.getEmail(), newCandidate.getDate_of_birth(),newCandidate.getLast_name(),newCandidate.getFamily_name(),
+                newCandidate.getOther_number(),newCandidate.getGender(), newCandidate.getCategory_id(),newCandidate.getCountry_id(),
+                newCandidate.getState_id(),newCandidate.getCity_id(),newCandidate.getAddress(),newCandidate.getEducation(),
+                newCandidate.getGroup(),newCandidate.getAssociation_name(),newCandidate.getAssociation_reg_date(),newCandidate.getAssociation_address());
 
         call.enqueue(new Callback<CandidateApiData>() {
             @Override
@@ -78,8 +80,8 @@ public class CandidateBackgroundApiTasks {
 
 
                     if (response.body().getSuccess().equals(SUCCESS)){
-
-
+                        
+                        setCandidate(response.body().getCandidate());
 
                     }
 
@@ -89,7 +91,6 @@ public class CandidateBackgroundApiTasks {
 
                 }
 
-
             }
 
             @Override
@@ -97,9 +98,10 @@ public class CandidateBackgroundApiTasks {
 
                 synchronized (CandidateBackgroundApiTasks.this){
 
+                    setMessage(t.getMessage());
+                    setCandidate(null);
                     CandidateBackgroundApiTasks.this.notifyAll();
 
-                    Toast.makeText(context, "Something Went wrong", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -107,11 +109,12 @@ public class CandidateBackgroundApiTasks {
 
     }
 
-    public void updateCandidate(Candidate newcandidate){
-        Log.e(TAG, "updateCandidate: "+newcandidate.getId()+" "+newcandidate.getEmail()+" "+newcandidate.getOther_number());
-        Call<CandidateApiData> call = candidateApi_interface.updateCandidate(newcandidate.getId(),newcandidate.getFirst_name(),newcandidate.getMobile_number(),newcandidate.getEmail(), newcandidate.getDate_of_birth(),
-                newcandidate.getLast_name(),newcandidate.getFamily_name(),newcandidate.getOther_number(),newcandidate.getGender(), newcandidate.getCategory_id(),newcandidate.getCountry_id(),
-                newcandidate.getState_id(),newcandidate.getCity_id(),newcandidate.getAddress(),newcandidate.getEducation(),newcandidate.getGroup());
+    public void updateCandidate(Candidate newCandidate){
+        Log.e(TAG, "updateCandidate: "+newCandidate.getId()+" "+newCandidate.getEmail()+" "+newCandidate.getOther_number());
+        Call<CandidateApiData> call = candidateApi_interface.updateCandidate(newCandidate.getId(),newCandidate.getFirst_name(),newCandidate.getMobile_number(),newCandidate.getEmail(), newCandidate.getDate_of_birth(),
+                newCandidate.getLast_name(),newCandidate.getFamily_name(),newCandidate.getOther_number(),newCandidate.getGender(), newCandidate.getCategory_id(),newCandidate.getCountry_id(),
+                newCandidate.getState_id(),newCandidate.getCity_id(),newCandidate.getAddress(),newCandidate.getEducation(),newCandidate.getGroup(),
+                newCandidate.getAssociation_id(),newCandidate.getFile_body(),newCandidate.getAvailable(),newCandidate.getDate_available());
         call.enqueue(new Callback<CandidateApiData>() {
             @Override
             public void onResponse(Call<CandidateApiData> call, Response<CandidateApiData> response) {
@@ -120,6 +123,8 @@ public class CandidateBackgroundApiTasks {
 
                     if (response.body().getSuccess().equals(SUCCESS)){
 
+                        setCandidate(response.body().getCandidate());
+
                     }
                     setMessage(response.body().getMessage());
                     CandidateBackgroundApiTasks.this.notifyAll();
@@ -133,9 +138,10 @@ public class CandidateBackgroundApiTasks {
 
                 synchronized (CandidateBackgroundApiTasks.this){
 
+                    setCandidate(null);
+                    setMessage(t.getMessage());
                     CandidateBackgroundApiTasks.this.notifyAll();
 
-                    Toast.makeText(context, "Something Went wrong", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -188,17 +194,18 @@ public class CandidateBackgroundApiTasks {
         Call<CandidateProjectApiData> call = candidateApi_interface.addCandidateProject(candidateProject.getCandidate_id(),candidateProject.getTitle(),candidateProject.getLocation(),candidateProject.getDate_of_completion(),
                                                                     candidateProject.getClient_name(),candidateProject.getClient_contact(),candidateProject.getClient_email(),
                                                                     candidateProject.getClient_address(),
-                                                                    candidateProject.getDescription(),candidateProject.getStatus());
+                                                                    candidateProject.getDescription(),candidateProject.getStatus(),candidateProject.getFile_body());
         call.enqueue(new Callback<CandidateProjectApiData>() {
             @Override
             public void onResponse(Call<CandidateProjectApiData> call, Response<CandidateProjectApiData> response) {
 
                 synchronized (CandidateBackgroundApiTasks.this){
-
-                    if (response.body().getSuccess().equals(SUCCESS)){
-                        setCandidateProject(response.body().getCandidateProject());
+                    if (response.isSuccessful()){
+                        if (response.body().getSuccess().equals(SUCCESS)){
+                            setCandidateProject(response.body().getCandidateProject());
+                        }
+                        setMessage(response.body().getMessage());
                     }
-                    setMessage(response.body().getMessage());
                     CandidateBackgroundApiTasks.this.notifyAll();
                 }
 
@@ -447,6 +454,53 @@ public class CandidateBackgroundApiTasks {
 
     }
 
+    public void getCandidatesByMemberLevel(String memberLevel,String group_id){
+
+        Integer group = Integer.parseInt(group_id);
+
+        Call<CandidateListApiData> call = candidateApi_interface.getCandidatesbyMemberLevel(memberLevel,group);
+
+        call.enqueue(new Callback<CandidateListApiData>() {
+
+            @Override
+            public void onResponse(Call<CandidateListApiData> call, Response<CandidateListApiData> response) {
+
+                synchronized (CandidateBackgroundApiTasks.this){
+
+                    if (response.body().getSuccess().equals(SUCCESS)){
+
+                        setCandidateArrayList(response.body().getCandidateArrayList());
+
+                    }else {
+
+                        setCandidateArrayList(null);
+
+                    }
+
+                    setMessage(response.body().getMessage());
+                    CandidateBackgroundApiTasks.this.notifyAll();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CandidateListApiData> call, Throwable t) {
+
+                synchronized (CandidateBackgroundApiTasks.this){
+
+                    setMessage(t.getMessage());
+                    setCandidateArrayList(null);
+                    CandidateBackgroundApiTasks.this.notifyAll();
+
+                }
+
+            }
+        });
+
+
+    }
+
     public void getAssessmentsInAssessmentGroup(int assessment_group_id) {
 
         Call<AssessmentListApiData> call = candidateApi_interface.getAssessmentsInAssessmentGroup(assessment_group_id);
@@ -601,9 +655,9 @@ public class CandidateBackgroundApiTasks {
 
 
         Call<AssessmentApiData> call = candidateApi_interface
-                                        .makeAssessment(assessment.getAssessment_group_id(),assessment.getQuestion_id(),assessment.getCandidate_id(),
-                                                                            assessment.getGrade(),assessment.getOther_remarks(),assessment.getProject_id(),
-                                                                            assessment.getInstitution_id(),assessment.getAssessor_id());
+                                        .makeAssessment(assessment.getQuestion_id(),assessment.getCandidate_id(),
+                                                        assessment.getGrade(),assessment.getOther_remarks(),
+                                                        assessment.getInstitution_id(),assessment.getAssessor_id());
 
         call.enqueue(new Callback<AssessmentApiData>() {
             @Override
@@ -651,8 +705,8 @@ public class CandidateBackgroundApiTasks {
             @Override
             public void onResponse(Call<AssessmentApiData> call, Response<AssessmentApiData> response) {
 
-                Log.e(TAG, "onResponse: assessment "+response.body().getSuccess());
-                Log.e(TAG, "onResponse: assessment "+response.body().getMessage());
+//                Log.e(TAG, "onResponse: assessment "+response.body().getSuccess());
+//                Log.e(TAG, "onResponse: assessment "+response.body().getMessage());
                 synchronized (CandidateBackgroundApiTasks.this){
 
                     if (response.body().getSuccess().equals(SUCCESS)){
@@ -686,7 +740,6 @@ public class CandidateBackgroundApiTasks {
     }
 
 
-
     public Context getContext() {
         return context;
     }
@@ -696,7 +749,9 @@ public class CandidateBackgroundApiTasks {
     }
 
     public Candidate getCandidate() {
+
         return candidate;
+
     }
 
     public void setCandidate(Candidate candidate) {

@@ -1,6 +1,8 @@
 package com.example.jupa.Group.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +16,11 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import com.example.jupa.Activity.GroupQuestionsActivity;
 import com.example.jupa.Activity.GroupsActivity;
 import com.example.jupa.Activity.InstitutionActivity;
+import com.example.jupa.Activity.InstitutionsActivity;
+import com.example.jupa.Activity.UserHomeActivity;
 import com.example.jupa.Group.Group;
 import com.example.jupa.Activity.GroupActivity;
 import com.example.jupa.Activity.GroupSearchActivity;
@@ -60,6 +65,42 @@ public class GroupsAdapter extends RecyclerView.Adapter {
 
     }
 
+    public void showActionsDialog(final Group group){
+
+        String[] items = {"Search Trade Candidates","Manage Trade Test Module"};
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                switch (i){
+
+                    case 0:
+                        Intent intent = new Intent(context, GroupSearchActivity.class);
+                        intent.putExtra(GroupActivity.GROUP_TAG,group);
+                        context.startActivity(intent);
+                        break;
+
+                    case 1:
+                        viewGroupQuestions(group.getId());
+                        break;
+
+                }
+            }
+        });
+
+        alertDialogBuilder.create()
+                          .show();
+
+    }
+
+    private void viewGroupQuestions(Integer groupId) {
+
+        Intent questionsIntent = new Intent(context, GroupQuestionsActivity.class);
+        questionsIntent.putExtra(GroupQuestionsActivity.GROUP_EXTRA,groupId);
+        context.startActivity(questionsIntent);
+
+    }
+
 
     @Override
     public GroupViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -85,22 +126,37 @@ public class GroupsAdapter extends RecyclerView.Adapter {
 
             final Group group = groupArrayList.get(position);
             holder.groupName.setText(group.getGroup_name());
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    return false;
+                }
+            });
+
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent;
-                    if (GroupsActivity.institution_view){
+                    if(GroupsActivity.group_search_purpose){
 
-                        intent = new Intent(context,GroupActivity.class);
+                        intent = new Intent(context, UserHomeActivity.class);
+                        intent.putExtra(GroupQuestionsActivity.GROUP_EXTRA,group);
+                        intent.putExtra(InstitutionsActivity.SEARCH_PURPOSE,true);
+                        context.startActivity(intent);
 
                     }else {
+                        if (GroupsActivity.institution_view){
 
-                        intent = new Intent(context, GroupSearchActivity.class);
+                            intent = new Intent(context,GroupActivity.class);
+                            intent.putExtra(GroupActivity.GROUP_TAG,group);
+                            context.startActivity(intent);
 
+                        }else {
+
+                            showActionsDialog(group);
+
+                        }
                     }
-
-                    intent.putExtra(GroupActivity.GROUP_TAG,group);
-                    context.startActivity(intent);
 
                 }
             });

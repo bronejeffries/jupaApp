@@ -204,7 +204,7 @@
                         />
                     <TextView
                         android:gravity="start"
-                        android:id="@+id/country"
+                        android:id="@+id/address"
                         android:layout_width="0dp"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
@@ -527,13 +527,37 @@
             <Button
                 android:id="@+id/view_projects"
                 android:layout_margin="8dp"
-                android:background="@drawable/button_gradient_accent"
+                android:background="@drawable/button_accent"
                 android:textColor="@color/white"
                 android:text="@string/projects"
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:layout_width="wrap_content"
-                android:layout_height="26dp" />
+                android:layout_height="30dp" />
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/assess_candidate"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_accent"
+                android:textColor="@color/white"
+                android:text="@string/assess"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/view_candidate_subjects"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_primary"
+                android:textColor="@color/white"
+                android:text="@string/subjects"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
 
             <!--<Button-->
                 <!--android:id="@+id/view_skills"-->
@@ -569,8 +593,8 @@
             android:src="@drawable/construction_icon_png_5"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:layout_width="275dp"
-            android:layout_height="275dp"/>
+            android:layout_width="250dp"
+            android:layout_height="250dp"/>
 
         <TextView
             android:layout_marginTop="5dp"
@@ -584,27 +608,37 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/view_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_more_vert_white_24dp"
-            app:elevation="20dp"
-            app:backgroundTint="@color/colorPrimary"
+        <LinearLayout
+            android:id="@+id/more_holder"
             android:layout_below="@+id/btn_layout"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            />
+            android:gravity="end"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/view_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/ic_more_vert_white_24dp"
+                app:elevation="20dp"
+                app:backgroundTint="@color/colorPrimary"
+                />
+
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:visibility="gone"
             android:id="@+id/more_card"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_above="@+id/view_more"
+            android:layout_above="@+id/more_holder"
             app:cardElevation="20dp"
             app:cardBackgroundColor="@color/white_trans"
             android:foreground="@android:color/transparent"

@@ -234,6 +234,7 @@
             android:layout_height="wrap_content">
 
             <Button
+                android:onClick="selectProjectImage"
                 android:id="@+id/attach_image"
                 android:layout_gravity="center"
                 android:background="@color/colorPrimary"

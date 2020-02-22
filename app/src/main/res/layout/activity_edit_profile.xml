@@ -17,6 +17,20 @@ tools:context=".Activity.EditProfileActivity">
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <ImageView
+            android:onClick="selectProfile"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/profile_image"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/construction_icon_png_5"
+            android:layout_width="185dp"
+            android:layout_height="185dp"/>
+
+        <!--app:civ_circle_background_color="@color/white"-->
+        <!--app:civ_border_width="2dp"-->
+        <!--app:civ_border_overlay="true"-->
+        <!--app:civ_border_color="@color/white_trans"-->
+
         <LinearLayout
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
@@ -116,6 +130,54 @@ tools:context=".Activity.EditProfileActivity">
 
         <LinearLayout
             android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="@string/available"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                />
+            <Spinner
+                android:gravity="start"
+                android:id="@+id/available_view"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:entries="@array/available_array"
+                android:textSize="15sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="@string/date_available"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:gravity="start"
+                android:id="@+id/available_date_view"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="@string/date_available"
+                android:textSize="15sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -129,8 +191,8 @@ tools:context=".Activity.EditProfileActivity">
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:padding="10dp"/>
-
-            <EditText
+            <Spinner
+                android:entries="@array/education_levels"
                 android:id="@+id/education_input"
                 android:inputType="text"
                 android:layout_weight="0.5"
@@ -142,16 +204,27 @@ tools:context=".Activity.EditProfileActivity">
         <Button
             android:id="@+id/register_btn"
             android:layout_margin="30dp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_group"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/button_gradient_background"
+            android:background="@drawable/button_primary"
             android:textSize="20sp"
             android:textColor="@android:color/white"/>
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        app:elevation="0dp"
+        android:background="@color/black"
+        app:rippleColor="@color/black"
+        app:backgroundTint="@color/black"
+        app:srcCompat="@drawable/ic_mode_edit_white_24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
 

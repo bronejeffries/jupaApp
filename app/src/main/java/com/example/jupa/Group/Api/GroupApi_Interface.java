@@ -19,7 +19,7 @@ public interface GroupApi_Interface {
     Call<GroupApiData> addGroup(@Field("group_name") String groupName, @Field("group_code")String groupCode, @Field("user_id") int User_id);
 
     @GET("get_group_byID.php")
-    Call<GroupApiData> getGroupById(@Query("group_id") int group_ID);
+    Call<GroupApiData> getGroupById(@Query("group_id") Integer group_ID);
 
     @GET("get_candidates_ingroup.php")
     Call<GroupCandidatesListApiData> getCandidatesInAGroup(@Query("group_id") int group_ID);
@@ -45,6 +45,10 @@ public interface GroupApi_Interface {
     @GET("get_candidates_byassessor.php")
     Call<CandidateListApiData> getCandidatesByAssessor(@Query("assessor_id") Integer assessor_id, @Query("institution_id") Integer institution_id, @Query("last") Integer last,
                                                        @Query("limit") Integer limit);
+
+    @GET("get_candidates_byname.php")
+    Call<CandidateListApiData> getCandidatesByName(@Query("candidate_name") String candidate_name, @Query("last") Integer last, @Query("limit") Integer limit);
+
 
 
 }

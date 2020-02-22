@@ -11,14 +11,23 @@
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="300dip"
-        android:background="@drawable/construction_icon_png_5">
-
-
-
+        android:background="@color/colorPrimary">
     </RelativeLayout>
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/construction_icon_png_5"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/white"
+        android:layout_above="@+id/card"
+        app:civ_border_overlay="true"
+        app:civ_circle_background_color="@color/white"
+        android:layout_centerHorizontal="true"/>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         app:contentPaddingBottom="12dp"
         android:layout_margin="10dp"
         app:cardBackgroundColor="@color/white"

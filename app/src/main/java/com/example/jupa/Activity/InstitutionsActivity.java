@@ -28,11 +28,15 @@ public class InstitutionsActivity extends AppCompatActivity {
     public static InstitutionsAdapter institutionsAdapter;
     showProgressbar showProgress;
     InstitutionApiBackgroundTasks institutionApiBackgroundTasks;
+    public static final String SEARCH_PURPOSE = "search_purpose";
+    public static Boolean search_purpose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_institutions);
+
+        search_purpose = getIntent().getBooleanExtra(SEARCH_PURPOSE,false);
 
         showProgress = new showProgressbar(this);
 
@@ -48,14 +52,17 @@ public class InstitutionsActivity extends AppCompatActivity {
         showProgress.setMessage("loading");
         showProgress.show();
         floatingActionButton =(FloatingActionButton)findViewById(R.id.new_institution_btn);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                addNewInstitutionActivity();
+        if(!search_purpose){
 
-            }
-        });
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addNewInstitutionActivity();
+                }
+            });
+
+        }
 
         new fetchInstitutions().execute();
     }

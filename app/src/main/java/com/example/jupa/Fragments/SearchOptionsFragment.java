@@ -39,7 +39,7 @@ public class SearchOptionsFragment extends Fragment {
         country_card = (CardView) view.findViewById(R.id.country_card);
         state_card = (CardView) view.findViewById(R.id.state_card);
         city_card = (CardView)view.findViewById(R.id.city_card);
-        rank_card = (CardView)view.findViewById(R.id.rank_card);
+//        rank_card = (CardView)view.findViewById(R.id.rank_card);
         group_card = (CardView)view.findViewById(R.id.group_card);
         institution_card = (CardView)view.findViewById(R.id.institution_card);
 
@@ -87,16 +87,16 @@ public class SearchOptionsFragment extends Fragment {
             }
         });
 
-        rank_card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent rank_intent = new Intent(getContext(), SearchActivity.class);
-                rank_intent.putExtra(SearchActivity.BY_RANK_EXTRA,true);
-                startActivity(rank_intent);
-
-            }
-        });
+//        rank_card.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Intent rank_intent = new Intent(getContext(), SearchActivity.class);
+//                rank_intent.putExtra(SearchActivity.BY_RANK_EXTRA,true);
+//                startActivity(rank_intent);
+//
+//            }
+//        });
 
         group_card.setOnClickListener(new View.OnClickListener() {
             @Override

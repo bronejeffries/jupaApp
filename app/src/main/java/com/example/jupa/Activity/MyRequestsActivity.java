@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.jupa.Candidate.Candidate;
 import com.example.jupa.Helpers.showProgressbar;
 import com.example.jupa.R;
 import com.example.jupa.Request.Adapter.RequestApplicationAdapter;
@@ -31,6 +32,7 @@ public class MyRequestsActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     public static RequestApplicationAdapter requestApplicationAdapter;
     private AlertDialog requestalertDialog;
+    Candidate candidate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class MyRequestsActivity extends AppCompatActivity {
 
         showProgress = new showProgressbar(this);
         requestApiBackgroundTasks = RequestApiBackgroundTasks.getInstance(this);
+
+        candidate = getIntent().getParcelableExtra(RankRequestActivity.CANDIDATE_EXTRA);
 
         file_request = (Button)findViewById(R.id.file_new_request);
         file_request.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +116,7 @@ public class MyRequestsActivity extends AppCompatActivity {
     private void showRankRequestActivity() {
 
         Intent rankRequestIntent = new Intent(this,RankRequestActivity.class);
+        rankRequestIntent.putExtra(RankRequestActivity.CANDIDATE_EXTRA,candidate);
         startActivity(rankRequestIntent);
 
     }

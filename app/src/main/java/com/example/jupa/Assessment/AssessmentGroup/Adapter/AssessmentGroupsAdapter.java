@@ -79,19 +79,13 @@ public class AssessmentGroupsAdapter extends RecyclerView.Adapter {
             ((AssessmentGroupViewHolder)holder).assess.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    makeAssessment(assessmentGroup);
+
                 }
             });
         }
 
     }
 
-    public void makeAssessment(AssessmentGroup assessmentGroup){
-        Intent assessmentIntent = new Intent(context, AssessmentActivity.class);
-        assessmentIntent.putExtra(AssessmentActivity.ASSESSMENT_GROUP_EXTRA, assessmentGroup);
-        context.startActivity(assessmentIntent);
-
-    }
 
     @Override
     public int getItemCount() {

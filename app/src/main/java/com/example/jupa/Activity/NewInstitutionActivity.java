@@ -1,79 +1,57 @@
 package com.example.jupa.Activity;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.net.Uri;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.jupa.Helpers.PaymentChoiceHelper;
 import com.example.jupa.Helpers.SelectFileHelper;
 import com.example.jupa.Helpers.showProgressbar;
 import com.example.jupa.Institution.Api.InstitutionApiBackgroundTasks;
 import com.example.jupa.Institution.Institution;
 import com.example.jupa.R;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.Manifest.permission.CAMERA;
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class NewInstitutionActivity extends AppCompatActivity {
 
 
     Bitmap mBitmap;
-
     showProgressbar showProgress;
     ImageView badgeView;
     EditText name_input, center_no_input,contact_person_input,telephone_number_input, physical_address,email_input, about_input, website_input, facebook_input;
     Button save_institution;
     String nameText, centerNoText, contactPersonText, telText, physical_addressText ,emailText, aboutText, websiteText, facebookText;
     InstitutionApiBackgroundTasks institutionApiBackgroundTasks;
+    Institution newInstitution;
+    SelectFileHelper selectFileHelper;
+    public static Boolean payment_initiated = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_new_institution);
 
         showProgress = new showProgressbar(this);
         institutionApiBackgroundTasks = InstitutionApiBackgroundTasks.getInstance(this);
-
         name_input = (EditText) findViewById(R.id.institutions_name_input);
         center_no_input = (EditText) findViewById(R.id.institutions_center_no_input);
         contact_person_input = (EditText) findViewById(R.id.institutions_contact_person_input);
@@ -85,8 +63,7 @@ public class NewInstitutionActivity extends AppCompatActivity {
         facebook_input = (EditText)findViewById(R.id.institutions_facebook_input);
         save_institution = (Button)findViewById(R.id.save_institution);
         badgeView = (ImageView)findViewById(R.id.institution_image_view);
-
-
+        selectFileHelper = SelectFileHelper.getInstance();
         save_institution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,12 +87,19 @@ public class NewInstitutionActivity extends AppCompatActivity {
 
         if (inputValid()){
 
-            Institution newInstitution = new Institution(centerNoText,nameText,null,contactPersonText,telText,emailText,physical_addressText,
-                    aboutText,websiteText,facebookText);
             showProgress.setMessage("Saving...");
             showProgress.show();
-            new saveInstitutions().execute(newInstitution);
 
+            newInstitution = new Institution(centerNoText,nameText,null,contactPersonText,telText,emailText,physical_addressText,
+                    aboutText,websiteText,facebookText);
+            if (mBitmap==null){
+                BitmapDrawable drawable = (BitmapDrawable) badgeView.getDrawable();
+                mBitmap = drawable.getBitmap();
+            }
+
+            String image = selectFileHelper.getStringImage(mBitmap);
+            newInstitution.setFile_body(image);
+            new saveInstitutions().execute(newInstitution);
 
         }else {
 
@@ -123,6 +107,7 @@ public class NewInstitutionActivity extends AppCompatActivity {
 
         }
     }
+
 
     private boolean inputValid() {
 
@@ -172,6 +157,7 @@ public class NewInstitutionActivity extends AppCompatActivity {
         }
 
 
+
         return valid;
     }
 
@@ -185,11 +171,15 @@ public class NewInstitutionActivity extends AppCompatActivity {
 
             if (institution!=null){
 
+                newInstitution = institution;
+
                 if (InstitutionsActivity.institutionsAdapter!=null){
                     InstitutionsActivity.institutionsAdapter.addItem(institution);
                     showProgress.dismiss();
                     onBackPressed();
+
                 }else {
+
                     showProgress.dismiss();
                     buildNotificationDialog(institutionApiBackgroundTasks.getMessage());
                 }
@@ -237,17 +227,20 @@ public class NewInstitutionActivity extends AppCompatActivity {
         builder.setMessage(message);
         builder.setIcon(R.drawable.ic_help_outline_black_24dp);
         builder.setTitle("Registration Complete");
+        builder.setCancelable(false);
         builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                onBackPressed();
+                dialogInterface.dismiss();
+
+                PaymentChoiceHelper.showInstitutionPaymentChoice(NewInstitutionActivity.this,newInstitution);
 
             }
         });
 
-
         AlertDialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
     }
 
@@ -296,6 +289,7 @@ public class NewInstitutionActivity extends AppCompatActivity {
                         SelectFileHelper.permissionsRejected.add(perms);
 
                     }
+
                 }
 
                 if (SelectFileHelper.permissionsRejected.size() > 0) {
@@ -332,52 +326,12 @@ public class NewInstitutionActivity extends AppCompatActivity {
 
     }
 
-
-    private void multipartImageUpload() {
-
-        try {
-            File filesDir = getApplicationContext().getFilesDir();
-            File file = new File(filesDir, "image" + ".png");
-
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            mBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-            byte[] bitmapdata = bos.toByteArray();
-
-
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(bitmapdata);
-            fos.flush();
-            fos.close();
-
-            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("upload", file.getName(), reqFile);
-            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
-
-//            Call<ResponseBody> req = .postImage(body, name);
-//
-//            req.enqueue(new Callback<ResponseBody>() {
-//                @Override
-//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//
-//                    if (response.code() == 200) {
-//
-//                    }
-//
-//                    Toast.makeText(getApplicationContext(), response.code() + " ", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                    Toast.makeText(getApplicationContext(), "Request failed", Toast.LENGTH_SHORT).show();
-//                    t.printStackTrace();
-//                }
-//            });
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (NewInstitutionActivity.payment_initiated){
+            NewInstitutionActivity.payment_initiated = false;
+            onBackPressed();
         }
     }
 

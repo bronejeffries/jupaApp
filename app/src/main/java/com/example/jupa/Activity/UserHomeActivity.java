@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,49 +35,67 @@ import com.example.jupa.Helpers.showProgressbar;
 public class UserHomeActivity extends AppCompatActivity {
 
     public static Candidate thisCandidate;
-    CardView ViewMyProfileCard,ViewMyRequestsCard, ViewCandidatesCard, ViewGroupDetailsCard, ViewIncomingRequestsCard, ViewManageQuestionsCard;
+    CardView ViewMyProfileCard,ViewMyRequestsCard, ViewCandidatesCard, ViewGroupDetailsCard, ViewIncomingRequestsCard;
     TextView not_verified;
     public final static String CANDIDATE_ROLE = "Candidate", ASSESSOR_ROLE= "Assessor", GROUP_ADMIN_ROLE = "Group Admin", ADMINISTRATOR_ROLE = "Administrator";
     GroupBackgroundApiTasks groupBackgroundApiTasks;
-    public static QuestionApiBackgroundTasks questionApiBackgroundTasks;
     static Group candidateGroup;
     showProgressbar showProgress;
     public static String loggedInUserRole;
-    public static Boolean ACCOUNT_STATUS;
+    public static Boolean ACCOUNT_STATUS,search_purpose;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
 
-        showProgress = new showProgressbar(this);
-        showProgress.setMessage("Checking information....a moment");
-        groupBackgroundApiTasks = GroupBackgroundApiTasks.getInstance(this);
-        questionApiBackgroundTasks = QuestionApiBackgroundTasks.getInstance(this);
-        ViewMyProfileCard = (CardView)findViewById(R.id.my_profile_view);
-        ViewMyRequestsCard = (CardView)findViewById(R.id.my_requests_view);
-        ViewCandidatesCard = (CardView)findViewById(R.id.assessor_candidates_view);
-        ViewGroupDetailsCard = (CardView)findViewById(R.id.group_admin_group_details);
-        ViewIncomingRequestsCard = (CardView)findViewById(R.id.group_admin_in_coming_requests);
-        ViewManageQuestionsCard = (CardView)findViewById(R.id.group_admin_manage_group_questions);
-        thisCandidate = LoggedInUser.getInstance().getLoggedInCandidate();
-        loggedInUserRole = thisCandidate.getRole();
-        not_verified = findViewById(R.id.not_verified);
+        intent = getIntent();
 
-        ACCOUNT_STATUS = thisCandidate.getStatus() != null && thisCandidate.getStatus().equals((getResources().getStringArray(R.array.status_array)[2]));
+        search_purpose = intent.getBooleanExtra(InstitutionsActivity.SEARCH_PURPOSE,false);
 
-        showProgress.show();
+        if (search_purpose){
 
-        new getCandidateGroup().execute(thisCandidate.getId());
+            candidateGroup = intent.getParcelableExtra(GroupQuestionsActivity.GROUP_EXTRA);
+
+            if (candidateGroup!=null){
+
+                ViewGroupDetails(null);
+
+            }
+
+        }else {
+
+            showProgress = new showProgressbar(this);
+            showProgress.setMessage("Checking information....a moment");
+            groupBackgroundApiTasks = GroupBackgroundApiTasks.getInstance(this);
+            ViewMyProfileCard = (CardView)findViewById(R.id.my_profile_view);
+            ViewMyRequestsCard = (CardView)findViewById(R.id.my_requests_view);
+            ViewCandidatesCard = (CardView)findViewById(R.id.assessor_candidates_view);
+            ViewGroupDetailsCard = (CardView)findViewById(R.id.group_admin_group_details);
+            ViewIncomingRequestsCard = (CardView)findViewById(R.id.group_admin_in_coming_requests);
+//        ViewManageQuestionsCard = (CardView)findViewById(R.id.group_admin_manage_group_questions);
+            thisCandidate = LoggedInUser.getInstance().getLoggedInCandidate();
+            loggedInUserRole = thisCandidate.getRole();
+            not_verified = findViewById(R.id.not_verified);
+
+            ACCOUNT_STATUS = thisCandidate.getStatus() != null && thisCandidate.getStatus().equals((getResources().getStringArray(R.array.status_array)[2]));
+
+            showProgress.show();
+            Log.e("candidate_group", "onCreate: "+thisCandidate.getGroup() );
+            new getCandidateGroup().execute(thisCandidate.getGroup());
+
+        }
 
     }
 
 ///////////////////    check the user role and display the appropriate views //////////////////
     private void ManageDisplay() {
 
+        makeVisible(ViewMyRequestsCard);
+
         if (ACCOUNT_STATUS){
 
-            makeVisible(ViewMyRequestsCard);
             switch (loggedInUserRole){
 
                 case ASSESSOR_ROLE:
@@ -86,7 +105,7 @@ public class UserHomeActivity extends AppCompatActivity {
                 case GROUP_ADMIN_ROLE:
                     makeVisible(ViewGroupDetailsCard);
                     makeVisible(ViewIncomingRequestsCard);
-                    makeVisible(ViewManageQuestionsCard);
+//                    makeVisible(ViewManageQuestionsCard);
                     break;
 
                 case ADMINISTRATOR_ROLE:
@@ -122,6 +141,7 @@ public class UserHomeActivity extends AppCompatActivity {
     public void ViewMyRequests(View view){
 
         Intent myRequestsIntent = new Intent(this,MyRequestsActivity.class);
+        myRequestsIntent.putExtra(RankRequestActivity.CANDIDATE_EXTRA,thisCandidate);
         startActivity(myRequestsIntent);
     }
 
@@ -144,79 +164,11 @@ public class UserHomeActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this,ApplicationsActivity.class);
         intent.putExtra(ApplicationsActivity.GROUP_ADMIN_VIEW,true);
-        intent.putExtra(ApplicationsActivity.GROUP_ID,thisCandidate.getGroup());
+        intent.putExtra(ApplicationsActivity.GROUP_ID,thisCandidate.getId());
         startActivity(intent);
 
     }
 
-
-    public void ManageGroupQuestions(View view){
-
-        AlertDialog.Builder manageQuestionsAlertDialog = new AlertDialog.Builder(this);
-        final String[] manageQuestionsAlertDialogOptions = {"View Group Questions","Add New QuestionCategory"};
-        manageQuestionsAlertDialog.setItems(manageQuestionsAlertDialogOptions, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                switch (i){
-
-                    case 0:
-                        viewGroupQuestions();
-                        break;
-                    case 1:
-                        AddNewQuestionCategory(UserHomeActivity.this);
-                        break;
-                }
-
-            }
-        });
-
-        AlertDialog alertDialog = manageQuestionsAlertDialog.create();
-        alertDialog.show();
-
-
-    }
-
-    private void AddNewQuestion() {
-
-        AlertDialog.Builder addNewQuestionDialog = new AlertDialog.Builder(this);
-        LinearLayout addQuestionLinearLayout = (LinearLayout) LayoutInflater.from(UserHomeActivity.this).inflate(R.layout.addnewquestiondialog,null,false);
-        addNewQuestionDialog.setView(addQuestionLinearLayout);
-        addNewQuestionDialog.setTitle("Add New Question");
-        addNewQuestionDialog.create().show();
-
-    }
-
-    public static void AddNewQuestionCategory(Context context) {
-
-        AlertDialog.Builder addNewCategoryDialog = new AlertDialog.Builder(context);
-        LinearLayout addCategoryLinearLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.addquestioncategory,null,false);
-        final EditText category = (EditText)addCategoryLinearLayout.findViewById(R.id.category_input);
-        Button save_btn = (Button) addCategoryLinearLayout.findViewById(R.id.save_category_btn);
-
-        save_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                QuestionCategory questionCategory = new QuestionCategory(category.getText().toString(), candidateGroup.getId());
-                new addQuestionCategory().execute(questionCategory);
-
-            }
-        });
-
-        addNewCategoryDialog.setView(addCategoryLinearLayout);
-        addNewCategoryDialog.setTitle("Add New Question Category");
-        addNewCategoryDialog.create().show();
-
-    }
-
-    private void viewGroupQuestions() {
-
-        Intent questionsIntent = new Intent(this, GroupQuestionsActivity.class);
-        questionsIntent.putExtra(GroupQuestionsActivity.GROUP_EXTRA,thisCandidate.getGroup());
-        startActivity(questionsIntent);
-
-    }
 
 
     @Override
@@ -257,35 +209,6 @@ public class UserHomeActivity extends AppCompatActivity {
     }
 
 
-    public static class addQuestionCategory extends AsyncTask<QuestionCategory,Void, QuestionCategory>{
-
-        @Override
-        protected void onPostExecute(QuestionCategory questionCategory) {
-
-            super.onPostExecute(questionCategory);
-        }
-
-        @Override
-        protected QuestionCategory doInBackground(QuestionCategory... questionCategories) {
-            QuestionCategory returnedQuestionCategory;
-
-            synchronized (questionApiBackgroundTasks){
-
-                questionApiBackgroundTasks.createQuestionCategory(questionCategories[0]);
-                try {
-                    questionApiBackgroundTasks.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                returnedQuestionCategory = questionApiBackgroundTasks.getQuestionCategory();
-            }
-
-
-            return returnedQuestionCategory;
-        }
-    }
-
     public class getCandidateGroup extends AsyncTask<Integer,Void,Group>{
 
         @Override
@@ -322,6 +245,15 @@ public class UserHomeActivity extends AppCompatActivity {
             }
 
             return returnedGroup;
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e("restart", "onRestart: "+intent.getBooleanExtra(InstitutionsActivity.SEARCH_PURPOSE,false));
+        if(intent.getBooleanExtra(InstitutionsActivity.SEARCH_PURPOSE,false)){
+            finish();
         }
     }
 

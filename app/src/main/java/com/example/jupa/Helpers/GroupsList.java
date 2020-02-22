@@ -2,6 +2,7 @@ package com.example.jupa.Helpers;
 
 import android.content.Context;
 
+import com.example.jupa.Candidate.Candidate;
 import com.example.jupa.Candidate.Category.CandidateCategory;
 import com.example.jupa.Group.Api.GroupBackgroundApiTasks;
 import com.example.jupa.Group.Group;
@@ -13,15 +14,14 @@ import java.util.List;
 
 public class GroupsList {
 
-
     public  Context context;
     public GroupBackgroundApiTasks groupBackgroundApiTasks;
-    public  List<String> spinnerArray, categorySpinnerArray,ranksSpinnerArray, institutionSpinnerArray;
+    public  List<String> spinnerArray, categorySpinnerArray,ranksSpinnerArray, institutionSpinnerArray, candidateSpinnerArray;
     private ArrayList<Group> groupArrayList;
     private ArrayList<CandidateCategory> candidateCategoryArrayList;
     private ArrayList<Rank> rankArrayList;
     private ArrayList<Institution> institutionArrayList;
-
+    private ArrayList<Candidate> candidateArrayList;
 
     public GroupsList(Context context) {
         this.context = context;
@@ -92,6 +92,12 @@ public class GroupsList {
         makeRankList();
     }
 
+    public void makeCandidateListFrom(ArrayList<Candidate> arrayList){
+
+        setCandidateArrayList(arrayList);
+        makeAssociationsList();
+    }
+
     private void makeRankList() {
 
         setRanksSpinnerArray(new ArrayList<String>());
@@ -113,6 +119,37 @@ public class GroupsList {
             for (Institution institution : institutionArrayList  ) {
                 String institution_name = institution.getName()+" ("+institution.getCenter_No()+")";
                 institutionSpinnerArray.add(institution_name);
+            }
+
+        }
+
+    }
+
+    public List<String> getCandidateSpinnerArray() {
+        return candidateSpinnerArray;
+    }
+
+    public void setCandidateSpinnerArray(List<String> candidateSpinnerArray) {
+        this.candidateSpinnerArray = candidateSpinnerArray;
+    }
+
+    public ArrayList<Candidate> getCandidateArrayList() {
+        return candidateArrayList;
+    }
+
+    public void setCandidateArrayList(ArrayList<Candidate> candidateArrayList) {
+        this.candidateArrayList = candidateArrayList;
+    }
+
+    private void makeAssociationsList() {
+
+        setCandidateSpinnerArray(new ArrayList<String>());
+
+        if (candidateArrayList !=null){
+
+            for (Candidate candidate : candidateArrayList  ) {
+                String candidate_name = candidate.getAssociation_name();
+                candidateSpinnerArray.add(candidate_name);
             }
 
         }
@@ -176,6 +213,22 @@ public class GroupsList {
             }
         }
         return rankFound;
+
+    }
+
+    public Candidate findAssociationByName(String name){
+
+        Candidate candidateFound = null;
+
+        if (candidateArrayList!=null){
+
+            for (Candidate candidate: getCandidateArrayList()) {
+                if (candidate.getAssociation_name().equals(name)){
+                    candidateFound =  candidate;
+                }
+            }
+        }
+        return candidateFound;
 
     }
 

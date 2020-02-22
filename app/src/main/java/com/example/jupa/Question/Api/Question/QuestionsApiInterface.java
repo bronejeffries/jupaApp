@@ -19,7 +19,7 @@ public interface QuestionsApiInterface {
 
     @FormUrlEncoded
     @POST("add_question.php")
-    Call<QuestionApiData> addQuestionToCategory(@Field("category_id") int assessment_cat_id, @Field("question_description") String question_description,
+    Call<QuestionApiData> addQuestionToCategory(@Field("assessment_cat_id") int assessment_cat_id, @Field("question_description") String question_description,
                                                 @Field("unique_no") String unique_no, @Field("user_id") int user_id);
 
 
@@ -29,11 +29,18 @@ public interface QuestionsApiInterface {
 
     @FormUrlEncoded
     @POST("add_qtn_category.php")
-    Call<QuestionCategoryApiData> addQuestionCategory(@Field("group_id") int category_id, @Field("user_id") int User_id);
+    Call<QuestionCategoryApiData> addQuestionCategory(@Field("group_id") int category_id, @Field("question_sub_cat_name") String category_name ,@Field("user_id") int User_id);
 
     @GET("get_qtn_byid.php")
     Call<QuestionApiData> getQuestion(@Query("question_id") int question_id );
 
+    @FormUrlEncoded
+    @POST("update_qtn_category.php")
+    Call<QuestionCategoryApiData> updatequestioncategory(@Field("question_cat_id")Integer id,@Field("question_category_name") String category_name);
+
+    @FormUrlEncoded
+    @POST("delete_qtn_category.php")
+    Call<QuestionCategoryApiData> deletequestioncategory(@Field("question_cat_id")Integer id);
 
 
 }

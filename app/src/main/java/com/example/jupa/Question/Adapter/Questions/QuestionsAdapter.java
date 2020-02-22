@@ -1,7 +1,6 @@
 package com.example.jupa.Question.Adapter.Questions;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,28 +12,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jupa.Activity.AssessmentActivity;
 import com.example.jupa.Activity.Assessment_reportActivity;
 import com.example.jupa.Activity.UserHomeActivity;
 import com.example.jupa.Assessment.Assessment;
+import com.example.jupa.Question.Adapter.Categories.CategoriesAdapter;
 import com.example.jupa.Question.Question;
 import com.example.jupa.R;
 
 import java.util.ArrayList;
 
-import static android.content.ContentValues.TAG;
 import static com.example.jupa.Activity.AssessmentActivity.archivedAssessment;
 
 public class QuestionsAdapter extends RecyclerView.Adapter {
 
     ArrayList<Question> questionArrayList;
     Context context;
-    Boolean assessment;
+    Boolean assessment,questionView;
     private boolean reportReview;
     private static final int REPORT_VIEW_TYPE = 2;
     private static final int ASSESSMENT_VIEW_TYPE = 1;
+    private static final int QUESTION_VIEW_TYPE = 3;
+    ArrayList<QuestionGrade> questionGradeArrayList;
+    public static String this_questionCategory;
 
     public QuestionsAdapter(ArrayList<Question> questionArrayList, Context context, Boolean assessment,Boolean reportReview) {
         this.questionArrayList = questionArrayList;
@@ -47,7 +50,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
 
-        final Question question = questionArrayList.get(position);
+
         if (this.reportReview){
 
             return REPORT_VIEW_TYPE;
@@ -55,6 +58,10 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
         }else if(this.assessment) {
 
             return ASSESSMENT_VIEW_TYPE;
+
+        }else if(this.getQuestionView()) {
+
+            return QUESTION_VIEW_TYPE;
 
         }else{
 
@@ -78,6 +85,12 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
 
             return new questionViewHolder(linearLayout);
 
+        }else if (viewType == QUESTION_VIEW_TYPE ){
+
+            CardView cardView = (CardView) LayoutInflater.from(context).inflate(R.layout.institution_item_view,parent,false);
+
+            return new categoryQuestionViewHolder(cardView);
+
         }else {
 
             return null;
@@ -95,13 +108,15 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
             switch (holder.getItemViewType()){
 
                 case REPORT_VIEW_TYPE:
-
+                    setQuestionGradeArrayList(new ArrayList<QuestionGrade>());
                     if (Assessment_reportActivity.assessmentLinkedHashMap.containsKey(question.getQuestion_id())){
 
                         Assessment assessmentRetrieved = Assessment_reportActivity.assessmentLinkedHashMap.get(question.getQuestion_id());
                         ((reportQuestionViewHolder) holder).questionView.setText(question.getTitle());
                         ((reportQuestionViewHolder)holder).setMarksImage(assessmentRetrieved.getGrade());
-
+                        QuestionGrade questionGrade = new QuestionGrade(question.getTitle(),assessmentRetrieved.getGrade());
+                        questionGradeArrayList.add(questionGrade);
+                        CategoriesAdapter.getListLinkedHashMap().put(this_questionCategory,questionGradeArrayList);
                     }
                     break;
 
@@ -146,13 +161,11 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
                                     int selected_grade_position = ((questionViewHolder)holder).grade_spinner.getSelectedItemPosition();
                                     String grade = AssessmentActivity.grade_array[selected_grade_position];
                                     String other_remarks = ((questionViewHolder)holder).otherRemarks.getText().toString();
-                                    int assessment_group_id = AssessmentActivity.assessmentGroup.getId();
                                     int assessed_candidate_id = AssessmentActivity.assessedCandidate.getId();
-                                    int assessed_project_id = AssessmentActivity.candidateProject.getProject_id();
                                     int question_id = question.getQuestion_id();
                                     int assessor_id = UserHomeActivity.thisCandidate.getId();
                                     int institution_id = UserHomeActivity.thisCandidate.getInstitution_id();
-                                    Assessment assessment = new Assessment(assessment_group_id,question_id,grade,other_remarks,assessed_candidate_id,assessed_project_id,assessor_id,institution_id);
+                                    Assessment assessment = new Assessment(question_id,grade,other_remarks,assessed_candidate_id,assessor_id,institution_id);
                                     archivedAssessment.add(assessment);
                                     Toast.makeText(context, "Assessment archived "+grade, Toast.LENGTH_SHORT).show();
                                     ((questionViewHolder)holder).archive_assessment.setText("Archived");
@@ -165,6 +178,12 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
                         }
                     }
                     break;
+
+                case QUESTION_VIEW_TYPE:
+
+                    ((categoryQuestionViewHolder) holder).questionView.setText(question.getTitle());
+                    break;
+
                 default:
                     return;
 
@@ -184,6 +203,12 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
 
     public ArrayList<Question> getQuestionArrayList() {
         return questionArrayList;
+    }
+
+    public void setQuestionArrayList(ArrayList<Question> questionArrayList,String questionCategory) {
+        this_questionCategory = questionCategory;
+        this.questionArrayList = questionArrayList;
+        this.notifyDataSetChanged();
     }
 
     public void setQuestionArrayList(ArrayList<Question> questionArrayList) {
@@ -228,6 +253,19 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
 
     }
 
+    private class categoryQuestionViewHolder extends RecyclerView.ViewHolder{
+
+        TextView questionView;
+
+        public categoryQuestionViewHolder(@NonNull View itemView) {
+
+            super(itemView);
+            questionView = (TextView)itemView.findViewById(R.id.institutions_name);
+
+        }
+
+    }
+
     private class questionViewHolder extends RecyclerView.ViewHolder{
 
         View holderview;
@@ -260,8 +298,51 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
             this.question_open = question_open;
         }
 
+
+
     }
 
+    public Boolean getQuestionView() {
+        return questionView;
+    }
+
+    public void setQuestionView(Boolean questionView) {
+        this.questionView = questionView;
+    }
+
+    public ArrayList<QuestionGrade> getQuestionGradeArrayList() {
+        return questionGradeArrayList!=null?questionGradeArrayList:(new ArrayList<QuestionGrade>());
+    }
+
+    public void setQuestionGradeArrayList(ArrayList<QuestionGrade> questionGradeArrayList) {
+        this.questionGradeArrayList = questionGradeArrayList;
+    }
+
+    public static class QuestionGrade{
+
+        String question,grade;
+
+        public QuestionGrade(String question, String grade) {
+            this.question = question;
+            this.grade = grade;
+        }
+
+        public String getQuestion() {
+            return question;
+        }
+
+        public void setQuestion(String question) {
+            this.question = question;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
+        }
+    }
 
 
 }

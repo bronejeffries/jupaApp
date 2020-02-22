@@ -1,5 +1,6 @@
 package com.example.jupa.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jupa.Candidate.Candidate;
+import com.example.jupa.Helpers.PaymentDetails;
 import com.example.jupa.Helpers.showProgressbar;
 import com.example.jupa.Institution.Api.InstitutionApiBackgroundTasks;
 import com.example.jupa.Institution.Institution;
@@ -32,7 +34,7 @@ public class RequestApplicationViewActivity extends AppCompatActivity {
 
     TextView titleView, regNoInput, years_of_experience, present_qualification, reason, rank_applied_for, institutionView;
     LinearLayout rank_layout, institution_layout;
-    Button confirm_button, decline_button, forward_button;
+    Button confirm_button, decline_button, forward_button,request_payment,request_payment_waive;
     RequestApplicationObject thisRequestApplicationObject;
     RequestApiBackgroundTasks requestApiBackgroundTasks;
     public static final String ASSESSOR_REQUEST_TYPE ="ASSESSOR", RANK_REQUEST_TYPE = "RANK", REQUEST_EXTRA = "APPLICATION",
@@ -46,6 +48,8 @@ public class RequestApplicationViewActivity extends AppCompatActivity {
     RankBackgroundApiTasks rankBackgroundApiTasks;
     InstitutionApiBackgroundTasks institutionApiBackgroundTasks;
     Candidate candidate_viewing;
+    private final int amount=3500;
+    public static String action="credit";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,7 @@ public class RequestApplicationViewActivity extends AppCompatActivity {
 
         intent = getIntent();
         thisRequestApplicationObject = intent.getParcelableExtra(REQUEST_EXTRA);
+
         adapterPosition = intent.getIntExtra(POSITION_EXTRA,0);
 
         view_platform = intent.getIntExtra(VIEW_PLATFORM_EXTRA,0);
@@ -106,6 +111,25 @@ public class RequestApplicationViewActivity extends AppCompatActivity {
 
         }
 
+        request_payment = (Button)findViewById(R.id.request_payment_btn);
+        request_payment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startPaymentIntent();
+
+            }
+        });
+
+        request_payment_waive = (Button)findViewById(R.id.request_payment_waive_btn);
+        request_payment_waive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action = "waive";
+                handleResult(true);
+            }
+        });
+
         confirm_button = (Button)findViewById(R.id.request_acceptance_btn);
         confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +171,97 @@ public class RequestApplicationViewActivity extends AppCompatActivity {
 
     }
 
+    private void startPaymentIntent() {
+
+        PaymentDetails paymentDetails = new PaymentDetails(candidate_viewing.getEmail(),candidate_viewing.getFirst_name(),candidate_viewing.getLast_name(),"Payment for Application",
+                String.valueOf(candidate_viewing.getId()),"UG","UGX",amount);
+
+        Intent intent = new Intent(this, PaymentActivity.class);
+        intent.putExtra(PaymentActivity.PAYMENT_DETAILS_EXTRA,paymentDetails);
+        startActivityForResult(intent,PaymentActivity.RESULT_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode==PaymentActivity.RESULT_CODE){
+
+            Boolean result = false;
+
+            if (data!=null){
+                result = data.getBooleanExtra(PaymentActivity.RESULT_INTENT_DATA,false);
+            }
+
+            handleResult(result);
+
+        }
+    }
+
+    private void handleResult(Boolean result) {
+
+        if (result){
+            showProgress.setMessage("updating payment information");
+            showProgress.show();
+            new makePaymentForApplication().execute(thisRequestApplicationObject);
+        }
+    }
+
+    private void handlePaymentResponse(){
+        thisRequestApplicationObject.setPaid(1);
+        request_payment.setVisibility(View.GONE);
+        if (personal_view){
+
+            MyRequestsActivity.requestApplicationAdapter.changeItemPaymentStatus(adapterPosition,thisRequestApplicationObject.getPaid_Value());
+
+        }else {
+
+            ApplicationsActivity.requestApplicationAdapter.changeItemPaymentStatus(adapterPosition,thisRequestApplicationObject.getPaid_Value());
+
+        }
+        Toast.makeText(this, "Payment Successful", Toast.LENGTH_SHORT).show();
+        checkViewLevel();
+    }
+
+    private class makePaymentForApplication extends AsyncTask<RequestApplicationObject,Void,String>{
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s!=null&&s.equals("success")){
+                handlePaymentResponse();
+            }else {
+
+                Toast.makeText(RequestApplicationViewActivity.this,s, Toast.LENGTH_SHORT).show();
+
+            }
+            showProgress.dismiss();
+
+        }
+
+        @Override
+        protected String doInBackground(RequestApplicationObject... requestApplicationObjects) {
+            String message=null;
+            synchronized (requestApiBackgroundTasks){
+
+                requestApiBackgroundTasks.payRequest(requestApplicationObjects[0],amount,action);
+
+                try {
+
+                    requestApiBackgroundTasks.wait();
+                    message = requestApiBackgroundTasks.getMessage();
+
+                } catch (InterruptedException e) {
+
+                    e.printStackTrace();
+
+                }
+
+
+            }
+            return message;
+        }
+    }
+
     private void showCommentDialog() {
 
         final EditText comment_edit_Text;
@@ -177,7 +292,6 @@ public class RequestApplicationViewActivity extends AppCompatActivity {
         alertBuilder.create().show();
 
     }
-
 
     public void checkApplicationType(){
 
@@ -211,6 +325,7 @@ public class RequestApplicationViewActivity extends AppCompatActivity {
         protected void onPostExecute(RequestApplicationObject requestApplicationObject) {
 
             Toast.makeText(RequestApplicationViewActivity.this, requestApiBackgroundTasks.getMessage(), Toast.LENGTH_SHORT).show();
+
             showProgress.dismiss();
 
             if (requestApplicationObject!=null){
@@ -342,22 +457,43 @@ public class RequestApplicationViewActivity extends AppCompatActivity {
 
     public void checkViewLevel(){
 
-        if (!candidate_viewing.getId().equals(thisRequestApplicationObject.getCandidate_id())&&thisRequestApplicationObject.getPaid()){
+        if (!candidate_viewing.getId().equals(thisRequestApplicationObject.getCandidate_id())){
 
             if (UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.GROUP_ADMIN_ROLE)){
 
-                decline_button.setVisibility(View.VISIBLE);
-                forward_button.setVisibility(View.VISIBLE);
+                if (thisRequestApplicationObject.getPaid()) {
+                    showButton(decline_button);
+                    showButton(forward_button);
+                }
+
 
             }else if(UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.ADMINISTRATOR_ROLE)) {
 
-                decline_button.setVisibility(View.VISIBLE);
-                confirm_button.setVisibility(View.VISIBLE);
+                if (thisRequestApplicationObject.getPaid()) {
+
+                    showButton(decline_button);
+                    showButton(confirm_button);
+
+                }else{
+
+                    showButton(request_payment_waive);
+
+                }
 
             }
 
+        }else if(candidate_viewing.getId().equals(thisRequestApplicationObject.getCandidate_id()) && !thisRequestApplicationObject.getPaid() ){
+
+                showButton(request_payment);
+
         }
 
+
+    }
+
+    public void showButton(Button button){
+
+        button.setVisibility(View.VISIBLE);
 
     }
 

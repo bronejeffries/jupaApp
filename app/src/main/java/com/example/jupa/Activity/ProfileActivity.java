@@ -1,6 +1,7 @@
 package com.example.jupa.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -33,6 +35,7 @@ import com.example.jupa.Candidate.Category.CandidateCategory;
 import com.example.jupa.Candidate.Category.Api.CandidateCategoryBackgroundApiTasks;
 import com.example.jupa.Group.Api.GroupBackgroundApiTasks;
 import com.example.jupa.Group.Group;
+import com.example.jupa.Helpers.LoadImageToView;
 import com.example.jupa.Helpers.LoggedInInstitution;
 import com.example.jupa.Helpers.LoggedInUser;
 import com.example.jupa.R;
@@ -46,13 +49,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfileActivity extends AppCompatActivity {
 
     public static final String CANDIDATE_EXTRA ="candidate", RANK_EXTRA = "rank", CATEGORY_EXTRA = "category";
+    public static final int EDIT_REQUEST =200 ;
     ListView skillsListView;
     RecyclerView projectsRecyclerView;
     public static CandidateProjectsAdapter candidateProjectsAdapter;
-    Button view_projects,view_skills;
+    Button view_projects,view_skills,view_subjects, assess_btn;
     Intent intent;
     public static Candidate candidate;
     SkillsAdapter skillsAdapter;
@@ -73,7 +79,8 @@ public class ProfileActivity extends AppCompatActivity {
     private Group group;
     public boolean candidates_view;
     public static boolean profile_edited =false;
-    LinearLayout viewcandidatesLayout;
+    LinearLayout viewCandidatesLayout;
+    CircleImageView profile_image_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -95,6 +102,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         candidate_id = candidate.getId();
 
+        profile_image_view = (CircleImageView) findViewById(R.id.profile_image);
         profile_name = (TextView)findViewById(R.id.profile_name);
 
         rankView = (TextView)findViewById(R.id.rank_view);
@@ -104,8 +112,8 @@ public class ProfileActivity extends AppCompatActivity {
         status = (TextView)findViewById(R.id.status_view);
         available = (TextView)findViewById(R.id.available_view);
         date_available = (TextView)findViewById(R.id.available_date_view);
-        address = (TextView)findViewById(R.id.country_view);
-        country = (TextView)findViewById(R.id.country);
+        address = (TextView)findViewById(R.id.address);
+        country = (TextView)findViewById(R.id.country_view);
         state = (TextView)findViewById(R.id.state_view);
         city = (TextView)findViewById(R.id.city_view);
         contact = (TextView)findViewById(R.id.contact_view);
@@ -120,13 +128,35 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         view_projects = (Button)findViewById(R.id.view_projects);
+        view_subjects = (Button)findViewById(R.id.view_candidate_subjects);
+        assess_btn = (Button)findViewById(R.id.assess_candidate);
 
-        viewcandidatesLayout = (LinearLayout)findViewById(R.id.view_assessor_candidates);
+        Viewmore = (FloatingActionButton)findViewById(R.id.view_more);
+
+        viewCandidatesLayout = (LinearLayout)findViewById(R.id.view_assessor_candidates);
 
         view_projects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showProjectsBottomSheet();
+            }
+        });
+
+        view_subjects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(ProfileActivity.this,CandidateSubjectsActivity.class);
+                intent.putExtra(RegisterSubjectsActivity.CANDIDATE_EXTRA,candidate);
+                startActivity(intent);
+
+            }
+        });
+
+        assess_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeAssessment();
             }
         });
 
@@ -143,7 +173,6 @@ public class ProfileActivity extends AppCompatActivity {
         showReportbtn = (FloatingActionButton)findViewById(R.id.view_assessment_report);
 
         moreCardView = (CardView)findViewById(R.id.more_card);
-        Viewmore = (FloatingActionButton)findViewById(R.id.view_more);
         viewAssessorCandidate = (FloatingActionButton)findViewById(R.id.view_candidates);
         Viewmore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,9 +191,15 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-
         populateViews();
 //        attachOnClickListenerToAttachAssessor();
+
+    }
+
+    public void makeAssessment(){
+        Intent assessmentIntent = new Intent(this, AssessmentActivity.class);
+        assessmentIntent.putExtra(RankRequestActivity.CANDIDATE_EXTRA, candidate);
+        startActivity(assessmentIntent);
 
     }
 
@@ -281,6 +316,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void populateViews() {
 
+        LoadImageToView.loadImage(this,candidate.getPhoto_url(),profile_image_view);
         profile_name.setText(candidate.getName());
         role.setText(candidate.getRole());
         status.setText(candidate.getStatus());
@@ -297,15 +333,29 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (loggedInCandidate!=null) {
 
+            findViewById(R.id.more_holder).setVisibility(View.VISIBLE);
             ProfileOwner = loggedInCandidate.getId().equals(candidate_id);
+
 
             Log.e("profile", "populateViews: "+ProfileOwner );
 
             if(ProfileOwner && UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.ASSESSOR_ROLE)){
 
-                viewcandidatesLayout.setVisibility(View.VISIBLE);
+                viewCandidatesLayout.setVisibility(View.VISIBLE);
 
             }
+
+            if(!ProfileOwner && UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.ASSESSOR_ROLE)){
+
+                assess_btn.setVisibility(View.VISIBLE);
+
+            }else {
+
+                assess_btn.setVisibility(View.GONE);
+
+            }
+
+
 
             if (!UserHomeActivity.loggedInUserRole.equals(UserHomeActivity.GROUP_ADMIN_ROLE)){
 
@@ -621,9 +671,18 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.profile_menu,menu);
-        return true;
+        if (loggedInCandidate!=null && loggedInCandidate.getId().equals(candidate_id)) {
+
+                MenuInflater inflater = getMenuInflater();
+                inflater.inflate(R.menu.profile_menu,menu);
+                return true;
+
+        }else {
+
+            return super.onCreateOptionsMenu(menu);
+
+        }
+
     }
 
     @Override
@@ -634,20 +693,43 @@ public class ProfileActivity extends AppCompatActivity {
             case R.id.edit_profile:
                 Intent intent = new Intent(ProfileActivity.this,EditProfileActivity.class);
                 intent.putExtra(EditProfileActivity.CANDIDATE_EXTRA,candidate);
-                startActivity(intent);
+                startActivityForResult(intent,EDIT_REQUEST);
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
 
-
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-//        Toast.makeText(this, "Im back Restart "+String.valueOf(profile_edited), Toast.LENGTH_SHORT).show();
+        if (requestCode==EDIT_REQUEST){
+
+            if (data!=null){
+
+                candidate = data.getParcelableExtra(RankRequestActivity.CANDIDATE_EXTRA);
+                if (ProfileOwner){
+                    LoggedInUser.getInstance().LoginUser(candidate);
+                }
+
+            }
+
+            handleResult(candidate);
+
+        }
+    }
+
+    private void handleResult(Candidate candidate) {
+
+        if (candidate!=null){
+
+            Toast.makeText(this, "updated successfully", Toast.LENGTH_SHORT).show();
+            populateViews();
+        }
 
     }
+
 }

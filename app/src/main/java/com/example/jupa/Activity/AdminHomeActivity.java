@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jupa.Helpers.LoggedInUser;
 import com.example.jupa.R;
 import com.example.jupa.Rank.Api.RankBackgroundApiTasks;
 import com.example.jupa.Rank.Adapter.RanksAdapter;
@@ -48,6 +49,7 @@ public class AdminHomeActivity extends AppCompatActivity {
      ArrayList<Rank> rankArrayList;
     private RankBackgroundApiTasks rankBackgroundApiTasks;
     showProgressbar showprogress;
+    TextView logged_in_ass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,9 @@ public class AdminHomeActivity extends AppCompatActivity {
 
         rankBackgroundApiTasks = RankBackgroundApiTasks.getInstance(this);
         showprogress = new showProgressbar(this);
+        logged_in_ass = (TextView)findViewById(R.id.logged_in_as);
+        String logged_as = "("+ LoggedInUser.getInstance().getLoggedInCandidate().getName() +")";
+        logged_in_ass.setText(logged_as);
 
     }
 

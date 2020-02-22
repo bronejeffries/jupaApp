@@ -8,6 +8,9 @@ import com.example.jupa.Institution.Institution;
 
 import java.util.ArrayList;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -93,10 +96,21 @@ public class InstitutionApiBackgroundTasks {
 
     public void add_institutionTask(Institution institution){
 
+//        RequestBody center_no = RequestBody.create(MediaType.parse("text/plain"), institution.getCenter_No()),
+//                name = RequestBody.create(MediaType.parse("text/plain"),institution.getName()),
+//                contact_person = RequestBody.create(MediaType.parse("text/plain"),institution.getContactPerson()),
+//                telephone = RequestBody.create(MediaType.parse("text/plain"),institution.getTelephone_number()),
+//                email = RequestBody.create(MediaType.parse("text/plain"),institution.getEmail_address()),
+//                physical_address = RequestBody.create(MediaType.parse("text/plain"),institution.getPhysical_address()),
+//                about = RequestBody.create(MediaType.parse("text/plain"),institution.getAbout_institution()),
+//                website = RequestBody.create(MediaType.parse("text/plain"),institution.getWebsite()),
+//                facebook = RequestBody.create(MediaType.parse("text/plain"),institution.getFacebook());
+
+
         Call<InstitutionApiData> call = institutionApiInterface.add_new_institution(institution.getCenter_No(),institution.getName(),
                                         institution.getContactPerson(),institution.getTelephone_number(),institution.getEmail_address(),
                                             institution.getPhysical_address(),institution.getAbout_institution(),institution.getWebsite(),
-                                            institution.getFacebook());
+                                            institution.getFacebook(),institution.getFile_body());
 
         call.enqueue(new Callback<InstitutionApiData>() {
             @Override
@@ -216,6 +230,83 @@ public class InstitutionApiBackgroundTasks {
         });
 
     }
+
+    public void payRequest(Institution institution,Integer ammount,String category){
+
+        Call<ResponseBody> call = institutionApiInterface.payApplication(institution.getInstitution_id(),ammount,category);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                synchronized (InstitutionApiBackgroundTasks.this){
+                    if (response.isSuccessful()){
+                        setMessage("success");
+                    }else {
+                        setMessage(null);
+                    }
+                    InstitutionApiBackgroundTasks.this.notifyAll();
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+
+                synchronized (InstitutionApiBackgroundTasks.this){
+
+                    setInstitution(null);
+                    setMessage(t.getMessage());
+                    InstitutionApiBackgroundTasks.this.notifyAll();
+
+                }
+
+
+            }
+        });
+    }
+
+    public void verifyInstitution(Institution institution){
+
+        Call<ResponseBody> call = institutionApiInterface.verifyInstitution(institution.getInstitution_id(),institution.getStatus());
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                synchronized (InstitutionApiBackgroundTasks.this){
+                    if (response.isSuccessful()){
+                        setMessage("success");
+                    }else {
+                        setMessage(null);
+                    }
+                    InstitutionApiBackgroundTasks.this.notifyAll();
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+
+                synchronized (InstitutionApiBackgroundTasks.this){
+
+                    setInstitution(null);
+                    setMessage(t.getMessage());
+                    InstitutionApiBackgroundTasks.this.notifyAll();
+
+                }
+
+
+            }
+        });
+    }
+
 
 
     public Institution getInstitution() {

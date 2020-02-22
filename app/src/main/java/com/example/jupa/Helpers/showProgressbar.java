@@ -35,10 +35,10 @@ public class showProgressbar {
         progressDialog = new ProgressDialog(context);
         progressDialog.setProgressStyle(R.style.Widget_AppCompat_ProgressBar);
         progressDialog.setIndeterminate(true);
-        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage(message);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
         progressDialog.show();
-
     }
 
     public void dismiss(){

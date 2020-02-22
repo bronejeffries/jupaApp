@@ -12,10 +12,13 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jupa.Activity.RequestApplicationViewActivity;
+import com.example.jupa.Helpers.LoadImageToView;
 import com.example.jupa.R;
 import com.example.jupa.Request.RequestApplicationObject;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RequestApplicationAdapter extends RecyclerView.Adapter {
 
@@ -80,7 +83,6 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
 
         }
 
-
     }
 
     @Override
@@ -103,10 +105,18 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
 
     }
 
+    public void changeItemPaymentStatus(int adapterPosition, int paid) {
+
+        this.getRequestApplicationObjectArrayList().get(adapterPosition).setPaid(paid);
+        this.changeItem(adapterPosition);
+
+    }
+
     private class applicationViewHolder extends RecyclerView.ViewHolder{
 
 
         TextView roleView, applicationType, applicationStatus, viewApplicationDetails,name,payment_status;
+        CircleImageView circleImageView;
 
         public applicationViewHolder(@NonNull View itemView) {
 
@@ -118,6 +128,7 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
             applicationType = (TextView)itemView.findViewById(R.id.type_view);
             applicationStatus = (TextView)itemView.findViewById(R.id.application_status);
             payment_status = (TextView)itemView.findViewById(R.id.application_payment_status);
+            circleImageView = (CircleImageView)itemView.findViewById(R.id.profile_image);
 
         }
 
@@ -127,7 +138,7 @@ public class RequestApplicationAdapter extends RecyclerView.Adapter {
             roleView.setText(requestApplicationObject.getCandidate().getRole());
             getStatusInfo(requestApplicationObject.getStatus(),this.applicationStatus);
             applicationType.setText(requestApplicationObject.getRequest_type());
-
+            LoadImageToView.loadImage(context,requestApplicationObject.getCandidate().getPhoto_url(),this.circleImageView);
             String status = requestApplicationObject.getPaymentStatus();
             payment_status.setText(status);
             viewApplicationDetails.setOnClickListener(new View.OnClickListener() {

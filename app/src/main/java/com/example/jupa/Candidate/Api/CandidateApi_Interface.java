@@ -8,6 +8,7 @@ import com.example.jupa.Candidate.Project.CandidateProjectApiData;
 import com.example.jupa.Candidate.Project.CandidateProjectListApiData;
 import com.google.gson.annotations.SerializedName;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -29,7 +30,8 @@ public interface CandidateApi_Interface {
                                            @Field("candidateemail") String email, @Field("dob") String dateOfBirth, @Field("lastname") String lastname,
                                            @Field("familyname") String familyname, @Field("othernumber") String OtherNumber, @Field("gender") String gender,
                                            @Field("category_id") Integer category_id, @Field("country_id") Integer country_id, @Field("state_id") Integer state_id,
-                                           @Field("city_id") Integer city_id, @Field("address") String address,@Field("education") String education,@Field("group_id") int group_id );
+                                           @Field("city_id") Integer city_id, @Field("address") String address,@Field("education") String education,@Field("group_id") Integer group_id,
+                                           @Field("association_name") String association_name, @Field("association_reg_date") String association_reg_date, @Field("association_address") String association_address);
 
     @FormUrlEncoded
     @POST("update_candidate.php")
@@ -37,7 +39,8 @@ public interface CandidateApi_Interface {
                                            @Field("candidateemail") String email, @Field("dob") String dateOfBirth, @Field("lastname") String lastname,
                                            @Field("familyname") String familyname, @Field("othernumber") String OtherNumber, @Field("gender") String gender,
                                            @Field("category_id") Integer category_id, @Field("country_id") Integer country_id, @Field("state_id") Integer state_id,
-                                           @Field("city_id") Integer city_id, @Field("address") String address,@Field("education") String education, @Field("group_id") int group_id);
+                                           @Field("city_id") Integer city_id, @Field("address") String address, @Field("education") String education, @Field("group_id") Integer group_id,
+                                           @Field("association_id") Integer association_id, @Field("photo") String  file, @Field("available") String available, @Field("date_available") String date_available);
 
 
     @GET("get_candidate_details.php")
@@ -55,7 +58,7 @@ public interface CandidateApi_Interface {
     Call<CandidateProjectApiData> addCandidateProject(@Field("candidate_id") Integer candidate_id, @Field("title") String title, @Field("location") String loaction, @Field("publication_date") String publication_date,
                                                       @Field("client_name") String client_name, @Field("client_contact") String client_contact,
                                                       @Field("client_email") String client_email, @Field("client_address") String client_address,
-                                                      @Field("descrp") String descrp, @Field("project_status") Integer project_status);
+                                                      @Field("descrp") String descrp, @Field("project_status") Integer project_status,@Field("project_photo") String photo);
 
 
     @GET("get_assessment_groups_byProject.php")
@@ -75,8 +78,9 @@ public interface CandidateApi_Interface {
 
     @FormUrlEncoded
     @POST("add_assessment_results.php")
-    Call<AssessmentApiData> makeAssessment(@Field("assessment_group_id") int assessment_group_id, @Field("question_id") int question_id, @Field("candidate_id") int candidate_id , @Field("grade") String grade, @Field("other_remarks") String other_remarks,
-                                           @Field("project_id") int project_id, @Field("institution_id") int institution_id, @Field("assessor_id") int assessor_id);
+    Call<AssessmentApiData> makeAssessment(@Field("question_id") int question_id, @Field("candidate_id") int candidate_id , @Field("grade") String grade,
+                                           @Field("other_remarks") String other_remarks, @Field("institution_id") int institution_id,
+                                           @Field("assessor_id") int assessor_id);
 
 
     @GET("get_assessment_result_bygroup.php")
@@ -88,6 +92,7 @@ public interface CandidateApi_Interface {
     @GET("get_assessment_result_byinstitute.php")
     Call<AssessmentListApiData> getInstitutionAssessments(@Query("institution_id") int institution_id);
 
-
+    @GET("get_candidates_bymember_level.php")
+    Call<CandidateListApiData> getCandidatesbyMemberLevel(@Query("member_level") String member_level,@Query("group_id") Integer group_id);
 
 }

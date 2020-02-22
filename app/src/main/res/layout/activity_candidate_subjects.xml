@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.CandidateSubjectsActivity">
+
+
+    <TextView
+        android:id="@+id/no_subject_notice"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/btn_layout_margintop"
+        android:text="@string/no_subjects_register"
+        android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_alignParentTop="true"
+        android:id="@+id/registered_subjects_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/registered_subject_layout"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+</RelativeLayout>

@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jupa.Activity.InstitutionActivity;
+import com.example.jupa.Activity.InstitutionsActivity;
 import com.example.jupa.Institution.Institution;
 import com.example.jupa.R;
 
@@ -81,17 +82,19 @@ public class InstitutionsAdapter extends RecyclerView.Adapter {
 
         Institution thisInstitution;
         View view;
-        TextView nameView;
+        TextView nameView,status;
         public InstitutionViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
             nameView = (TextView)itemView.findViewById(R.id.institutions_name);
+            status = (TextView)itemView.findViewById(R.id.institution_status);
         }
 
         public void bind(Institution institution){
 
             this.thisInstitution = institution;
             nameView.setText(institution.getTitltleRepresentation());
+            status.setText(institution.getStatusRepresentation());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -105,6 +108,7 @@ public class InstitutionsAdapter extends RecyclerView.Adapter {
 
             Intent intent = new Intent(context, InstitutionActivity.class);
             intent.putExtra(InstitutionActivity.INSTITUTION_EXTRA,this.thisInstitution);
+            intent.putExtra(InstitutionsActivity.SEARCH_PURPOSE,InstitutionsActivity.search_purpose);
             context.startActivity(intent);
 
         }

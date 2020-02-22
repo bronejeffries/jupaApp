@@ -17,6 +17,11 @@
         <item>VERIFIED</item>
     </string-array>
 
+    <string-array name="available_array">
+        <item>Available</item>
+        <item>Busy</item>
+    </string-array>
+
     <string-array name="grades_array">
         <item>PASSED</item>
         <item>AVERAGE</item>
@@ -27,6 +32,14 @@
         <item>80</item>
         <item>50</item>
         <item>30</item>
+    </string-array>
+
+    <string-array name="education_levels">
+        <item>None</item>
+        <item>P.7</item>
+        <item>S.4</item>
+        <item>S.6</item>
+        <item>Tertiary</item>
     </string-array>
 
 </resources>

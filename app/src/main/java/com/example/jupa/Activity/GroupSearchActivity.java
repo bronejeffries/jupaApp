@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 public class GroupSearchActivity extends AppCompatActivity {
 
-
     Group group;
     public static String groupName;
     Intent intent;
@@ -131,7 +130,6 @@ public class GroupSearchActivity extends AppCompatActivity {
         }
     }
 
-
     public class searchGroup extends AsyncTask<searchObject,Void,ArrayList<Candidate>>{
 
         @Override
@@ -184,7 +182,7 @@ public class GroupSearchActivity extends AppCompatActivity {
     public static class searchObject implements Parcelable {
 
         Integer rank_id, group_id, last, limit,institution_id,assessor_id;
-        String status,member_level,requestType;
+        String status,member_level,requestType,name;
 
 
         public searchObject(Integer rank_id, Integer group_id, Integer last, Integer limit, String status) {
@@ -229,6 +227,56 @@ public class GroupSearchActivity extends AppCompatActivity {
             status = in.readString();
             member_level = in.readString();
             requestType = in.readString();
+            name = in.readString();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            if (rank_id == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeInt(rank_id);
+            }
+            if (group_id == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeInt(group_id);
+            }
+            if (last == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeInt(last);
+            }
+            if (limit == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeInt(limit);
+            }
+            if (institution_id == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeInt(institution_id);
+            }
+            if (assessor_id == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeInt(assessor_id);
+            }
+            dest.writeString(status);
+            dest.writeString(member_level);
+            dest.writeString(requestType);
+            dest.writeString(name);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
         }
 
         public static final Creator<searchObject> CREATOR = new Creator<searchObject>() {
@@ -315,53 +363,12 @@ public class GroupSearchActivity extends AppCompatActivity {
             this.status = status;
         }
 
-
-        @Override
-        public int describeContents() {
-            return 0;
+        public String getName() {
+            return name;
         }
 
-        @Override
-        public void writeToParcel(Parcel parcel, int i) {
-            if (rank_id == null) {
-                parcel.writeByte((byte) 0);
-            } else {
-                parcel.writeByte((byte) 1);
-                parcel.writeInt(rank_id);
-            }
-            if (group_id == null) {
-                parcel.writeByte((byte) 0);
-            } else {
-                parcel.writeByte((byte) 1);
-                parcel.writeInt(group_id);
-            }
-            if (last == null) {
-                parcel.writeByte((byte) 0);
-            } else {
-                parcel.writeByte((byte) 1);
-                parcel.writeInt(last);
-            }
-            if (limit == null) {
-                parcel.writeByte((byte) 0);
-            } else {
-                parcel.writeByte((byte) 1);
-                parcel.writeInt(limit);
-            }
-            if (institution_id == null) {
-                parcel.writeByte((byte) 0);
-            } else {
-                parcel.writeByte((byte) 1);
-                parcel.writeInt(institution_id);
-            }
-            if (assessor_id == null) {
-                parcel.writeByte((byte) 0);
-            } else {
-                parcel.writeByte((byte) 1);
-                parcel.writeInt(assessor_id);
-            }
-            parcel.writeString(status);
-            parcel.writeString(member_level);
-            parcel.writeString(requestType);
+        public void setName(String name) {
+            this.name = name;
         }
     }
 

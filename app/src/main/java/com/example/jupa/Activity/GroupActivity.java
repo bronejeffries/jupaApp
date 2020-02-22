@@ -49,11 +49,10 @@ public class GroupActivity extends AppCompatActivity {
     CandidateBackgroundApiTasks candidateBackgroundApiTasks;
     ArrayList<Candidate> GroupCandidates;
     private CandidatesAdapter masonCandidatesAdapter;
-    showProgressbar showprogress;
+//    showProgressbar showprogress;
     ProgressBar progressBar;
     int last;
     private GroupSearchActivity.searchObject searchObject;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,7 @@ public class GroupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group);
 
 
-        showprogress = new showProgressbar(this);
+//        showprogress = new showProgressbar(this);
         progressBar = (ProgressBar)findViewById(R.id.search_progress_bar);
 
         Intent intent = getIntent();
@@ -102,7 +101,6 @@ public class GroupActivity extends AppCompatActivity {
             searchObject.setInstitution_id(institution!=null?institution.getInstitution_id():null);
             searchObject.setAssessor_id(assessor.getId());
             fetchCandidates();
-
 
         }else if (institution_candidate_assessor_view){
 

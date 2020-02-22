@@ -4,6 +4,7 @@ package com.example.jupa.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -11,10 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.jupa.Activity.AssociationRegistrationActivity;
 import com.example.jupa.Activity.CandidateLoginActivity;
 import com.example.jupa.Activity.InstitutionLoginActivity;
 import com.example.jupa.Activity.NewInstitutionActivity;
 import com.example.jupa.Activity.RegistrationActivity;
+import com.example.jupa.Activity.UserHomeActivity;
 import com.example.jupa.Institution.Institution;
 import com.example.jupa.R;
 
@@ -48,7 +51,7 @@ public class SignUpOptionsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                RegisterClicked();
+                RegisterClicked(UserHomeActivity.CANDIDATE_ROLE);
 
             }
         });
@@ -57,7 +60,7 @@ public class SignUpOptionsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                RegisterClicked();
+                RegisterClicked(UserHomeActivity.ASSESSOR_ROLE);
 
             }
         });
@@ -66,7 +69,7 @@ public class SignUpOptionsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                RegisterClicked();
+                AssociationClicked();
 
             }
         });
@@ -85,8 +88,16 @@ public class SignUpOptionsFragment extends Fragment {
     }
 
 
-    public void RegisterClicked(){
+    public void RegisterClicked(@Nullable String level){
         Intent intent = new Intent(getContext(), RegistrationActivity.class);
+        intent.putExtra(RegistrationActivity.LEVEL_EXTRA,level);
+        startActivity(intent);
+
+    }
+
+    public void AssociationClicked(){
+
+        Intent intent = new Intent(getContext(), AssociationRegistrationActivity.class);
         startActivity(intent);
 
     }

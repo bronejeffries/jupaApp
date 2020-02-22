@@ -28,6 +28,7 @@ public class QuestionApiBackgroundTasks {
     ArrayList<QuestionCategory> questionCategoryArrayList;
     static QuestionApiBackgroundTasks Instance = null;
     public String SUCCESS = "1", FAILED = "0",message;
+    public Boolean success;
     static QuestionsApiInterface questionspiInterface = RetrofitSingleton.getRetrofitInstance().create(QuestionsApiInterface.class);
 
     public QuestionApiBackgroundTasks(Context context) {
@@ -45,7 +46,7 @@ public class QuestionApiBackgroundTasks {
 
     public void createQuestionCategory(QuestionCategory questionCategory){
 
-        Call<QuestionCategoryApiData> call = questionspiInterface.addQuestionCategory(questionCategory.getId(), UserHomeActivity.thisCandidate.getId());
+        Call<QuestionCategoryApiData> call = questionspiInterface.addQuestionCategory(questionCategory.getGroup_id(),questionCategory.getName(), UserHomeActivity.thisCandidate.getId());
         call.enqueue(new Callback<QuestionCategoryApiData>() {
             @Override
             public void onResponse(Call<QuestionCategoryApiData> call, Response<QuestionCategoryApiData> response) {
@@ -79,7 +80,85 @@ public class QuestionApiBackgroundTasks {
 
     }
 
+    public void updateQuestionCategory(QuestionCategory questionCategory){
 
+        Call<QuestionCategoryApiData> call = questionspiInterface.updatequestioncategory(questionCategory.getId(),questionCategory.getName());
+        call.enqueue(new Callback<QuestionCategoryApiData>() {
+            @Override
+            public void onResponse(Call<QuestionCategoryApiData> call, Response<QuestionCategoryApiData> response) {
+
+                synchronized (QuestionApiBackgroundTasks.this){
+
+                    if (response.body().getSuccess().equals(SUCCESS)){
+
+                        setQuestionCategory(response.body().getQuestionCategory());
+
+
+                    }else {
+
+                        setQuestionCategory(null);
+
+                    }
+
+                    setMessage(response.body().getMessage());
+                    QuestionApiBackgroundTasks.this.notifyAll();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<QuestionCategoryApiData> call, Throwable t) {
+
+                synchronized (QuestionApiBackgroundTasks.this){
+
+                    setMessage(t.getMessage());
+                    setQuestionCategory(null);
+                    QuestionApiBackgroundTasks.this.notifyAll();
+                }
+            }
+        });
+
+    }
+
+    public void deleteQuestionCategory(QuestionCategory questionCategory){
+
+        Call<QuestionCategoryApiData> call = questionspiInterface.deletequestioncategory(questionCategory.getId());
+        call.enqueue(new Callback<QuestionCategoryApiData>() {
+            @Override
+            public void onResponse(Call<QuestionCategoryApiData> call, Response<QuestionCategoryApiData> response) {
+
+                synchronized (QuestionApiBackgroundTasks.this){
+
+                    if (response.body().getSuccess().equals(SUCCESS)){
+
+                        setSuccess(true);
+
+                    }else {
+                        setQuestionCategory(null);
+                        setSuccess(false);
+                    }
+                    setMessage(response.body().getMessage());
+                    QuestionApiBackgroundTasks.this.notifyAll();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<QuestionCategoryApiData> call, Throwable t) {
+
+                synchronized (QuestionApiBackgroundTasks.this){
+
+                    setMessage(t.getMessage());
+                    setQuestionCategory(null);
+                    setSuccess(false);
+                    QuestionApiBackgroundTasks.this.notifyAll();
+                }
+            }
+        });
+
+    }
 
     public void createQuestion(Question question){
 
@@ -247,8 +326,6 @@ public class QuestionApiBackgroundTasks {
 
     }
 
-
-
     public Question getQuestion() {
         return question;
     }
@@ -287,5 +364,13 @@ public class QuestionApiBackgroundTasks {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 }

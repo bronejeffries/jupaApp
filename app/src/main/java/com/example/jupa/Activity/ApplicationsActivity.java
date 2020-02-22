@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -41,7 +42,6 @@ public class ApplicationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_applications);
 
 
-
         intent = getIntent();
         admin_view = intent.getBooleanExtra(ADMIN_VIEW,false);
 
@@ -61,6 +61,7 @@ public class ApplicationsActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         applications_recycler_view.setLayoutManager(linearLayoutManager);
+
         applications_recycler_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -166,6 +167,7 @@ public class ApplicationsActivity extends AppCompatActivity {
                 if (requestApplicationObjects.size()>0){
 
                     requestApplicationAdapter.addItems(requestApplicationObjects);
+                    Log.e("Applications", "onPostExecute: "+requestApplicationObjects.size());
 
                 }
                 last += searchObject.getLimit();

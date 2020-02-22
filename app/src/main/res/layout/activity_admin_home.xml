@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_trans"
+    android:background="@color/colorPrimary"
     tools:context=".Activity.AdminHomeActivity">
 
     <RelativeLayout
@@ -15,6 +15,14 @@
             android:layout_width="match_parent"
             android:background="@drawable/construction_icon_png_5"
             android:layout_height="370dp">
+            <TextView
+                android:textSize="15sp"
+                android:id="@+id/logged_in_as"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,6 +87,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"

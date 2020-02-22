@@ -42,7 +42,7 @@ public class GroupsActivity extends AppCompatActivity {
     public static String viewPurpose;
     public static Institution institution;
     Intent intent;
-    public static boolean institution_view;
+    public static boolean institution_view,group_search_purpose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,26 +55,38 @@ public class GroupsActivity extends AppCompatActivity {
         showprogress.show();
 
         intent = getIntent();
+
+        group_search_purpose = intent.getBooleanExtra(InstitutionsActivity.SEARCH_PURPOSE,false);
+
         institution = intent.getParcelableExtra(INSTITUTION_EXTRA);
 
         floatingActionButton = (FloatingActionButton)findViewById(R.id.fab);
 
-        if (institution == null){
+        if(!group_search_purpose){
 
-            floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showAddGroupDialog();
-                }
-            });
+            if (institution == null){
 
-        }else {
+                floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showAddGroupDialog();
+                    }
+                });
 
-            institution_view = true;
-            viewPurpose = intent.getStringExtra(INTENT_PURPOSE);
+            }else {
+
+                institution_view = true;
+                viewPurpose = intent.getStringExtra(INTENT_PURPOSE);
+
+            }
+
+        }else{
+
+            institution = null;
+            viewPurpose = null;
+            institution_view = false;
 
         }
-
 
         adapter = GroupsAdapter.getInstance(groupArrayList,this);
         groupArrayList = adapter.getGroupArrayList();

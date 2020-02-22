@@ -9,14 +9,26 @@
         android:id="@+id/rel_1"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="300dip"
-        android:background="@drawable/construction_icon_png_5">
-
+        android:layout_height="300dp"
+        android:background="@color/colorPrimary">
     </RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        android:src="@drawable/construction_icon_png_5"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/white"
+        android:layout_above="@+id/card"
+        app:civ_border_overlay="true"
+        android:layout_marginBottom="20dp"
+        app:civ_circle_background_color="@color/white"
+        android:layout_centerHorizontal="true"/>
 
 
     <androidx.cardview.widget.CardView
-        android:layout_margin="10dp"
+        android:id="@+id/card"
+        android:layout_margin="25dp"
         app:contentPaddingBottom="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/action_sign_in_short"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/button_gradient_background"
+                android:background="@drawable/button_primary"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"/>
 

@@ -32,6 +32,7 @@
         app:cardElevation="8dip"
         app:cardCornerRadius="5dip">
 
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -102,7 +103,19 @@
                     android:text="@string/rank_applied_for"
                     android:textColor="@color/black"/>
 
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/candidate_rank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dip"
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    android:text="@string/candidate"
+                    android:textColor="@color/black"/>
+
                 <Spinner
+                    android:visibility="gone"
                     android:id="@+id/rank_applied_input"
                     android:textSize="18sp"
                     android:padding="12dip"
@@ -167,6 +180,11 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+
+            <include
+               layout="@layout/recommendation_select_layout"
+                />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

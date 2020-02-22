@@ -1,24 +1,32 @@
 package com.example.jupa.Helpers;
 
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Base64;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.jupa.Activity.NewInstitutionActivity;
-
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -30,9 +38,27 @@ public class SelectFileHelper {
     public static ArrayList<String> permissions;
     public static ArrayList<String> permissionsToRequest;
     public final static int ALL_PERMISSIONS_RESULT = 107;
-    public static ArrayList<String> permissionsRejected = new ArrayList<>();
+    public static ArrayList<String> permissionsRejected;
     public final static int IMAGE_RESULT = 200;
+    public ArrayList<RequestBody> file_body;
 
+    public static SelectFileHelper instance = null;
+
+    public static SelectFileHelper getInstance(){
+
+        if (instance==null){
+            instance = new SelectFileHelper();
+        }
+        return instance;
+    }
+
+    public String getStringImage(Bitmap bmp) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
 
     public static String getImageFromFilePath(Intent data, Context context) {
 
@@ -84,7 +110,11 @@ public class SelectFileHelper {
     }
 
     public static void askPermissions(Context context) {
+
         permissions = new ArrayList<>();
+        permissionsToRequest = new ArrayList<>();
+        permissionsRejected = new ArrayList<>();
+
         permissions.add(CAMERA);
         permissions.add(WRITE_EXTERNAL_STORAGE);
         permissions.add(READ_EXTERNAL_STORAGE);
@@ -160,4 +190,11 @@ public class SelectFileHelper {
         return chooserIntent;
     }
 
+    public ArrayList<RequestBody> getFile_body() {
+        return file_body;
+    }
+
+    public void setFile_body(ArrayList<RequestBody> file_body) {
+        this.file_body = file_body;
+    }
 }

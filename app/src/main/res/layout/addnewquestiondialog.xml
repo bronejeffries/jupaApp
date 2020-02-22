@@ -11,36 +11,8 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="@string/question_category"
-            android:textSize="21sp"
-            android:padding="5dp"
-            android:textStyle="bold|normal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Spinner
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:hint="@string/client_name"
-            android:textColorHint="@color/colorAccent"
-            android:inputType="text"
-            android:textSize="21sp"
-            android:textStyle="normal"
-            android:id="@+id/question_category_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="2dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
             android:text="@string/question"
-            android:textSize="21sp"
+            android:textSize="15sp"
             android:padding="5dp"
             android:textStyle="bold|normal"
             android:layout_width="match_parent"
@@ -50,35 +22,70 @@
             android:layout_marginTop="10dp"
             android:padding="5dp"
             android:hint="@string/question"
-            android:textColorHint="@color/colorAccent"
+            android:textColorHint="@color/colorPrimary"
             android:inputType="text"
-            android:textSize="21sp"
+            android:textSize="15sp"
             android:textStyle="normal"
             android:id="@+id/question_title_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="@string/question_code"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:textStyle="bold|normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:hint="@string/question_code"
+            android:textColorHint="@color/colorPrimary"
+            android:inputType="text"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:id="@+id/question_code_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
-
     <LinearLayout
+        android:gravity="end"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="2dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <Button
+            android:layout_marginRight="@dimen/contact_view_margin_start"
+            android:layout_marginEnd="@dimen/contact_view_margin_start"
             android:id="@+id/save_question_btn"
             android:layout_gravity="center_horizontal"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/button_primary"
             android:textColor="@color/white"
             android:text="@string/add_group"
-            android:textSize="21sp"
+            android:textSize="14sp"
             android:padding="5dp"
             android:textStyle="bold|normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <Button
+            android:layout_marginLeft="@dimen/contact_view_margin_start"
+            android:layout_marginStart="@dimen/contact_view_margin_start"
+            android:id="@+id/cancel_action"
+            android:layout_gravity="end|center_horizontal"
+            android:background="@drawable/button_accent"
+            android:textColor="@color/white"
+            android:text="@string/cancel"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:textStyle="bold|normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

@@ -1,12 +1,13 @@
 package com.example.jupa.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -15,34 +16,27 @@ import android.widget.Toast;
 import com.example.jupa.Candidate.Api.CandidateBackgroundApiTasks;
 import com.example.jupa.Candidate.Candidate;
 import com.example.jupa.Candidate.Category.CandidateCategory;
-import com.example.jupa.Candidate.Category.Api.CandidateCategoryBackgroundApiTasks;
-import com.example.jupa.Group.Adapter.GroupsAdapter;
-import com.example.jupa.Group.Api.GroupBackgroundApiTasks;
 import com.example.jupa.Group.Group;
-import com.example.jupa.Helpers.GroupsList;
+import com.example.jupa.Helpers.PopulateRegistrationSpinners;
 import com.example.jupa.R;
 import com.example.jupa.Helpers.showProgressbar;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RegistrationActivity extends AppCompatActivity {
 
 
-    Spinner groupSpinner,  category, genderSpinner;
-    EditText firstname,lastname,familyname, mobile_no, other_no, email, dob, address, education;
-    String firstnameText, lastnameText, familynameText, mobile_noText, other_noText, emailText, dobText,
+    Spinner groupSpinner,  category, genderSpinner,education;
+    EditText firstName, lastName, familyName, mobile_no, other_no, email, dob, address;
+    String firstNameText, lastNameText, familyNameText, mobile_noText, other_noText, emailText, dobText,
             addressText, educationText, genderText, groupText, categoryText;
 
     Button save_btn;
     showProgressbar showprogress;
-    private GroupsList groupsList;
     CandidateBackgroundApiTasks candidateBackgroundApiTasks;
-    private ArrayList<Group> groupArrayList;
-    private ArrayList<CandidateCategory> candidateCategoryArrayList;
-    private GroupBackgroundApiTasks groupBackgroundApiTasks;
-    private CandidateCategoryBackgroundApiTasks candidateCategoryBackgroundApiTasks;
-    private List<String> spinnerArray, categorySpinnerArray;
+    String member_level;
+    Intent intent;
+    PopulateRegistrationSpinners populateRegistrationSpinners;
+
+    public static final String LEVEL_EXTRA="level_extra";
 
 
     @Override
@@ -50,77 +44,82 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        intent = getIntent();
+        member_level = intent.getStringExtra(LEVEL_EXTRA);
+
 //        candidateCategoryBackgroundApiTasks
         candidateBackgroundApiTasks = CandidateBackgroundApiTasks.getInstance(this);
         showprogress = new showProgressbar(this);
+        showprogress.setMessage("Loading");
+        showprogress.show();
 
         groupSpinner = (Spinner)findViewById(R.id.group_input);
-        populateGroupSpinner();
         category = (Spinner)findViewById(R.id.category_input);
         genderSpinner = (Spinner)findViewById(R.id.gender_input);
 
+        populateRegistrationSpinners = new PopulateRegistrationSpinners(this,groupSpinner,category,genderSpinner);
+        populateRegistrationSpinners.setShowProgress(showprogress);
 
-        firstname = (EditText)findViewById(R.id.first_name_input);
-        lastname = (EditText)findViewById(R.id.last_name_input);
-        familyname = (EditText)findViewById(R.id.family_name_input);
+
+        firstName = (EditText)findViewById(R.id.first_name_input);
+        lastName = (EditText)findViewById(R.id.last_name_input);
+        familyName = (EditText)findViewById(R.id.family_name_input);
         mobile_no = (EditText)findViewById(R.id.mobile_no_input);
         other_no = (EditText)findViewById(R.id.other_no_input);
         address = (EditText)findViewById(R.id.address_input);
-        education = (EditText)findViewById(R.id.education_input);
+        education = (Spinner)findViewById(R.id.education_input);
 
         email = (EditText)findViewById(R.id.email_input);
         dob = (EditText)findViewById(R.id.dob_input);
-
-        showprogress.setMessage("Loading");
-        showprogress.show();
 
         save_btn = (Button)findViewById(R.id.register_btn);
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerCandidate();
+
+                if (save_btn.getText().toString().equals(getResources().getString(R.string.reload))){
+                    startActivity(getIntent());
+                }else {
+                    registerCandidate();
+                }
             }
         });
-    }
 
+        populateRegistrationSpinners.setButton(save_btn);
+        populateRegistrationSpinners.populateGroupSpinner();
+    }
 
 
     private void registerCandidate() {
 
-        firstnameText = firstname.getText().toString();
-        lastnameText = lastname.getText().toString();
-        familynameText = familyname.getText().toString();
+        firstNameText = firstName.getText().toString();
+        lastNameText = lastName.getText().toString();
+        familyNameText = familyName.getText().toString();
 
         mobile_noText = mobile_no.getText().toString();
         other_noText = other_no.getText().toString();
 
         addressText = address.getText().toString();
         genderText = genderSpinner.getSelectedItem().toString();
-        educationText = education.getText().toString();
+        educationText = education.getSelectedItem().toString();
 
         emailText = email.getText().toString();
         dobText = dob.getText().toString();
-        if (groupSpinner.getSelectedItem()!=null){
 
-            groupText = groupSpinner.getSelectedItem().toString();
+        groupText = groupSpinner.getSelectedItem()!=null?groupSpinner.getSelectedItem().toString():null;
 
-        }else {
-
-            groupText = null;
-
-        }
         categoryText = category.getSelectedItem()!=null?category.getSelectedItem().toString():null;
         Integer group_id;
-        Group group = groupsList.findGroupByName(groupText);
+        Group group = populateRegistrationSpinners.groupsList.findGroupByName(groupText);
         group_id = (group!=null)?group.getId():null;
 
         Integer category_id;
-        CandidateCategory candidateCategory = groupsList.findCandidateCategoryByName(categoryText);
+        CandidateCategory candidateCategory = populateRegistrationSpinners.groupsList.findCandidateCategoryByName(categoryText);
         category_id = candidateCategory!=null?candidateCategory.getId():null;
 
-        Candidate newCandidate = new Candidate(null,null,firstnameText,lastnameText,familynameText,
+        Candidate newCandidate = new Candidate(null,null, firstNameText, lastNameText, familyNameText,
                 genderText,emailText,dobText,mobile_noText,other_noText,null,addressText,educationText,group_id,category_id,
-                null,null,null,null);
+                null,null,null,null,null,null,null,null);
 
         showprogress.setMessage("A moment as we set you up!");
         showprogress.show();
@@ -129,136 +128,67 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
 
-    private void populateGroupSpinner() {
+    public void showSelectAssociation(Candidate candidate){
 
-        groupsList = new GroupsList(this);
-        spinnerArray = new ArrayList<>();
-        GroupsAdapter current_adapter = GroupsAdapter.getInstance(null, null);
-        if (current_adapter != null ){
+        //skip selection for assessor
 
-            groupsList.makeListFrom(current_adapter.getGroupArrayList());
-            spinnerArray = groupsList.getSpinnerArray();
-            setGroupSpinner();
-        }
-        else {
+        if (member_level!=null&&member_level.equals(UserHomeActivity.ASSESSOR_ROLE)){
 
-            groupBackgroundApiTasks = new GroupBackgroundApiTasks(RegistrationActivity.this);
-            fetchAllGroups();
-        }
+            Intent assessor_intent = new Intent(this, AssessorRequestActivity.class);
+            assessor_intent.putExtra(RankRequestActivity.INITIAL_RANK,true);
+            assessor_intent.putExtra(RankRequestActivity.CANDIDATE_EXTRA,candidate);
+            startActivity(assessor_intent);
 
-    }
+        }else{
 
+            Intent selectAssociation = new Intent(this, SelectAssociationActivity.class);
+            selectAssociation.putExtra(LEVEL_EXTRA,member_level);
+            selectAssociation.putExtra(RankRequestActivity.CANDIDATE_EXTRA,candidate);
+            startActivity(selectAssociation);
 
-    public void setGroupSpinner(){
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        groupSpinner.setAdapter(adapter);
-        fetchAllCategories();
-
-    }
-
-    public void setCategorySpinner(){
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,
-                                                            groupsList.categorySpinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        category.setAdapter(adapter);
-        showprogress.dismiss();
-
-    }
-
-
-    private void fetchAllGroups() {
-        new fetchgroups().execute();
-    }
-
-    private class fetchgroups extends AsyncTask<Void,Void, ArrayList<Group>> {
-
-        @Override
-        protected void onPostExecute(ArrayList<Group> arrayList) {
-
-            groupArrayList = arrayList;
-            groupsList.makeListFrom(groupArrayList);
-            spinnerArray = groupsList.getSpinnerArray();
-            setGroupSpinner();
         }
 
-        @Override
-        protected ArrayList<Group> doInBackground(Void... voids) {
 
-            ArrayList<Group> groupArrayListReturned;
+    }
 
-            synchronized (groupBackgroundApiTasks){
 
-                groupBackgroundApiTasks.fetchGroups();
-                try {
-                    groupBackgroundApiTasks.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                groupArrayListReturned = groupBackgroundApiTasks.getGroupArrayList();
+    private void buildNotificationDialog(String message,final Candidate candidate) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message);
+        builder.setIcon(R.drawable.ic_help_outline_black_24dp);
+        builder.setTitle("Registration");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                dialogInterface.dismiss();
+                showSelectAssociation(candidate);
 
             }
-            return groupArrayListReturned;
+        });
 
-        }
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
     }
-
-    private void fetchAllCategories() {
-
-        candidateCategoryBackgroundApiTasks = new CandidateCategoryBackgroundApiTasks(this);
-        new fetchCategories().execute();
-
-    }
-
-    public class fetchCategories extends AsyncTask<Void,Void,ArrayList<CandidateCategory>>{
-
-        @Override
-        protected void onPostExecute(ArrayList<CandidateCategory> candidateCategories) {
-
-            candidateCategoryArrayList = candidateCategories;
-            Log.e("post execute", "onPostExecute: "+candidateCategoryArrayList );
-            groupsList.makeCategoryListFrom(candidateCategoryArrayList);
-//            categorySpinnerArray = groupsList.getCategorySpinnerArray();
-            setCategorySpinner();
-
-        }
-
-        @Override
-        protected ArrayList<CandidateCategory> doInBackground(Void... voids) {
-
-            ArrayList<CandidateCategory> candidateCategoryArrayListReturned;
-
-            synchronized (candidateCategoryBackgroundApiTasks){
-
-                candidateCategoryBackgroundApiTasks.fetchCategories();
-                try {
-                    candidateCategoryBackgroundApiTasks.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                candidateCategoryArrayListReturned = candidateCategoryBackgroundApiTasks.getCandidateCategoryArrayList();
-            }
-            return candidateCategoryArrayListReturned;
-        }
-    }
-
 
     public class sendRegistrationData extends AsyncTask<Candidate,Void,Candidate>{
-
 
         @Override
         protected void onPostExecute(Candidate candidate) {
 
             showprogress.dismiss();
+
             Toast.makeText(RegistrationActivity.this, candidateBackgroundApiTasks.getMessage(), Toast.LENGTH_LONG).show();
 
             if (candidate!=null){
 
-              finish();
+                buildNotificationDialog(candidateBackgroundApiTasks.getMessage(),candidate);
 
             }
+
         }
 
         @Override
@@ -269,8 +199,10 @@ public class RegistrationActivity extends AppCompatActivity {
             synchronized (candidateBackgroundApiTasks){
 
                 try {
+
                     candidateBackgroundApiTasks.registerNewCandidate(candidates[0]);
                     candidateBackgroundApiTasks.wait();
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -283,4 +215,9 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        onBackPressed();
+    }
 }

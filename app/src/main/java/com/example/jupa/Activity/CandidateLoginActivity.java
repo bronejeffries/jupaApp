@@ -62,15 +62,9 @@ public class CandidateLoginActivity extends AppCompatActivity {
                 if (verifyInput()){
                     String emailText = email.getText().toString();
                     String passwordText = password.getText().toString();
-                    if (emailText.equals("a")) {
-                        Intent mainActivityIntent = new Intent(CandidateLoginActivity.this, AdminHomeActivity.class);
-                        startActivity(mainActivityIntent);
-                    }else {
                         showProgress.setMessage("Authenticating...");
                         showProgress.show();
                         new loginUser().execute(emailText,passwordText);
-
-                    }
                 }else {
                     return;
                 }

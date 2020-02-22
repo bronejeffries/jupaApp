@@ -43,7 +43,6 @@ public class CandidatesDisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_candidates_display);
 
         searchArea = (EditText)findViewById(R.id.search_candidate);
-//        searchArea.setCompoundDrawables(null,null,null,null);
         recyclerView = (RecyclerView)findViewById(R.id.candidate_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar = (ProgressBar)findViewById(R.id.search_progress_bar);
@@ -67,7 +66,6 @@ public class CandidatesDisplayActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
 
@@ -118,11 +116,11 @@ public class CandidatesDisplayActivity extends AppCompatActivity {
 
     public class fetchCandidateProfile extends AsyncTask<String,Void, Candidate>{
 
-
         @Override
         protected void onPostExecute(Candidate candidate) {
 
             if (candidate!=null){
+
                 candidatesAdapter.setArrayList(new ArrayList<Candidate>());
                 candidatesAdapter.getArrayList().add(candidate);
                 candidatesAdapter.notifyDataSetChanged();
